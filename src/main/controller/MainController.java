@@ -25,7 +25,7 @@ public class MainController {
 	}
 	@RequestMapping("/practice")
 	public String practice(){
-		return "t:practice/board";
+		return "t:practice/practice";
 	}
 	@RequestMapping("/storage")
 	public String storage(){
@@ -41,6 +41,6 @@ public class MainController {
 	}
 	@RequestMapping("/admin")
 	public String admin(){
-		return "t:admin/board";
+		return "t:admin/admin";
 	}
 }
