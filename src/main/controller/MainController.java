@@ -11,7 +11,6 @@ public class MainController {
 		return "t:index";
 //		return "/main/intro.jsp";
 	}
-	
 	@RequestMapping("/notice")
 	public String notice(){
 		return "t:notice/board";
