@@ -7,4 +7,8 @@
 		<put-attribute name="sideNav" value="/WEB-INF/view/main/sideNav.jsp"/>
 		<put-attribute name="article" value="/WEB-INF/view/main/article.jsp"/>
 	</definition>
+	
+	<definition name="t:*/*" extends="t:index">
+		<put-attribute name="article" value="/WEB-INF/view/{1}/{2}.jsp"/>
+	</definition>
 </tiles-definitions>
