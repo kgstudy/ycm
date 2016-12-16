@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<nav class="w3-sidenav w3-red w3-collapse w3-top w3-large w3-padding"
+<nav class="w3-sidenav w3-black w3-collapse w3-top w3-large w3-padding"
 	style="z-index: 3; width: 300px; font-weight: bold" id="mySidenav">
 	<br> <a href="javascript:void(0)" onclick="w3_close()"
 		class="w3-padding-xlarge w3-hide-large w3-display-topleft w3-hover-white"
@@ -25,9 +25,9 @@
 
 <!-- Top menu on small screens -->
 <header
-	class="w3-container w3-top w3-hide-large w3-red w3-xlarge w3-padding">
+	class="w3-container w3-top w3-hide-large w3-black w3-xlarge w3-padding">
 	<a href="javascript:void(0)"
-		class="w3-btn w3-red w3-border w3-border-white w3-margin-right"
+		class="w3-btn w3-black w3-border w3-border-white w3-margin-right"
 		onclick="w3_open()">☰</a> <span>Company Name</span>
 </header>
 
