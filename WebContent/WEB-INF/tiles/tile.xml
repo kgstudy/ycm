@@ -3,10 +3,8 @@
 
 <tiles-definitions>
 	<definition name="t:index" template="/WEB-INF/view/main/templete.jsp">
-		<put-attribute name="title" value="The Friends"/>
+		<put-attribute name="title" value="Yoon's Class Management"/>
 		<put-attribute name="sideNav" value="/WEB-INF/view/main/sideNav.jsp"/>
 		<put-attribute name="article" value="/WEB-INF/view/main/article.jsp"/>
-<!-- 		<put-attribute name="footer" value="/WEB-INF/view/main/footer.jsp"/> -->
-		<put-attribute name="bottom" value="/WEB-INF/view/main/bottom.jsp"/>
 	</definition>
 </tiles-definitions>
