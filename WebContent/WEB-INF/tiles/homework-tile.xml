@@ -11,6 +11,6 @@
 		<put-attribute name="article" value="/WEB-INF/view/homework/admin.jsp"/>
 	</definition>
 	<definition name="t:homework/*" extends="t:homework">
-		<put-attribute name="article" value="/WEB-INF/view/homework/studentaaa.jsp"/>
+		<put-attribute name="article" value="/WEB-INF/view/homework/{1}.jsp"/>
 	</definition>
 </tiles-definitions>

@@ -55,6 +55,10 @@ public String void(String[] args){}</textArea>
 		$("#cancel").remove();
 		$("#br").remove();
 		$("#newClassBtn").show();
+		for(var i=0; i<ar.length; i++){
+			ar[i].hide();
+		}
+		$("#"+element.value+"Div").show();
 		var cls = element.value;
 		var content = $("#"+cls+"Content").val();
 		$.ajax({

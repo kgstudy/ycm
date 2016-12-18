@@ -8,7 +8,25 @@
 		<put-attribute name="article" value="/WEB-INF/view/main/article.jsp"/>
 	</definition>
 	
-	<definition name="t:*/*" extends="t:index">
-		<put-attribute name="article" value="/WEB-INF/view/{1}/{2}.jsp"/>
+	<definition name="t:admin/*" extends="t:index">
+		<put-attribute name="article" value="/WEB-INF/view/admin/{1}.jsp"/>
+	</definition>
+	<definition name="t:classes/*" extends="t:index">
+		<put-attribute name="article" value="/WEB-INF/view/classes/{1}.jsp"/>
+	</definition>
+	<definition name="t:notice/*" extends="t:index">
+		<put-attribute name="article" value="/WEB-INF/view/notice/{1}.jsp"/>
+	</definition>
+	<definition name="t:practice/*" extends="t:index">
+		<put-attribute name="article" value="/WEB-INF/view/practice/{1}.jsp"/>
+	</definition>
+	<definition name="t:question/*" extends="t:index">
+		<put-attribute name="article" value="/WEB-INF/view/question/{1}.jsp"/>
+	</definition>
+	<definition name="t:storage/*" extends="t:index">
+		<put-attribute name="article" value="/WEB-INF/view/storage/{1}.jsp"/>
+	</definition>
+	<definition name="t:video/*" extends="t:index">
+		<put-attribute name="article" value="/WEB-INF/view/video/{1}.jsp"/>
 	</definition>
 </tiles-definitions>
