@@ -20,7 +20,7 @@
 <%-- 			<c:forEach> --%>
 				<tr>
 					<td>#</td>
-					<td><a href="homework/student/title"><b>Title</b></a></td>
+					<td><a href="/homework/student/title"><b>Title</b></a></td>
 					<td>Writer</td>
 					<td>Date</td>
 					<td>Count</td>
