@@ -1,5 +1,13 @@
 @CHARSET "EUC-KR";
 
+footer{
+	height: 2em;
+	text-align: center;
+	background-color: #f8f8f8;
+	margin-top: 20px;
+	padding-top: 5px;
+}
+
 #problemView{
 	width : 500px;
 	height: 300px;
