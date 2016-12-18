@@ -25,7 +25,7 @@ public class StudentController {
 	@RequestMapping("/title")
 	public String homeworkWrite(Map map){		
 		map.putAll(hws.read());		
-		return "t:homework/student";
+		return "t:hw/student";
 	}
 	@RequestMapping("/read")
 	public String homeworkRead(Map map){

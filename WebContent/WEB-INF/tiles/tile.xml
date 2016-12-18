@@ -17,6 +17,9 @@
 	<definition name="t:notice/*" extends="t:index">
 		<put-attribute name="article" value="/WEB-INF/view/notice/{1}.jsp"/>
 	</definition>
+	<definition name="t:homework/*" extends="t:index">
+		<put-attribute name="article" value="/WEB-INF/view/homework/{1}.jsp"/>
+	</definition>
 	<definition name="t:practice/*" extends="t:index">
 		<put-attribute name="article" value="/WEB-INF/view/practice/{1}.jsp"/>
 	</definition>

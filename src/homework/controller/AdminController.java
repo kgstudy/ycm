@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import homework.service.HomeworkService;
 
 @Controller
-@RequestMapping("/homework/admin")
+@RequestMapping("/hw/admin")
 public class AdminController {
 	@Autowired
 	HomeworkService hws;
@@ -19,7 +19,7 @@ public class AdminController {
 	public String admin(Map map){
 		System.out.println("index");
 		map.put("list", hws.read());
-		return "t:homeworkadmin";
+		return "t:homework/admin";
 	}
 	@RequestMapping("/write")
 	public String homeworkWrite(String title, String content){
