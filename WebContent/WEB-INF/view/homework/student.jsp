@@ -4,7 +4,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <link href="/css/homework.css" rel="stylesheet" >
 <div id='problemView'>
-HW #<br/>
+HW student#<br/>
 ${list.CONTENT }
 </div>
 <form id='homeworkForm' action='/homework/write' >

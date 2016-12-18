@@ -10,7 +10,7 @@
 	<definition name="t:homeworkadmin" extends="t:homework">
 		<put-attribute name="article" value="/WEB-INF/view/homework/admin.jsp"/>
 	</definition>
-	<definition name="t:homework/*" extends="t:homework">
-		<put-attribute name="article" value="/WEB-INF/view/homework/studentaaa.jsp"/>
+	<definition name="t:homework*" extends="t:homework">
+		<put-attribute name="article" value="/WEB-INF/view/homework/writing.jsp"/>
 	</definition>
 </tiles-definitions>
