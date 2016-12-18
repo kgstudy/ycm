@@ -17,15 +17,15 @@
 			</div>
 			<div class="w3-row" id="classGroup" align="center">
 				<input type="button" class="btn btn-default" value="Main" style="width: 40%" onclick="viewClass(this)"/><br/>
-<!-- 				<input type="button" class="btn btn-default" value="Controller" style="width: 40%" onclick="viewClass(this)"/><br/> -->
-<!-- 				<input type="button" class="btn btn-default" value="Model" style="width: 40%" onclick="viewClass(this)"/><br/> -->
 			</div>
 		</div>
 		<div class="w3-col l8 m9" id="divGroup">
 			<div class="w3-row" id="contentGroup">
 				<textArea class="form-control Content" rows="25" style="resize: none; border: solid gray 2px" id="MainContent">
 public class Main {
-  
+  public void main(String[] args) {
+    
+  }
 }</textArea>
 			</div>
 			<div class="w3-row">
@@ -49,6 +49,19 @@ public class Main {
 <script>
 	var ar = new Array("MainContent");
 	
+	$(".form-control").keydown(function(txt){
+		alert(txt.keyCode);
+	});
+// 	document.getElementById("#Content").addEventListener("keydown", function(txt){
+// 		if(txt.keyCode==17){
+// 			document.getElementById("#Content").addEventListener("keydown", function(txt){
+// 				if(txt.keyCode==13){
+// 					$("#runBtn").trigger("click");
+// 				}
+// 			});
+// 		}
+// 	});
+	
 	function run(){
 		var txt = "";
 		for(var i=0; i<ar.length; i++){
@@ -58,13 +71,17 @@ public class Main {
 			}
 		}
 		alert(txt);
-// 		$("#result").text(txt);
 		$.ajax({
-			"method" : "post",
-			"url" : "/practice/"+txt,
-			"async" : false
-		}).done(function(text){
-			$("#result").val(text);
+			type : "post",
+			url : "/practice/run",
+			 beforeSend : function(xhr){
+		    	  xhr.setRequestHeader("content-type" , "application/json; charset=UTF-8");
+		    },
+			data : txt,
+			async : false,
+			success : function(text){
+				$("#result").val(text);
+			}
 		});
 	}
 	
@@ -117,9 +134,9 @@ public class Main {
 			cg.html(html+newClass);
 			var newContent = "<textArea class='form-control' rows='25' style='resize: none; border: solid gray 2px; display='none'' id='"+val+"Content'>";
 			newContent += "public class "+val+" {\n";
-// 			newContent += "    public String void(String[] args){\n";
+			newContent += "  public void main(String[] args){\n";
 			newContent += "    \n";
-// 			newContent += "    }\n";
+			newContent += "  }\n";
 			newContent += "}";
 			newContent += "</textArea>";
 			$("#contentGroup").html($("#contentGroup").html()+newContent);

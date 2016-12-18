@@ -12,9 +12,14 @@ public class PracticeController {
 	@Autowired
 	PracticeService ps;
 	
-	@RequestMapping("/{content}")
+//	@RequestMapping("/{content}")
+//	@ResponseBody
+//	public String content(@PathVariable(name="content")String content){
+//		return ps.content(content);
+//	}
+	@RequestMapping("/run")
 	@ResponseBody
-	public String content(@PathVariable(name="content")String content){
+	public String run(@RequestBody()String content){
 		return ps.content(content);
 	}
 }
