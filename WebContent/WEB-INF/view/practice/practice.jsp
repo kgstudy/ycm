@@ -5,6 +5,9 @@
 <div class="w3-container" align="center">
 	<h2 style="margin-top: 100px; margin-bottom: 50px">Practice Coding</h2>
 	<div class="w3-row">
+		<div class="w3-row" align="center">
+			<font style="color: red">※ 새로고침 또는 페이지 전환시 작성했던 내용이 소실될 수 있습니다.</font>
+		</div><br/>
 		<div class="w3-col l4 m3">
 			<div class="w3-row" align="right">
 				<input type="button" class="btn btn-default" value="실행" style="width: 20%" onclick="run()" id="runBtn"/>&nbsp;&nbsp;
@@ -19,12 +22,14 @@
 			</div>
 		</div>
 		<div class="w3-col l8 m9" id="divGroup">
-			<div class="w3-row" id="MainDiv">
+			<div class="w3-row" id="contentGroup">
 				<textArea class="form-control Content" rows="25" style="resize: none; border: solid gray 2px" id="MainContent">
-public String void(String[] args){}</textArea>
+public class Main {
+  
+}</textArea>
 			</div>
 			<div class="w3-row">
-				<textArea class="form-control" rows="9" style="resize: none; border: solid gray 2px" readonly="readonly"></textArea>
+				<textArea class="form-control" rows="9" style="resize: none; border: solid gray 2px" readonly="readonly" id="result"></textArea>
 			</div>
 		</div>
 	</div>
@@ -42,32 +47,39 @@ public String void(String[] args){}</textArea>
 </div>
 
 <script>
-	var ar = new Array("mainDiv");
+	var ar = new Array("MainContent");
 	
 	function run(){
-		$("#mainDiv").hide();
+		var txt = "";
+		for(var i=0; i<ar.length; i++){
+			if(document.getElementById(ar[i]).style.display!="none"){
+				txt = $("#"+ar[i]).val();
+				break;
+			}
+		}
+		alert(txt);
+// 		$("#result").text(txt);
+		$.ajax({
+			"method" : "post",
+			"url" : "/practice/"+txt,
+			"async" : false
+		}).done(function(text){
+			$("#result").val(text);
+		});
 	}
 	
 	function viewClass(element){
-		alert(element.value);
+		var cls = element.value;
+		var content = $("#"+cls+"Content").val();
 		$("#newClass").remove();
 		$("#create").remove();
 		$("#cancel").remove();
 		$("#br").remove();
 		$("#newClassBtn").show();
 		for(var i=0; i<ar.length; i++){
-			ar[i].hide();
+			$("#"+ar[i]).hide();
 		}
-		$("#"+element.value+"Div").show();
-		var cls = element.value;
-		var content = $("#"+cls+"Content").val();
-		$.ajax({
-			"method" : "get",
-			"url" : "/practice/"+cls+"/"+content,
-			"async" : false
-		}).done(function(text){
-			$("#"+cls+"Content").val(text);
-		});
+		$("#"+cls+"Content").show();
 	}
 	
 	function create(){
@@ -85,6 +97,7 @@ public String void(String[] args){}</textArea>
 		$("#newClassBtn").show();
 		var val = $("#newClass").val();
 		var cg = $("#classGroup");
+		val = val.substring(0, 1).toUpperCase() + val.substring(1);
 		for(var i=0; i<ar.length; i++){
 			if(ar[i] == val+"Content"){
 				b = true;
@@ -102,21 +115,22 @@ public String void(String[] args){}</textArea>
 			var html = cg.html();
 			var newClass = "<input type='button' class='btn btn-default' value='"+val+"' style='width: 40%' onclick='viewClass(this)''/><br/>";
 			cg.html(html+newClass);
-			var newContent = "<div class='w3-row' id='"+val+"Div'>"
-			newContent += "<textArea class='form-control' rows='25' style='resize: none; border: solid gray 2px; display='none'' id='"+val+"Content'>";
-			newContent += "public String void(String[] args){}";
+			var newContent = "<textArea class='form-control' rows='25' style='resize: none; border: solid gray 2px; display='none'' id='"+val+"Content'>";
+			newContent += "public class "+val+" {\n";
+// 			newContent += "    public String void(String[] args){\n";
+			newContent += "    \n";
+// 			newContent += "    }\n";
+			newContent += "}";
 			newContent += "</textArea>";
-			newContent += "</div>";
-			$("#divGroup").html($("#divGroup").html()+newContent);
+			$("#contentGroup").html($("#contentGroup").html()+newContent);
+			ar[ar.length] = val+"Content";
+			for(var i=0; i<ar.length; i++){
+				$("#"+ar[i]).hide();
+			}
 			$("#newClass").remove();
 			$("#create").remove();
 			$("#cancel").remove();
 			$("#br").remove();
-			ar[ar.length] = val+"Div";
-			for(var i=0; i<ar.length; i++){
-				alert(ar[i]);
-				$("#"+ar[i]).hide();
-			}
 			$("#"+val+"Content").show();
 		}
 	}
