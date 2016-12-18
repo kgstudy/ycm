@@ -49,18 +49,18 @@ public class Main {
 <script>
 	var ar = new Array("MainContent");
 	
-	$(".form-control").keydown(function(txt){
-		alert(txt.keyCode);
-	});
-// 	document.getElementById("#Content").addEventListener("keydown", function(txt){
-// 		if(txt.keyCode==17){
-// 			document.getElementById("#Content").addEventListener("keydown", function(txt){
-// 				if(txt.keyCode==13){
-// 					$("#runBtn").trigger("click");
-// 				}
-// 			});
-// 		}
+// 	$(".form-control").keydown(function(txt){
+// 		alert(txt.keyCode);
 // 	});
+	document.getElementById("#Content").addEventListener("keydown", function(txt){
+		if(txt.keyCode==17){
+			document.getElementById("#Content").addEventListener("keydown", function(txt){
+				if(txt.keyCode==13){
+					$("#runBtn").trigger("click");
+				}
+			});
+		}
+	});
 	
 	function run(){
 		var txt = "";
