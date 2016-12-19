@@ -8,7 +8,13 @@ HW student#<br/>
 ${list.CONTENT }
 </div>
 <form id='homeworkForm' action='/homework/write' >
-	<textarea id='homeworkContent' name='content' cols='100' rows='20' ></textarea>	
+	<textarea id='homeworkContent' name='content' cols='100' rows='20' >		
+		Class Homework{
+			public static void main(String[] args){
+			
+			}
+		}
+	</textarea>	
 	<c:if test='false' >
 		<textarea rows="7" cols="30"></textarea><br/>
 	</c:if>	
@@ -53,7 +59,9 @@ ${list.CONTENT }
 			url : "/homework/compile",
 			type : "post",
 			data : {
-				"source" : "public static void(String[] args){ return void; }"
+				"java" : "Class Homework{"+
+					"public static void(String[] args){ System.out.println(\"Hello WebCoding!!\") }"+
+					"}"
 			}
 		});
 	}

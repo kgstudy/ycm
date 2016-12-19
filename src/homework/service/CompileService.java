@@ -1,27 +1,25 @@
 package homework.service;
 
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
+import java.util.Properties;
 
-import javax.servlet.ServletContext;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.lowagie.text.pdf.codec.Base64.InputStream;
-import com.lowagie.text.pdf.codec.Base64.OutputStream;
 
 @Component
 public class CompileService {	
 	
 	public String javaCompile(String java, String classPath){
 		System.out.println(classPath);
+		Properties prop = System.getProperties();
+		Map map = System.getenv();
+		System.out.println(prop);
+		System.out.println(map.toString());
 		try {
-			FileWriter fw = new FileWriter(classPath+"\\homework.java");
+			
+			PrintWriter fw = new PrintWriter(classPath+"\\Homework.java");
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write(java);
 			bw.close();
