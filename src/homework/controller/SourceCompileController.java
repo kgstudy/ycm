@@ -21,17 +21,8 @@ public class SourceCompileController {
 	
 	@RequestMapping("/compile")
 	@ResponseBody
-	public String getSource(String java){
-		csvc.javaCompile(java, context.getRealPath("/classpath"));		
-		Runtime rt =Runtime.getRuntime();
-		String execFile = "C:\\Windows\\system32\\notepad.exe";
-		try {
-			rt.exec(execFile);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public String getSource(String java){		
 		
-		return "complete"; 
+		return csvc.javaCompile(java, context.getRealPath("/classpath")); 
 	}
 }

@@ -9,7 +9,7 @@ public class HomeSocket extends TextWebSocketHandler{
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		System.out.println(session.getId()+"ë¡œ ì—°ê²°");
+		System.out.println(session.getId()+"·Î ¿¬°á");
 	}
 	
 	@Override
@@ -20,6 +20,6 @@ public class HomeSocket extends TextWebSocketHandler{
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		System.out.println(session.getId()+"ê°€ ì¢…ë£Œ");
+		System.out.println(session.getId()+"ÀÌ Á¾·á");
 	}
 }
