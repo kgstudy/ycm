@@ -11,7 +11,6 @@ public class MainController {
 		return "t:index";
 //		return "/main/intro.jsp";
 	}
-	
 	@RequestMapping("/notice")
 	public String notice(){
 		return "t:notice/board";
@@ -26,7 +25,7 @@ public class MainController {
 	}
 	@RequestMapping("/practice")
 	public String practice(){
-		return "t:practice/board";
+		return "t:practice/practice";
 	}
 	@RequestMapping("/storage")
 	public String storage(){
@@ -42,6 +41,6 @@ public class MainController {
 	}
 	@RequestMapping("/admin")
 	public String admin(){
-		return "t:admin/board";
+		return "t:admin/admin";
 	}
 }

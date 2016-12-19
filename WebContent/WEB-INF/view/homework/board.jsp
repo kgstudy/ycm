@@ -20,7 +20,7 @@
 <%-- 			<c:forEach> --%>
 				<tr>
 					<td>#</td>
-					<td><a href="#"><b>Title</b></a></td>
+					<td><a href="/homework/student/title"><b>Title</b></a></td>
 					<td>Writer</td>
 					<td>Date</td>
 					<td>Count</td>
@@ -35,10 +35,14 @@
 <%-- 		</c:forEach> --%>
 	</div>
 	<div align="right">
-		<input type="button" class="btn btn-default" value="글작성"/>
+		<a href='/homework/writeForm' ><input id='quizWrite' type="button" class="btn btn-default" value="글작성"/></a>
 	</div>
 	<div align="center">
 		<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px"/>&nbsp;&nbsp;
 		<input type="button" class="btn btn-default" value="검색"/>
 	</div>
 </div>
+
+<script>
+	
+</script>

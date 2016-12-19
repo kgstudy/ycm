@@ -15,36 +15,37 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
-body, h1, h2, h3, h4, h5 {
-	font-family: "Poppins", sans-serif
-}
+/* body, h1, h2, h3, h4, h5 { */
+/* 	font-family: "Poppins", sans-serif */
+/* } */
 
-body {
-	font-size: 16px;
-}
+/* body { */
+/* 	font-size: 16px; */
+/* } */
 
-.w3-half img {
-	margin-bottom: -6px;
-	margin-top: 16px;
-	opacity: 0.8;
-	cursor: pointer
-}
+/* .w3-half img { */
+/* 	margin-bottom: -6px; */
+/* 	margin-top: 16px; */
+/* 	opacity: 0.8; */
+/* 	cursor: pointer */
+/* } */
 
-.w3-half img:hover {
-	opacity: 1
-}
+/* .w3-half img:hover { */
+/* 	opacity: 1 */
+/* } */
 </style>
-<body>
-
-	<!-- Sidenav/menu -->
-	<tile:insertAttribute name="sideNav"/>
+<body>	
+	<tile:insertAttribute name="header"/>
 
 	<!-- !PAGE CONTENT! -->
 	<div class="w3-main" style="margin-left: 340px; margin-right: 40px">
 		<tile:insertAttribute name="article"/>
 		<!-- End page content -->
 	</div>
-
+	<footer>
+		<tile:insertAttribute name="footer" />
+	</footer>
+	
 <!-- 	<!-- W3.CSS Container -->
 <!-- 	<div class="w3-light-grey w3-container w3-padding-32" -->
 <!-- 		style="margin-top: 75px; padding-right: 58px"> -->
@@ -53,27 +54,6 @@ body {
 <!-- 				title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a> -->
 <!-- 		</p> -->
 <!-- 	</div> -->
-
-	<script>
-// Script to open and close sidenav
-function w3_open() {
-    document.getElementById("mySidenav").style.display = "block";
-    document.getElementById("myOverlay").style.display = "block";
-}
- 
-function w3_close() {
-    document.getElementById("mySidenav").style.display = "none";
-    document.getElementById("myOverlay").style.display = "none";
-}
-
-// Modal Image Gallery
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
-}
-</script>
 
 </body>
 </html>
