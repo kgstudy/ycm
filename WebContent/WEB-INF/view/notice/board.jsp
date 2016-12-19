@@ -35,7 +35,7 @@
 <%-- 		</c:forEach> --%>
 	</div>
 	<div align="right">
-		<input type="button" class="btn btn-default" value="글작성"/>
+		<input type="button" class="btn btn-default" value="글작성" onclick="javascript:location.href=''"/>
 	</div>
 	<div align="center">
 		<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px"/>&nbsp;&nbsp;
