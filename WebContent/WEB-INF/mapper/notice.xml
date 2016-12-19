@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="notice">
+	<select id="nolist" resultType="java.util.HashMap">
+		select * from notice order by notice_num desc
+	</select>
+	
+	<!--  '은선'은 작성자자리 나중에 관리자 이름으로.... -->
+	<insert id="noinput" parameterType="java.util.HashMap">
+		insert into notice values(NOTICE_SEQ.nextval,'은선',#{title},#{content},sysdate,0)
+	</insert> 
+	
+</mapper>

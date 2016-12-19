@@ -11,10 +11,10 @@ public class MainController {
 		return "t:index";
 //		return "/main/intro.jsp";
 	}
-	@RequestMapping("/notice")
+	/*@RequestMapping("/notice")
 	public String notice(){
 		return "t:notice/board";
-	}
+	}*/
 	@RequestMapping("/question")
 	public String question(){
 		return "t:question/board";
