@@ -35,16 +35,16 @@ public class Main {
 	</div>
 </div>
 
-<div class="w3-modal" id="modal" style="width: 100%; height: 100%" align="center">
-	<div class="w3-row" style="width: 50%; background-color: white; border-radius: 15px; margin-top: 30px">
-		<form class="form-group">
-			<label style="font-size: 22px">CLASS NAME</label>
-			<input type="text" placeholder="Class Name" class="form-control" id="className" style="width: 50%"/><br/>
-			<input type="button" class="btn btn-default" value="생성" id="create"/>&nbsp;&nbsp;
-			<input type="button" class="btn btn-default" value="취소" onclick="$('#modal').fadeOut(500)"/>
-		</form>
-	</div>
-</div>
+<!-- <div class="w3-modal" id="modal" style="width: 100%; height: 100%" align="center"> -->
+<!-- 	<div class="w3-row" style="width: 50%; background-color: white; border-radius: 15px; margin-top: 30px"> -->
+<!-- 		<form class="form-group"> -->
+<!-- 			<label style="font-size: 22px">CLASS NAME</label> -->
+<!-- 			<input type="text" placeholder="Class Name" class="form-control" id="className" style="width: 50%"/><br/> -->
+<!-- 			<input type="button" class="btn btn-default" value="생성" id="create"/>&nbsp;&nbsp; -->
+<!-- 			<input type="button" class="btn btn-default" value="취소" onclick="$('#modal').fadeOut(500)"/> -->
+<!-- 		</form> -->
+<!-- 	</div> -->
+<!-- </div> -->
 
 <script>
 	var ar = new Array("MainContent");
@@ -70,7 +70,6 @@ public class Main {
 				break;
 			}
 		}
-		alert(txt);
 		$.ajax({
 			type : "post",
 			url : "/practice/run",
