@@ -17,9 +17,9 @@ public class PracticeController {
 //	public String content(@PathVariable(name="content")String content){
 //		return ps.content(content);
 //	}
-	@RequestMapping("/run")
+	@RequestMapping("/run/{title}")
 	@ResponseBody
-	public String run(@RequestBody()String content){
-		return ps.content(content);
+	public String run(@RequestBody()String content, @PathVariable(name="title")String title){
+		return ps.content(content, title);
 	}
 }

@@ -23,7 +23,7 @@
 			<div class="w3-row" id="contentGroup">
 				<textArea class="form-control Content" rows="25" style="resize: none; border: solid gray 2px" id="MainContent">
 public class Main {
-  public void main(String[] args) {
+  public static void main(String args[]) {
     
   }
 }</textArea>
@@ -64,15 +64,17 @@ public class Main {
 	
 	function run(){
 		var txt = "";
+		var title = "";
 		for(var i=0; i<ar.length; i++){
 			if(document.getElementById(ar[i]).style.display!="none"){
 				txt = $("#"+ar[i]).val();
+				title = ar[i].substring(0, ar[i].lastIndexOf('C'));
 				break;
 			}
 		}
 		$.ajax({
 			type : "post",
-			url : "/practice/run",
+			url : "/practice/run/"+title,
 			 beforeSend : function(xhr){
 		    	  xhr.setRequestHeader("content-type" , "application/json; charset=UTF-8");
 		    },
@@ -133,7 +135,7 @@ public class Main {
 			cg.html(html+newClass);
 			var newContent = "<textArea class='form-control' rows='25' style='resize: none; border: solid gray 2px; display='none'' id='"+val+"Content'>";
 			newContent += "public class "+val+" {\n";
-			newContent += "  public void main(String[] args){\n";
+			newContent += "  public static void main(String args[]){\n";
 			newContent += "    \n";
 			newContent += "  }\n";
 			newContent += "}";
