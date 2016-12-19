@@ -52,9 +52,9 @@ public class Main {
 // 	$(".form-control").keydown(function(txt){
 // 		alert(txt.keyCode);
 // 	});
-	document.getElementById("#Content").addEventListener("keydown", function(txt){
+	document.getElementById("MainContent").addEventListener("keydown", function(txt){
 		if(txt.keyCode==17){
-			document.getElementById("#Content").addEventListener("keydown", function(txt){
+			document.getElementById("MainContent").addEventListener("keydown", function(txt){
 				if(txt.keyCode==13){
 					$("#runBtn").trigger("click");
 				}
