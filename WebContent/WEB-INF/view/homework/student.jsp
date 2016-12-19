@@ -11,7 +11,7 @@ ${list.CONTENT }
 	<textarea id='homeworkContent' name='content' cols='100' rows='20' >		
 		Class Homework{
 			public static void main(String[] args){
-			
+				SW code
 			}
 		}
 	</textarea>	
