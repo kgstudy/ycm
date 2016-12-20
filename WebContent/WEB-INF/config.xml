@@ -14,6 +14,7 @@
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
 	<context:component-scan base-package="main"/>
+	<context:component-scan base-package="admin"/>
 	<context:component-scan base-package="practice"/>
 	<context:component-scan base-package="homework" />
 	<context:component-scan base-package="notice"/>
