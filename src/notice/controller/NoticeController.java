@@ -84,6 +84,7 @@ public class NoticeController {
 		mav.setViewName("t:notice/rewrite");
 		return mav;
 	}
+	
 	// 공지 수정하고 글등록.
 	@RequestMapping("/reinput/{num}")
 	public ModelAndView reinput(@PathVariable(name = "num") int num, String title, String content){
@@ -92,6 +93,20 @@ public class NoticeController {
 		if(b){
 			mav.setViewName("redirect:/notice");
 		}
+		return mav;
+	}
+	
+	// 글삭제버튼 눌렀을때 
+	@RequestMapping("/delete/{num}")
+	public ModelAndView delete(@PathVariable(name = "num") int num){
+			ModelAndView mav = new ModelAndView();
+			boolean b = ns.noticedelete(num);
+			if(b){
+				mav.setViewName("redirect:/notice");
+			}else{
+				mav.setViewName("redirect:/view/"+num);
+			}
+			
 		return mav;
 	}
 

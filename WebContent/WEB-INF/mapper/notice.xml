@@ -23,8 +23,12 @@
 	<!-- 공지사항 내용 수정 -->
 	<update id="writeupdate" parameterType="java.util.HashMap">
 		update notice set
-		notice_title = #{title} , notice_content = #{content} where notice_num =
-		#{num}
+		notice_title = #{title} , notice_content = #{content} where notice_num = #{num}
 	</update>
+	
+	<!--  공지사항 글삭제 -->
+	<delete id="noticedelete" parameterType="java.lang.Integer">
+		delete notice where notice_num = #{num}
+	</delete>
 	
 </mapper>
