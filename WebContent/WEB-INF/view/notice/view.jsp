@@ -11,3 +11,7 @@
 
 
 
+<hr/>
+관리자로 들어왔을때 글삭제,글수정버튼 <br/>
+<input type="button" class="btn btn-default" value="글수정" onclick="javascript:location.href='/notice/rewrite/${noticeview.NOTICE_NUM}'"/>
+<input type="button" class="btn btn-default" value="글삭제" onclick="javascript:location.href='/notice/delete/${noticeview.NOTICE_NUM}'"/>
