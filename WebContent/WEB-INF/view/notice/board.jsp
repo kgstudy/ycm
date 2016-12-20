@@ -17,15 +17,15 @@
 		</thead>
 		<tbody>
 			<!-- forEach 주석풀고 작업 -->
-<%-- 			<c:forEach> --%>
+		<c:forEach  var="i" items="${noticelist }" >
 				<tr>
-					<td>#</td>
-					<td><a href="#"><b>Title</b></a></td>
-					<td>Writer</td>
-					<td>Date</td>
-					<td>Count</td>
+					<td>${i.NOTICE_NUM }</td>
+					<td><a href="#"><b>${i.NOTICE_TITLE }</b></a></td>
+					<td>${i.NOTICE_WRITER }</td>
+					<td>${i.NOTICE_DATE }</td>
+					<td>${i.NOTICE_COUNT }</td>
 				</tr>
-<%-- 			</c:forEach> --%>
+ 		</c:forEach> 
 		</tbody>
 	</table><br/>
 	<div align="center">
@@ -35,7 +35,7 @@
 <%-- 		</c:forEach> --%>
 	</div>
 	<div align="right">
-		<input type="button" class="btn btn-default" value="글작성"/>
+		<input type="button" class="btn btn-default" value="글작성" onclick="javascript:location.href='/nowrite'"/>
 	</div>
 	<div align="center">
 		<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px"/>&nbsp;&nbsp;

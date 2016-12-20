@@ -35,10 +35,15 @@
 <%-- 		</c:forEach> --%>
 	</div>
 	<div align="right">
-		<input type="button" class="btn btn-default" value="글작성"/>
+		<input type="button" class="btn btn-default" value="글작성" id="write"/>
 	</div>
 	<div align="center">
 		<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px"/>&nbsp;&nbsp;
 		<input type="button" class="btn btn-default" value="검색"/>
 	</div>
 </div>
+<script>
+	document.getElementById("write").addEventListener("click", function() {
+		location.href="/question/write";
+	})
+</script>
