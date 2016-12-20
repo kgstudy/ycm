@@ -10,6 +10,10 @@
 		</div><br/>
 		<div class="w3-col l4 m3">
 			<div class="w3-row" align="right">
+				Arguments 추가 : 
+				<input type="text" placeholder=",(콤마) 로 구분" style="width: 40%; padding-left: 10px"/>&nbsp;&nbsp;
+			</div>
+			<div class="w3-row" align="right">
 				<input type="button" class="btn btn-default" value="실행" style="width: 20%" onclick="run()" id="runBtn"/>&nbsp;&nbsp;
 			</div>
 			<div class="w3-row">
@@ -35,30 +39,14 @@ public class Main {
 	</div>
 </div>
 
-<!-- <div class="w3-modal" id="modal" style="width: 100%; height: 100%" align="center"> -->
-<!-- 	<div class="w3-row" style="width: 50%; background-color: white; border-radius: 15px; margin-top: 30px"> -->
-<!-- 		<form class="form-group"> -->
-<!-- 			<label style="font-size: 22px">CLASS NAME</label> -->
-<!-- 			<input type="text" placeholder="Class Name" class="form-control" id="className" style="width: 50%"/><br/> -->
-<!-- 			<input type="button" class="btn btn-default" value="생성" id="create"/>&nbsp;&nbsp; -->
-<!-- 			<input type="button" class="btn btn-default" value="취소" onclick="$('#modal').fadeOut(500)"/> -->
-<!-- 		</form> -->
-<!-- 	</div> -->
-<!-- </div> -->
-
 <script>
 	var ar = new Array("MainContent");
 	
-// 	$(".form-control").keydown(function(txt){
-// 		alert(txt.keyCode);
-// 	});
-	document.getElementById("MainContent").addEventListener("keydown", function(txt){
-		if(txt.keyCode==17){
-			document.getElementById("MainContent").addEventListener("keydown", function(txt){
-				if(txt.keyCode==13){
-					$("#runBtn").trigger("click");
-				}
-			});
+	$(".form-control").keydown(function(txt){
+		if(txt.ctrlKey && txt.keyCode==13){
+			$("#runBtn").trigger("click");
+		} else if(txt.keyCode==9){
+			/* Tab 키 눌렀을 때 2칸 space 되게끔 단축키 설정 */
 		}
 	});
 	

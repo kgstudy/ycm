@@ -23,6 +23,7 @@ public class PracticeService {
 		String dir = application.getRealPath("/files");
 		File f = new File(dir, title+".java");
 		String line = "";
+		List<String> list = new Vector<>();
 		try{
 			FileOutputStream fos = new FileOutputStream(f);
 			byte[] ar = content.getBytes();
@@ -38,16 +39,22 @@ public class PracticeService {
 			Process process  = builder.start();
 			System.out.println("프로세스 실행");
 			process.waitFor();
-			
-			builder = new ProcessBuilder("cmd", "/c", "java", title);
-			builder.directory(new File(dir));
-			process = builder.start();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			List<String> list = new Vector<>();
-			while((line = reader.readLine()) != null){
-				list.add(line);
+			BufferedReader error = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+			if(error.readLine() != null){
+				while((line = error.readLine()) != null){
+					list.add(line);
+				}
+				return list;
+			} else {
+				builder = new ProcessBuilder("cmd", "/c", "java", title);
+				builder.directory(new File(dir));
+				process = builder.start();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+				while((line = reader.readLine()) != null){
+					list.add(line);
+				}
+				return list;
 			}
-			return list;
 		} catch(Exception e){
 			e.printStackTrace();
 			return null;
