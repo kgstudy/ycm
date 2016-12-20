@@ -18,7 +18,7 @@ public class PracticeService {
 	@Autowired
 	ServletContext application;
 	
-	/*public String content(String content, String title){
+	public String content(String content, String title){
 //		String uuid = UUID.randomUUID().toString().substring(0, 10);
 		String dir = application.getRealPath("/files");
 		String s;
@@ -36,13 +36,17 @@ public class PracticeService {
 			
 			Process proc = new ProcessBuilder("cmd", "cd ", dir).start();
 			System.out.println("cmd 경로이동");
+			BufferedReader br   = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+			while(br.readLine() != null){
+				s = br.readLine();
+				System.out.println(s);
+			}
+			System.out.println("======");
 			proc = new ProcessBuilder("cmd", "javac ", title, ".java").start();
 			System.out.println("cmd 컴파일완료");
 			proc = new ProcessBuilder("cmd", "java ", title).start();
 			System.out.println("cmd 실행완료");
-			BufferedReader br   = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 			System.out.println(br);
-			while ((s =   br.readLine()) != null) System.out.println(s);
 			System.out.println("======");
 //			System.out.println(proc.exitValue());
 		} catch(Exception e){
@@ -50,8 +54,8 @@ public class PracticeService {
 			return null;
 		}
 		return content;
-	}*/
-	public String content(String content, String title){
+	}
+	/*public String content(String content, String title){
 		String dir = application.getRealPath("/files");
 		File f = new File(dir, title+".java");
 		try{
@@ -83,6 +87,7 @@ public class PracticeService {
             System.out.println(new String(baos.toByteArray()));
             System.out.println("exit " + exitCode);
             
+//            String cd = "cd "+dir;
             commandLine = CommandLine.parse("cd");
             commandLine.addArgument(dir);
             System.out.println(commandLine);
@@ -100,5 +105,5 @@ public class PracticeService {
             e.printStackTrace();
         }
 		return content;
-	}
+	}*/
 }

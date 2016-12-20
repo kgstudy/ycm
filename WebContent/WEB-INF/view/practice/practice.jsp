@@ -23,7 +23,7 @@
 			<div class="w3-row" id="contentGroup">
 				<textArea class="form-control Content" rows="25" style="resize: none; border: solid gray 2px" id="MainContent">
 public class Main {
-  public static void main(String args[]) {
+  public static void main(String[] args) {
     
   }
 }</textArea>
@@ -135,7 +135,7 @@ public class Main {
 			cg.html(html+newClass);
 			var newContent = "<textArea class='form-control' rows='25' style='resize: none; border: solid gray 2px; display='none'' id='"+val+"Content'>";
 			newContent += "public class "+val+" {\n";
-			newContent += "  public static void main(String args[]){\n";
+			newContent += "  public static void main(String[] args){\n";
 			newContent += "    \n";
 			newContent += "  }\n";
 			newContent += "}";

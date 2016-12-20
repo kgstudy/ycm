@@ -18,6 +18,7 @@
 	<context:component-scan base-package="practice"/>
 	<context:component-scan base-package="homework" />
 	<context:component-scan base-package="notice"/>
+	<context:component-scan base-package="question"/>
 	
 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"
 		id="beanNameViewResolver" p:order="2" />
