@@ -26,7 +26,7 @@ public class MainController {
 	@RequestMapping("/notice")
 	public ModelAndView notice(){
 		ModelAndView mav = new ModelAndView();
-		List<HashMap> list = ns.noticelist();
+		List<HashMap> list = ns.noticeList();
 		mav.addObject("noticelist",list);
 		mav.setViewName("t:notice/board");
 		return mav;
