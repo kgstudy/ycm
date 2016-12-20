@@ -35,19 +35,33 @@ public class PracticeService {
 			System.out.println(dir);
 			
 			Process proc = new ProcessBuilder("cmd", "cd ", dir).start();
-			System.out.println("cmd 경로이동");
-			BufferedReader br   = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-			while(br.readLine() != null){
-				s = br.readLine();
-				System.out.println(s);
+			Process process = Runtime.getRuntime().exec("cmd");
+			OutputStream os = process.getOutputStream();
+			byte[] javac = new String("java c"+dir+"\\"+title+".java").getBytes();
+			for(byte b : javac){
+				os.write(b);
 			}
+			BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			while(br.readLine()!=null){
+				System.out.println("a");
+				System.out.println(br.readLine());
+				System.out.println("b");
+			}
+			System.out.println(process.exitValue());
 			System.out.println("======");
-			proc = new ProcessBuilder("cmd", "javac ", title, ".java").start();
-			System.out.println("cmd 컴파일완료");
-			proc = new ProcessBuilder("cmd", "java ", title).start();
-			System.out.println("cmd 실행완료");
-			System.out.println(br);
-			System.out.println("======");
+//			System.out.println("cmd 경로이동");
+//			BufferedReader br   = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+//			while(br.readLine() != null){
+//				s = br.readLine();
+//				System.out.println(s);
+//			}
+//			System.out.println("======");
+//			proc = new ProcessBuilder("cmd", "javac ", title, ".java").start();
+//			System.out.println("cmd 컴파일완료");
+//			proc = new ProcessBuilder("cmd", "java ", title).start();
+//			System.out.println("cmd 실행완료");
+//			System.out.println(br);
+//			System.out.println("======");
 //			System.out.println(proc.exitValue());
 		} catch(Exception e){
 			e.printStackTrace();
