@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import notice.model.NoticeService;
+import question.model.QuestionService;
 
 @Controller
 public class MainController {
 	@Autowired
 	NoticeService ns;
+	@Autowired
+	QuestionService qs;
 
 	@RequestMapping("/")
 	public String index(){
@@ -29,8 +32,12 @@ public class MainController {
 		return mav;
 	}
 	@RequestMapping("/question")
-	public String question(){
-		return "t:question/board";
+	public ModelAndView question(){
+		ModelAndView mav = new ModelAndView();
+		List list = qs.qread();
+		mav.addObject("qread", list);
+		mav.setViewName("t:question/board");
+		return mav;
 	}
 	@RequestMapping("/homework")
 	public String homework(){
