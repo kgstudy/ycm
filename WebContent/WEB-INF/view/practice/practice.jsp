@@ -81,7 +81,14 @@ public class Main {
 			data : txt,
 			async : false,
 			success : function(text){
-				$("#result").val(text);
+				var html = "";
+				for(var i=0; i<text.length; i++){
+					html += text[i];
+					if(i!=text.length-1){
+						html += "\n"
+					}
+				}
+				$("#result").val(html);
 			}
 		});
 	}

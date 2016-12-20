@@ -1,5 +1,7 @@
 package practice.controller;
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +21,7 @@ public class PracticeController {
 //	}
 	@RequestMapping("/run/{title}")
 	@ResponseBody
-	public String run(@RequestBody()String content, @PathVariable(name="title")String title){
+	public List run(@RequestBody()String content, @PathVariable(name="title")String title){
 		return ps.content(content, title);
 	}
 }
