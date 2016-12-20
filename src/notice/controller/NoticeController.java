@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,10 +39,21 @@ public class NoticeController {
 	// 관리자 이름 넣는거 아직 안함
 	public ModelAndView noticeinput(String title, String content){
 		ModelAndView mav = new ModelAndView();
-		boolean b = ns.noinput(title, content);
+		boolean b = ns.noticeInput(title, content);
 		if(b){
 			mav.setViewName("redirect:/notice");
 		}
 		return mav;
 	}
+	
+	//공지 제목 눌렀을때 내용 보여주는거 
+	@RequestMapping("/view/{num}")
+	public ModelAndView noticeview(@PathVariable(name = "num") int num){
+		ModelAndView mav = new ModelAndView();
+		HashMap map = ns.getOneByNum(num);
+		mav.addObject("noticeview",map);
+		mav.setViewName("t:notice/view");
+		return mav;
+	}
+	
 }

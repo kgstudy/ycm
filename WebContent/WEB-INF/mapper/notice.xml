@@ -10,4 +10,8 @@
 		insert into notice values(NOTICE_SEQ.nextval,'은선',#{title},#{content},sysdate,0)
 	</insert> 
 	
+	<!--  공지뷰 보기  -->
+	<select id="noticeone" resultType="java.util.HashMap">
+		select * from notice where notice_num = #{num}
+	</select>
 </mapper>

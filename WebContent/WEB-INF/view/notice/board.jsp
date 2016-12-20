@@ -20,7 +20,7 @@
 		<c:forEach  var="i" items="${noticelist }" >
 				<tr>
 					<td>${i.NOTICE_NUM }</td>
-					<td><a href="#"><b>${i.NOTICE_TITLE }</b></a></td>
+					<td><a href="/notice/view/${i.NOTICE_NUM }"><b>${i.NOTICE_TITLE }</b></a></td>
 					<td>${i.NOTICE_WRITER }</td>
 					<td>${i.NOTICE_DATE }</td>
 					<td>${i.NOTICE_COUNT }</td>
