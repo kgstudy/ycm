@@ -13,7 +13,7 @@ public class NoticeService {
 	@Autowired
 	SqlSessionFactory fac;
 	
-	public List noticelist(){
+	public List noticeList(){
 		SqlSession ss = fac.openSession();
 //		HashMap<String,Object> map = new HashMap<>(); 쓸일있음
 		List<HashMap> list = ss.selectList("notice.nolist");
@@ -22,7 +22,7 @@ public class NoticeService {
 	}
 	
 	
-	public boolean noinput(String title, String content){
+	public boolean noticeInput(String title, String content){
 		SqlSession ss = fac.openSession();
 		HashMap<String,String> map = new HashMap<>();
 		map.put("title", title);
@@ -39,4 +39,15 @@ public class NoticeService {
 		}
 		return false;
 	}
+	
+	// num넘겨 받아서 공지뷰 보여주기 
+	public HashMap getOneByNum(int num) {
+		SqlSession ss = fac.openSession();
+			HashMap map = ss.selectOne("notice.noticeone", num);
+			ss.commit();
+			ss.close();
+		return map;
+			
+	}
+	
 }
