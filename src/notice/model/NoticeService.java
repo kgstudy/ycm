@@ -47,7 +47,36 @@ public class NoticeService {
 			ss.commit();
 			ss.close();
 		return map;
-			
 	}
+	
+	// 공지 클릭할때 조회수 올려주는거 
+	public int countup(int num){
+		SqlSession ss = fac.openSession();
+		int i = ss.update("notice.noticecountup",num);	//int로 나오는데.. 1이 성공 0이 실패  -> 실패할일..없을듯?
+		ss.commit();
+		ss.close();
+		return i;
+	}
+	
+	// 공지 글수정~~ 
+	 public boolean noticeUpdate(String title, String content, int num){
+		SqlSession ss = fac.openSession();
+			HashMap<String,Object> map = new HashMap<>();
+			map.put("title", title);
+			map.put("content", content);
+			map.put("num", num);
+			try{
+				ss.update("notice.writeupdate", map);
+				ss.commit();
+				ss.close();
+				return true;
+			}catch (Exception e) {
+				ss.rollback();
+				ss.close();
+				e.printStackTrace();
+				return false;
+			}
+	}
+	
 	
 }
