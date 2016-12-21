@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="w3-container" align="center">
-	<h2 style="margin-top: 100px; margin-bottom: 50px">Title</h2>
+	<h2 style="margin-top: 100px; margin-bottom: 50px">질문 게시판</h2>
 
 	<table class="w3-table-all w3-hoverable">
 		<thead style="border: solid gray 2px">
