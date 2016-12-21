@@ -31,4 +31,21 @@
 		delete notice where notice_num = #{num}
 	</delete>
 	
+	<!-- 공지사항 글 검색하기 제목 + 내용 페이지-->
+	<select id="noticesearch" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		<![CDATA[
+		select * from
+		(select rownum rnum, nn.* from
+		(select * from notice where notice_title like #{search} or notice_content like
+		#{search} order by NOTICE_NUM desc)
+		nn)
+		nnn where nnn.rnum >=#{start} and nnn.rnum<=#{end}
+		]]>
+	</select>
+	
+	<select id="searchpage" resultType="java.lang.Integer"  parameterType="java.util.HashMap">
+		select count(*) from notice where notice_title like #{search} or notice_content like #{search}
+	</select>
+	
 </mapper>

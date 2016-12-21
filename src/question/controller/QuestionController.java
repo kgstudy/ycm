@@ -30,9 +30,9 @@ public class QuestionController {
 
 	//DB ¿˙¿Â
 	@RequestMapping("/qwrite")
-	public ModelAndView qwrite(String title, String content, boolean check) {
+	public ModelAndView qwrite(String title, HttpSession login, String content, boolean check) {
 		ModelAndView mav = new ModelAndView();
-		boolean b = qs.qwrite(title, content, check);
+		boolean b = qs.qwrite(title, login, content, check);
 		if(b) {
 			mav.setViewName("redirect:/question");
 		} else {

@@ -11,8 +11,13 @@
 		select * from question where num=#{num}
 	</select>
 	
-	<!-- 글 등록 / 나중에 writer 수정 -->
+	<!-- 글 등록 -->
 	<insert id="write" parameterType="java.util.HashMap">
-		insert into question values (QNUM_SEQ.nextval, #{title}, '유미', sysdate, 0, #{content}, #{check})
+		insert into question values (QNUM_SEQ.nextval, #{title}, #{writer}, sysdate, 0, #{content}, #{check})
 	</insert>
+	
+	<!-- 조회수 증가 -->
+	<update id="upCount" parameterType="java.lang.Integer">
+		update question set count=count+1 where num=#{num}
+	</update>
 </mapper>
