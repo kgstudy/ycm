@@ -29,23 +29,60 @@
  		</c:forEach> 
 		</tbody>
 	</table><br/>
+	
+	<fmt:parseNumber var="var3" value="${(size-1)/5}" integerOnly="true"/>
 	<div align="center">
-	<!-- 주석 풀고 작업 -->
-<%-- 		<c:forEach> --%>
-		<a href="#">1</a>
-<%-- 		</c:forEach> --%>
-	</div>
-	<c:if test="${login.ID=='admin'}">	
-	<div align="right">
-		<input type="button" class="btn btn-default" value="글작성" onclick="javascript:location.href='/notice/write'"/>
-	</div>
+	
+	<c:if test="${size > 5}">
+		<input type="button" class="w3-btn w3-light-gray" value="이전" onclick="javascript:backpage()">
 	</c:if>
+	<!-- 주석 풀고 작업 -->
+		<c:forEach var="i" begin="${var3*5+1 }" end="${size }">
+			<c:choose>
+				<c:when test="${i==size}">
+					<a href="/notice?p=${i }&endp=${size}&search=${param.search }">${i }</a>
+				</c:when>
+				<c:otherwise>
+					<a href="/notice?p=${i }&endp=${size}&search=${param.search }">${i }</a> |
+				</c:otherwise>
+			</c:choose>
+		</c:forEach> 
+
+	<c:if test="${lastsize != size}">
+		<input type="button" class="w3-btn w3-light-gray" value="다음" onclick="javascript:nextpage()">
+	</c:if>		
+	</div>
+	
+	<c:if test="${login.ID=='admin'}">	
+		<div align="right">
+			<input type="button" class="btn btn-default" value="글작성" onclick="javascript:location.href='/notice/write'"/>
+		</div>
+	</c:if>
+	
 	<div align="center">
-	<form action="/notice" method="post">
-		<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px" name="search" value="${param.search }"/>&nbsp;&nbsp;
-		<input type="submit" class="btn btn-default" value="검색"/>
-	</form>
+		<form action="/notice" method="post">
+			<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px" name="search" value="${param.search }"/>&nbsp;&nbsp;
+			<input type="submit" class="btn btn-default" value="검색"/>
+		</form>
 	</div>
 </div>
+
+<c:if test="${lastsize == size }">
+	 <fmt:parseNumber var="var3" value="${(size-1)/5}"  integerOnly="true" />
+     <fmt:parseNumber var="size" value="${(var3+1)*5}"  integerOnly="true" />
+</c:if>
+
+<script>
+function nextpage() {
+    endp = ${size + 5 };
+    p = ${size + 1 };
+    location.href = "/notice?p="+ p + "&endp=" + endp+"&search=${param.search }";
+ }
+ function backpage() {
+    endp = ${size - 5 };
+    p = endp - 4;
+    location.href = "/notice?p="+ p + "&endp=" + endp+"&search=${param.search }";;
+ }
+</script>
 
 
