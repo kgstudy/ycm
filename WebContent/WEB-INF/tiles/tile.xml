@@ -32,4 +32,7 @@
 	<definition name="t:video/*" extends="t:index">
 		<put-attribute name="article" value="/WEB-INF/view/video/{1}.jsp"/>
 	</definition>
+	<definition name="t:join" extends="t:index">
+		<put-attribute name="article" value="/WEB-INF/view/member/join.jsp"/>
+	</definition>
 </tiles-definitions>

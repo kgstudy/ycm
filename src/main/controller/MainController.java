@@ -20,8 +20,8 @@ public class MainController {
 
 	@RequestMapping("/")
 	public String index(){
-		return "t:index";
-//		return "/main/intro.jsp";
+//		return "t:index";
+		return "/main/intro.jsp";
 	}
 	@RequestMapping("/notice")
 	public ModelAndView notice(){
