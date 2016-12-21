@@ -23,19 +23,7 @@ public class QuestionController {
 		mav.setViewName("t:question/write");
 		return mav;
 	}
-	//DB 저장
-//	@RequestMapping("/qwrite")
-//	@ResponseBody
-//	public boolean qwrite(String title, String content, String check) {
-//		ModelAndView mav = new ModelAndView();
-//		HashMap<String, String> map = new HashMap<>();
-//		map.put("title", title);
-//		map.put("content", content);
-//		map.put("check", check);
-//		System.out.println(title+"/"+content+"/"+check);
-//		boolean qw = qs.qwrite(map)==true? true : false;
-//		return qw;
-//	}
+
 	//DB 저장
 	@RequestMapping("/qwrite")
 	public ModelAndView qwrite(String title, String content, boolean check) {
@@ -48,10 +36,12 @@ public class QuestionController {
 		}
 		return mav;
 	}
+	
+	//글 읽기
 	@RequestMapping("/writeBoard")
 	public ModelAndView writeBoard() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("T:question/writeBoard");
+		mav.setViewName("t:question/writeBoard");
 		return mav;
 	}
 }

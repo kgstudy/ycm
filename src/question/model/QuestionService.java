@@ -22,12 +22,6 @@ public class QuestionService {
 	}
 	
 	//글 쓰기
-//	public boolean qwrite(HashMap map) {
-//		SqlSession session = fac.openSession();
-//		boolean r = session.insert("question.write", map) == 1 ? true : false;
-//		return r;
-//	}
-	//글 쓰기
 	public boolean qwrite(String title, String content, boolean check) {
 		SqlSession session = fac.openSession();
 		HashMap map = new HashMap();
@@ -47,5 +41,13 @@ public class QuestionService {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	//글 읽기
+	public List qBoard() {
+		SqlSession session = fac.openSession();
+		List list = session.selectOne("question.list");
+		session.close();
+		return list;
 	}
 }
