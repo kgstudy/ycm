@@ -20,10 +20,10 @@
 <c:forEach var="q" items="${qread }">
 				<tr>
 					<td>${q.NUM }</td>
-					<td><a href="/question/writeBoard"><b>${q.TITLE }</b></a></td>
+					<td><a href="/question/writeBoard/${q.NUM }"><b>${q.TITLE }</b></a></td>
 					<td>${q.WRITER }</td>
 					<td>${q.QDATE }</td>
-					<td>${Q.COUNT }</td>
+					<td>${q.COUNT }</td>
 				</tr>
 </c:forEach>
 		</tbody>

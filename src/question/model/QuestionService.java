@@ -22,19 +22,12 @@ public class QuestionService {
 	}
 	
 	//글 쓰기
-//	public boolean qwrite(HashMap map) {
-//		SqlSession session = fac.openSession();
-//		boolean r = session.insert("question.write", map) == 1 ? true : false;
-//		return r;
-//	}
-	//글 쓰기
 	public boolean qwrite(String title, String content, boolean check) {
 		SqlSession session = fac.openSession();
 		HashMap map = new HashMap();
 		map.put("title", title);
 		map.put("content", content);
 		map.put("check", check);
-		System.out.println(title+"/"+content+"/"+check);
 		
 		try {
 			session.insert("question.write", map);
@@ -47,5 +40,13 @@ public class QuestionService {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	//글 읽기
+	public HashMap qBoard(int num) {
+		SqlSession session = fac.openSession();
+		HashMap map = session.selectOne("question.qBoard", num);
+		session.close();
+		return map;
 	}
 }

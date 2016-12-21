@@ -1,9 +1,13 @@
 package question.controller;
 
 import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,19 +27,7 @@ public class QuestionController {
 		mav.setViewName("t:question/write");
 		return mav;
 	}
-	//DB 저장
-//	@RequestMapping("/qwrite")
-//	@ResponseBody
-//	public boolean qwrite(String title, String content, String check) {
-//		ModelAndView mav = new ModelAndView();
-//		HashMap<String, String> map = new HashMap<>();
-//		map.put("title", title);
-//		map.put("content", content);
-//		map.put("check", check);
-//		System.out.println(title+"/"+content+"/"+check);
-//		boolean qw = qs.qwrite(map)==true? true : false;
-//		return qw;
-//	}
+
 	//DB 저장
 	@RequestMapping("/qwrite")
 	public ModelAndView qwrite(String title, String content, boolean check) {
@@ -48,10 +40,14 @@ public class QuestionController {
 		}
 		return mav;
 	}
-	@RequestMapping("/writeBoard")
-	public ModelAndView writeBoard() {
+	
+	//글 읽기
+	@RequestMapping("/writeBoard/{num}")
+	public ModelAndView writeBoard(@PathVariable int num, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("T:question/writeBoard");
+		mav.setViewName("t:question/writeBoard");
+		HashMap map = qs.qBoard(num);
+		mav.addObject("qBoard", map);
 		return mav;
 	}
 }
