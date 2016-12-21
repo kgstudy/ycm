@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <div class="w3-container" align="center">
 	<h2 style="margin-top: 100px; margin-bottom: 50px">Title</h2>
@@ -40,8 +41,10 @@
 	</div>
 	</c:if>
 	<div align="center">
+	<form action="/notice" method="post">
 		<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px" name="search" value="${param.search }"/>&nbsp;&nbsp;
-		<input type="button" class="btn btn-default" value="검색" onclick="javascript:location.href='/notice'"/>
+		<input type="submit" class="btn btn-default" value="검색"/>
+	</form>
 	</div>
 </div>
 
