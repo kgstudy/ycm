@@ -41,7 +41,7 @@
 	</c:if>
 	<div align="center">
 		<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px" name="search" value="${param.search }"/>&nbsp;&nbsp;
-		<input type="button" class="btn btn-default" value="검색"/>
+		<input type="button" class="btn btn-default" value="검색" onclick="javascript:location.href='/notice'"/>
 	</div>
 </div>
 

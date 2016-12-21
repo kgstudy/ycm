@@ -24,11 +24,32 @@ public class MainController {
 		return "/main/intro.jsp";
 	}
 	@RequestMapping("/notice")
-	public ModelAndView notice(String search){
+	public ModelAndView notice(@RequestParam(defaultValue = "1") int p, @RequestParam(defaultValue = "5") int endp, String search){
 		ModelAndView mav = new ModelAndView();
-		List<HashMap> list = ns.noticeList();
+		if (search == null || search.equals("")) {
+		/*List<HashMap> list = ns.noticeList();*/
+			List<HashMap> list = ns.noticesearch("",p);
+			int size = ns.getSPageSize("");
+			int lastsize = ns.getSPageSize("");
+			if(size > endp){
+				size=endp;
+			}
+		mav.addObject("lastsize",lastsize);
+		mav.addObject("size", size);
 		mav.addObject("noticelist",list);
 		mav.setViewName("t:notice/board");
+		}else{
+			List<HashMap> list = ns.noticesearch(search,p);
+			int size = ns.getSPageSize(search);
+			int lastsize = ns.getSPageSize(search);
+			if(size > endp){
+				size=endp;
+			}
+			mav.addObject("lastsize",lastsize);
+			mav.addObject("size", size);
+			mav.addObject("noticelist",list);
+			mav.setViewName("t:notice/board");
+		}
 		return mav;
 	}
 	@RequestMapping("/question")
