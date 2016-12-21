@@ -28,7 +28,6 @@ public class QuestionService {
 		map.put("title", title);
 		map.put("content", content);
 		map.put("check", check);
-		System.out.println(title+"/"+content+"/"+check);
 		
 		try {
 			session.insert("question.write", map);
@@ -44,10 +43,10 @@ public class QuestionService {
 	}
 	
 	//±Û ÀÐ±â
-	public List qBoard() {
+	public HashMap qBoard(int num) {
 		SqlSession session = fac.openSession();
-		List list = session.selectOne("question.list");
+		HashMap map = session.selectOne("question.qBoard", num);
 		session.close();
-		return list;
+		return map;
 	}
 }

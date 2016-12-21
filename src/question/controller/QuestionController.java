@@ -1,9 +1,13 @@
 package question.controller;
 
 import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,10 +42,12 @@ public class QuestionController {
 	}
 	
 	//±Û ÀÐ±â
-	@RequestMapping("/writeBoard")
-	public ModelAndView writeBoard() {
+	@RequestMapping("/writeBoard/{num}")
+	public ModelAndView writeBoard(@PathVariable int num, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("t:question/writeBoard");
+		HashMap map = qs.qBoard(num);
+		mav.addObject("qBoard", map);
 		return mav;
 	}
 }
