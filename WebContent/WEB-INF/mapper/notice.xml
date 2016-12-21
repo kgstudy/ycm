@@ -31,4 +31,6 @@
 		delete notice where notice_num = #{num}
 	</delete>
 	
+	<!-- 공지사항 글 검색하기 제목 + 내용-->
+	
 </mapper>

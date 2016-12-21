@@ -34,11 +34,13 @@
 		<a href="#">1</a>
 <%-- 		</c:forEach> --%>
 	</div>
+	<c:if test="${login.ID=='admin'}">	
 	<div align="right">
 		<input type="button" class="btn btn-default" value="글작성" onclick="javascript:location.href='/notice/write'"/>
 	</div>
+	</c:if>
 	<div align="center">
-		<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px"/>&nbsp;&nbsp;
+		<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px" name="search" value="${param.search }"/>&nbsp;&nbsp;
 		<input type="button" class="btn btn-default" value="검색"/>
 	</div>
 </div>

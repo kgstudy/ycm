@@ -24,7 +24,7 @@ public class MainController {
 		return "/main/intro.jsp";
 	}
 	@RequestMapping("/notice")
-	public ModelAndView notice(){
+	public ModelAndView notice(String search){
 		ModelAndView mav = new ModelAndView();
 		List<HashMap> list = ns.noticeList();
 		mav.addObject("noticelist",list);
