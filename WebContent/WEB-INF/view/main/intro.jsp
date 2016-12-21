@@ -46,4 +46,10 @@
 			}
 		});
 	});
+	
+	$("#password").keydown(function(txt){
+		if(txt.keyCode==13){
+			$("#login").trigger("click");
+		}
+	});
 </script>
