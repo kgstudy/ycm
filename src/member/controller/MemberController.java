@@ -31,22 +31,29 @@ public class MemberController {
 	
 	@RequestMapping("/login/{id}/{password}")
 	@ResponseBody
-	public boolean login(@PathVariable(name="id")String id, @PathVariable(name="password")String password){
+	public boolean login(@PathVariable(name="id")String id, @PathVariable(name="password")String password, HttpSession session){
 		List<HashMap> list = ms.login(id, password);
 		if(list.size()!=0){
+			session.setAttribute("id", id);
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	@RequestMapping("/login/{id}")
-	public ModelAndView endLogin(@PathVariable(name="id")String id, HttpSession session){
-		System.out.println("aa");
+	@RequestMapping("/login")
+	public ModelAndView endLogin(HttpSession session){
 		ModelAndView mav = new ModelAndView("t:index");
+		String id = (String)session.getAttribute("id");
 		List<HashMap> list = ms.endLogin(id);
 		mav.addObject("list", list);
-		session.setAttribute("login", list);
+		session.setAttribute("login", list.get(0));
 		return mav;
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session){
+		session.removeAttribute("login");
+		return "redirect:/";
 	}
 }

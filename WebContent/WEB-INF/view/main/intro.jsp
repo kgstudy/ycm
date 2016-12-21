@@ -33,10 +33,13 @@
 		$.ajax({
 			type : "post",
 			url : "/member/login/"+id+"/"+password,
+			beforeSend : function(xhr){
+		    	  xhr.setRequestHeader("content-type" , "application/json; charset=UTF-8");
+		    },
 			async : false,
 			success : function(txt){
 				if(txt==true){
-					location.href="/login/"+id;
+					location.href="/member/login";
 				} else {
 					$("#fail").show();
 				}

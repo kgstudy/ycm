@@ -63,7 +63,7 @@ public class Main {
 		$.ajax({
 			type : "post",
 			url : "/practice/run/"+title,
-			 beforeSend : function(xhr){
+			beforeSend : function(xhr){
 		    	  xhr.setRequestHeader("content-type" , "application/json; charset=UTF-8");
 		    },
 			data : txt,
