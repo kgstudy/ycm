@@ -25,7 +25,6 @@ public class MemberService {
 			ss.close();
 			return true;
 		} catch(Exception e){
-			e.printStackTrace();
 			ss.rollback();
 			ss.close();
 			return false;
@@ -47,5 +46,15 @@ public class MemberService {
 		List<HashMap> list = ss.selectList("member.info", id);
 		ss.close();
 		return list;
+	}
+	
+	public boolean idCheck(String id){
+		SqlSession ss = fac.openSession();
+		List<HashMap> list = ss.selectList("member.info", id);
+		if(list.size()!=0){
+			return false;
+		} else {
+			return true;
+		}
 	}
 }

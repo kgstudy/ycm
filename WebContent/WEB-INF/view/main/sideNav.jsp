@@ -14,7 +14,7 @@
 		<input type="button" class="btn btn-default" value="내정보" id="info"/>&nbsp;&nbsp;
 		<input type="button" class="btn btn-default" value="로그아웃" id="logout"/>
 	</div><br/>
-	<a href="/" class="w3-padding w3-hover-gray"><font style="color: white">Home</font></a>
+	<a href="/member/login" class="w3-padding w3-hover-gray"><font style="color: white">Home</font></a>
 	<a href="/notice" class="w3-padding w3-hover-gray"><font style="color: white">공지사항</font></a>
 	<a href="/question" class="w3-padding w3-hover-gray"><font style="color: white">질문 게시판</font></a>
 	<a href="/homework" class="w3-padding w3-hover-gray"><font style="color: white">과제 게시판</font></a>

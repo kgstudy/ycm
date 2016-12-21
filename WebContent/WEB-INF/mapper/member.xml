@@ -7,9 +7,6 @@
 	<insert id="commit" parameterType="java.util.HashMap">
 		insert into member values(#{id}, #{password}, #{name}, #{phone}, #{eamil}, 0, 'rookie', sysdate)
 	</insert>
-	<delete id="deleteJoin">
-		delete from join where id = #{id}
-	</delete>
 	<select id="member" resultType="java.util.HashMap">
 		select * from member
 	</select>
