@@ -95,6 +95,7 @@
 				<label><b><font style="color: red">회원가입에 실패하였습니다.<br/>잠시 후 다시 시도해주세요.</font></b></label>
 			</div>
 			<input type="button" class="w3-btn-block w3-section w3-blue w3-ripple w3-padding" id="joinComplete" value="Join"/>
+			<input type="button" class="w3-btn-block w3-section w3-blue w3-ripple w3-padding" id="cancel" value="Cancel"/>
 		</form>
 	</div>
 	
@@ -105,6 +106,10 @@
 	</div>
 	
 	<script>
+		$("#cancel").click(function(){
+			$("#joinModal").hide();
+		});
+	
 		$("#join").click(function(){
 	// 		location.href="/member/join";
 			$("#joinModal").show();
