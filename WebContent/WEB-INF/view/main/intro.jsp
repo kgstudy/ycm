@@ -31,6 +31,7 @@
 			<label><font style="color: white; font-size: 20px;">PW:</font></label><br/>
 			<input type="password" id="password" name="password" style="width: 40%; height: 5%; border-radius: 5px; padding-left: 10px"/><br/><br/>
 			<input type="button" id="join" value="Join" class="btn btn-default" style="width: 10%"/>&nbsp;&nbsp;
+			<input type="button" id="search" value="Search" class="btn btn-default" style="width: 10%"/>&nbsp;&nbsp;
 			<input type="button" id="login" value="Login" class="btn btn-default" style="width: 10%"/><br/><br/>
 			<div id="fail" style="display: none">
 				<label><font style="color: red; font-size: 15px"><b>아이디 또는 비밀번호를 확인해주세요.</b></font></label>
@@ -38,7 +39,8 @@
 		</div>
 	</div>
 	
-	<div id="joinModal" class="w3-modal" style="display: none">
+	<!-- start 회원가입 폼 -->
+	<div id="joinModal" class="w3-modal" style="display: none; padding-left: 25%; padding-right: 25%">
 		<form class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
 			<h2 class="w3-center">Join</h2>
 		
@@ -95,24 +97,44 @@
 				<label><b><font style="color: red">회원가입에 실패하였습니다.<br/>잠시 후 다시 시도해주세요.</font></b></label>
 			</div>
 			<input type="button" class="w3-btn-block w3-section w3-blue w3-ripple w3-padding" id="joinComplete" value="Join"/>
-			<input type="button" class="w3-btn-block w3-section w3-blue w3-ripple w3-padding" id="cancel" value="Cancel"/>
+			<input type="button" class="w3-btn-block w3-section w3-blue w3-ripple w3-padding" id="joinCancel" value="Cancel" onclick="cancel(this)"/>
 		</form>
 	</div>
+	<!-- end 회원가입 폼 -->
 	
-	<div class="w3-modal" id="successModal" style="width: 100%; height: 100%; background-color: white; display: none" align="center">
+	<!-- start 아이디/비밀번호 찾기 -->
+	<c:import url="/WEB-INF/view/member/search.jsp"/>
+	<!-- end 아이디/비밀번호 찾기 -->
+	
+	<!-- start 아이디 찾기 -->
+	<c:import url="/WEB-INF/view/member/findId.jsp"/>
+	<!-- end 아이디 찾기 -->
+
+	<!-- start 비밀번호 찾기 -->
+	<c:import url="/WEB-INF/view/member/findPass.jsp"/>
+	<!-- end 비밀번호 찾기 -->
+	
+	<!-- start 회원가입 완료 -->
+	<div class="w3-modal" id="successModal" style="width: 100%; height: 100%; background-color: white; display: none; padding-left:25%; padding-right: 25%" align="center">
 		<div class="w3-row">
 			<label><b>회원가입 요청이 완료되었습니다.<br/>관리자 승인 후 로그인 가능합니다.</b></label>
 		</div>
 	</div>
+	<!-- end 회원가입 완료 -->
 	
 	<script>
-		$("#cancel").click(function(){
-			$("#joinModal").hide();
+		$("#search").click(function(){
+			$("#searchModal").fadeIn(300);
 		});
+		
+		function cancel(element){
+			var el = element.id.substring(0, element.id.indexOf('C'));
+			$("#"+el+"Modal").fadeOut(300);
+		}
 	
 		$("#join").click(function(){
 	// 		location.href="/member/join";
-			$("#joinModal").show();
+			$("#joinModal").fadeIn(300);
 		});
 		
 		$("#login").click(function(){

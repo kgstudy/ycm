@@ -14,24 +14,63 @@
 		
 		<div id="Homepage" class="w3-container w3-border tab">
 			<div class="w3-row">
-				<div class="w3-col m3 l4 w3-padding w3-black" style="z-index: 3; font-weight: bold; height: 40%">
-					<label class="w3-padding w3-hover-gray"><font style="color: white" id="homeM">Home</font></label><br/>
-					<label class="w3-padding w3-hover-gray"><font style="color: white" id="noticeM">공지사항</font></label><br/>
-					<label class="w3-padding w3-hover-gray"><font style="color: white" id="questionM">질문 게시판</font></label><br/>
-					<label class="w3-padding w3-hover-gray"><font style="color: white" id="homeworkM">과제 게시판</font></label><br/>
-					<label class="w3-padding w3-hover-gray"><font style="color: white" id="practiceM">코딩연습</font></label><br/>
-					<label class="w3-padding w3-hover-gray"><font style="color: white" id="storageM">자료실</font></label><br/>
-					<label class="w3-padding w3-hover-gray"><font style="color: white" id="videoM">동영상 자료실</font></label><br/>
-					<label onclick="dropM()" class="w3-padding w3-hover-gray"><font style="color: white" id="dropM">기수 게시판</font></label><br/>
+				<div class="w3-col m3 l3 w3-padding w3-black" style="z-index: 3; font-weight: bold; height: 40%">
+					<label class="w3-padding w3-hover-gray">
+						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
+						<font style="color: white" id="homeM">Home</font>
+					</label><br/>
+					<label class="w3-padding w3-hover-gray">
+						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
+						<font style="color: white" id="noticeM">공지사항</font>
+					</label><br/>
+					<label class="w3-padding w3-hover-gray">
+						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
+						<font style="color: white" id="questionM">질문 게시판</font>
+					</label><br/>
+					<label class="w3-padding w3-hover-gray">
+						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
+						<font style="color: white" id="homeworkM">과제 게시판</font>
+					</label><br/>
+					<label class="w3-padding w3-hover-gray">
+						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
+						<font style="color: white" id="practiceM">코딩연습</font>
+					</label><br/>
+					<label class="w3-padding w3-hover-gray">
+						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
+						<font style="color: white" id="storageM">자료실</font>
+					</label><br/>
+					<label class="w3-padding w3-hover-gray">
+						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
+						<font style="color: white" id="videoM">동영상 자료실</font>
+					</label><br/>
+					<label onclick="dropM()" class="w3-padding w3-hover-gray">
+						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
+						<font style="color: white" id="dropM">기수 게시판</font>
+					</label><br/>
 					<div id="classM" class="w3-dropdown-content w3-border" style='background-color: black'>
-				    	<label class="w3-hover-gray"><font style="color: white" id="class_1M">1기</font></label>
-						<label class="w3-hover-gray"><font style="color: white" id="class_2M">2기</font></label>
-						<label class="w3-hover-gray"><font style="color: white" id="class_3M">3기</font></label>
+				    	<label class="w3-hover-gray">
+				    		<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
+				    		<font style="color: white" id="class_1M">1기</font>
+						</label><br/>
+						<label class="w3-hover-gray">
+							<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
+							<font style="color: white" id="class_2M">2기</font>
+						</label><br/>
+						<label class="w3-hover-gray">
+							<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
+							<font style="color: white" id="class_3M">3기</font>
+						</label><br/>
 				    </div>
-				    <label class="w3-padding w3-hover-gray"><font style="color: white" id="adminM">관리자 전용</font></label>
+				    <label class="w3-padding w3-hover-gray">
+				    	<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
+				    	<font style="color: white" id="adminM">관리자 전용</font>
+				    	</label>
 				</div>
-				<div class="w3-col m9 l8">
+				<div class="w3-col m4 l4">
 					<h3>Content</h3>
+				</div>
+				<div class="w3-col m5 l5">
+					form
 				</div>
 			</div>
 		</div>
