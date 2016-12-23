@@ -59,7 +59,7 @@
 					<i class="w3-xxlarge fa fa-lock"></i>
 				</div>
 				<div class="w3-rest">
-					<input class="w3-input w3-border" name="joinPassword" type="text" placeholder="Password (8자 이상)" required="required" id="joinPassword">
+					<input class="w3-input w3-border" name="joinPassword" type="password" placeholder="Password (8자 이상)" required="required" id="joinPassword">
 					<span id="passCheck" style="display: none"></span>
 				</div>
 			</div>
@@ -115,10 +115,8 @@
 	<!-- end 비밀번호 찾기 -->
 	
 	<!-- start 회원가입 완료 -->
-	<div class="w3-modal" id="successModal" style="width: 100%; height: 100%; background-color: white; display: none; padding-left:25%; padding-right: 25%" align="center">
-		<div class="w3-row">
-			<label><b>회원가입 요청이 완료되었습니다.<br/>관리자 승인 후 로그인 가능합니다.</b></label>
-		</div>
+	<div class="w3-modal" id="successModal" style="display: none; padding-left: 30%; padding-right: 30%; padding-top: 20%; background-color: black" align="center">
+		<h3 style="color: white">회원가입 요청이 완료되었습니다.<br/>관리자 승인 후 로그인 가능합니다.</h3>
 	</div>
 	<!-- end 회원가입 완료 -->
 	
@@ -179,12 +177,10 @@
 				$("#nameCheck").show();
 				$("#nameCheck").html(html);
 			} else if(phone.length!=13){
-				alert("aa")
 				var html = "<font style='color: red'>올바른 핸드폰번호를 입력해주세요.</font>";
 				$("#phoneCheck").show();
 				$("#phoneCheck").html(html);
 			} else if(phone.length==13 && phone.indexOf('-')!=3 && phone.lastIndexOf('-')!=8){
-				alert("cc");
 				var html = "<font style='color: red'>올바른 핸드폰번호를 입력해주세요.</font>";
 				$("#phoneCheck").show();
 				$("#phoneCheck").html(html);
@@ -199,10 +195,14 @@
 					async : false,
 					success : function(txt){
 						if(txt==true){
-							$("#successModal").fadeIn(500).delay(1500).fadeOut(500);
-							setTimeout(function(){location.href="/"}, 2400);
-						} else {
-							$("#fail").show();
+							$("#successModal").fadeIn(300).delay(1000).fadeOut(300);
+							$("#joinModal").fadeOut(300);
+							$("#joinId").val("");
+							$("#joinPassword").val("");
+							$("#name").val("");
+							$("#phone").val("");
+							$("#email").val("");
+							$("#idCheck").hide();
 						}
 					},
 					error : function(txt){

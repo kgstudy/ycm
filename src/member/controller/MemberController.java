@@ -63,4 +63,34 @@ public class MemberController {
 	public boolean idCheck(@PathVariable(name="id")String id){
 		return ms.idCheck(id);
 	}
+	
+	@RequestMapping("/findId/{name}")
+	@ResponseBody
+	public boolean findId(@PathVariable(name="name")String name, @RequestParam(name="email")String email){
+		return ms.findId(name, email);
+	}
+	
+	@RequestMapping("/checkNum/{name}/{num}")
+	@ResponseBody
+	public String checkNum(@PathVariable(name="name")String name, @PathVariable(name="num")String num){
+		return ms.checkNum(name, num);
+	}
+	
+	@RequestMapping("/findPw/{id}")
+	@ResponseBody
+	public boolean findPw(@PathVariable(name="id")String id, @RequestParam(name="email")String email){
+		return ms.findPw(id, email);
+	}
+	
+	@RequestMapping("/checkNum2/{id}/{num}")
+	@ResponseBody
+	public boolean checkNum2(@PathVariable(name="id")String id, @PathVariable(name="num")String num){
+		return ms.checkNum2(id, num);
+	}
+	
+	@RequestMapping("/changePw/{id}/{pw}")
+	@ResponseBody
+	public boolean changePw(@PathVariable(name="id")String id, @PathVariable(name="pw")String pw){
+		return ms.changePw(id, pw);
+	}
 }
