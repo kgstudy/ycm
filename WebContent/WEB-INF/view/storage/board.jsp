@@ -9,6 +9,7 @@
 		<thead style="border: solid gray 2px">
 			<tr class="w3-light-grey">
 				<td><label>#</label></td>
+				<td><label>category</label></td>
 				<td><label>Title</label></td>
 				<td><label>Writer</label></td>
 				<td><label>Date</label></td>
@@ -20,6 +21,7 @@
 <%-- 			<c:forEach> --%>
 				<tr>
 					<td>#</td>
+					<td>category</td>
 					<td><a href="#"><b>Title</b></a></td>
 					<td>Writer</td>
 					<td>Date</td>
@@ -35,7 +37,9 @@
 <%-- 		</c:forEach> --%>
 	</div>
 	<div align="right">
-		<input type="button" class="btn btn-default" value="글작성"/>
+			<form action="/storage/write" method="post">
+			<input type="submit" value="글작성" class="btn btn-default" />
+			</form>
 	</div>
 	<div align="center">
 		<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px"/>&nbsp;&nbsp;
