@@ -39,11 +39,25 @@
 	<!-- 주석 풀고 작업 -->
 		<c:forEach var="i" begin="${var3*5+1 }" end="${size }">
 			<c:choose>
-				<c:when test="${i==size}">
-					<a href="/notice/page/${i }/${size}/${param.search }">${i }</a>
+				<c:when test="${param.search != null}">
+						<c:choose>
+								<c:when test="${i==size}">
+									<a href="/notice/search/${i }/${size}?search=${param.search }">${i }</a>
+								</c:when>
+								<c:otherwise>
+									<a href="/notice/search/${i }/${size}?search=${param.search }">${i }</a> |
+								</c:otherwise>
+						</c:choose>
 				</c:when>
 				<c:otherwise>
-					<a href="/notice/page/${i }/${size}/${param.search }">${i }</a> |
+					<c:choose>
+								<c:when test="${i==size}">
+									<a href="/notice/page/${i }/${size}">${i }</a>
+								</c:when>
+								<c:otherwise>
+									<a href="/notice/page/${i }/${size}">${i }</a> |
+								</c:otherwise>
+						</c:choose>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach> 
@@ -75,12 +89,12 @@
 function nextpage() {
     endp = ${size + 5 };
     p = ${size + 1 };
-    location.href = "/notice/page/"+ p + "/" + endp;
+    location.href = "/notice/page/"+ p + "/" + endp +"/${param.search }";
  }
  function backpage() {
     endp = ${size - 5 };
     p = endp - 4;
-    location.href = "/notice/page/"+ p + "/" + endp;
+    location.href = "/notice/page/"+ p + "/" + endp+"/${param.search }";
  }
 </script>
 

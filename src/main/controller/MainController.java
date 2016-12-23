@@ -68,7 +68,6 @@ public class MainController {
 		}
 		mav.addObject("lastsize",lastsize);
 		mav.addObject("size", size);
-		
 		mav.addObject("noticelist",list);
 		mav.setViewName("t:notice/board");
 		return mav;
@@ -138,7 +137,6 @@ public class MainController {
 				mav.addObject("storagesearch", search);
 				mav.setViewName("t:storage/board");
 				return mav;
-
 			}
 		} else {
 			if (search.equals("")) {

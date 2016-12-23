@@ -51,8 +51,8 @@ public class NoticeController {
 		return mav;
 	}
 	
-	@RequestMapping("/page/{p}/{size}/{search}")
-	public ModelAndView page(@PathVariable(name = "p") int p,@PathVariable(name = "size") int endp,@PathVariable(name = "search") String search){
+	@RequestMapping("/search/{p}/{size}")
+	public ModelAndView page(@PathVariable(name = "p") int p,@PathVariable(name = "size") int endp, String search){
 		ModelAndView mav = new ModelAndView();
 			List<HashMap> list = ns.noticesearch(search,p);
 			int size = ns.getSPageSize(search);
@@ -66,7 +66,6 @@ public class NoticeController {
 		mav.setViewName("t:notice/board");
 		return mav;
 	}
-	
 	
 	// 공지사항에서 검색했을때.. 검색하고 페이지 선택했을때
 	@RequestMapping("/search")
@@ -85,8 +84,6 @@ public class NoticeController {
 		
 		return mav;
 	}
-	
-	
 	
 	@RequestMapping("/write") // 공지사항 글쓰기 버튼 눌렀을때 
 	public ModelAndView writeview(){
