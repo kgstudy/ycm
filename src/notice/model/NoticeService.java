@@ -123,6 +123,7 @@ public class NoticeService {
 			HashMap map = new HashMap();
 			map.put("search", search2);
 			int tot = ss.selectOne("notice.searchpage",map);
+			ss.close();
 			return tot%5==0? tot/5 : tot/5+1;
 		}
 	 
