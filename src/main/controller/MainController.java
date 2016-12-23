@@ -23,11 +23,11 @@ public class MainController {
 //		return "t:index";
 		return "/main/intro.jsp";
 	}
-	@RequestMapping("/notice")
+	/*@RequestMapping("/notice")
 	public ModelAndView notice(@RequestParam(defaultValue = "1") int p, @RequestParam(defaultValue = "5") int endp, String search){
 		ModelAndView mav = new ModelAndView();
 		if (search == null || search.equals("")) {
-		/*List<HashMap> list = ns.noticeList();*/
+		List<HashMap> list = ns.noticeList();
 			List<HashMap> list = ns.noticesearch("",p);
 			int size = ns.getSPageSize("");
 			int lastsize = ns.getSPageSize("");
@@ -52,7 +52,17 @@ public class MainController {
 			
 		}
 		return mav;
+	}*/
+	@RequestMapping("/notice")
+	public ModelAndView noticelist(){
+		ModelAndView mav = new ModelAndView();
+		List<HashMap> list = ns.noticeList();
+		mav.addObject("noticelist",list);
+		mav.setViewName("t:notice/board");
+		return mav;
 	}
+	
+	
 	@RequestMapping("/question")
 	public ModelAndView question(){
 		ModelAndView mav = new ModelAndView();
