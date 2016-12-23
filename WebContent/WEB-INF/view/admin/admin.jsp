@@ -2,10 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="w3-container" align="center" style="margin-top: 100px; margin-bottom: 50px">
+<div class="w3-container" align="center">
+	<h2 style="margin-top: 100px; margin-bottom: 50px">Management</h2>
 	<div class="w3-container">
-		<h2>Management</h2>
-		
 		<ul class="w3-navbar w3-black">
 			<li><a href="javascript:void(0)" class="tablink w3-red" onclick="openTab(event, 'Homepage');"><font style="color: white" id="HomepageFont" class="font">Homepage</font></a></li>
 			<li><a href="javascript:void(0)" class="tablink" onclick="openTab(event, 'Student');"><font style="color: red" id="StudentFont" class="font">Student</font></a></li>
@@ -97,9 +96,6 @@
 	var video = $("#video").html();
 	var classes = new Array($("#class_1").html(), $("#class_2").html(), $("#class_3").html());
 	var admin = $("#admin").html();
-	window.onload = function(){
-		
-	};
 	
 	function openTab(evt, tabName) {
 	  var i, x, tablinks, font;
