@@ -30,7 +30,14 @@ public class NoticeController {
 		mav.addObject("noticelist",list);
 		mav.setViewName("t:notice/board");
 		return mav;
-	}*/
+	}*/ 
+	// 공지에서 페이지 선택했을때 
+	@RequestMapping("/page/{p}/{size}/{search}")
+	public ModelAndView page(@PathVariable(name = "p") int p,@PathVariable(name = "size") int size){
+		ModelAndView mav = new ModelAndView();
+		
+		return mav;
+	}
 
 	@RequestMapping("/write") // 공지사항 글쓰기 버튼 눌렀을때 
 	public ModelAndView writeview(){

@@ -27,7 +27,6 @@ public class MainController {
 	public ModelAndView notice(@RequestParam(defaultValue = "1") int p, @RequestParam(defaultValue = "5") int endp, String search){
 		ModelAndView mav = new ModelAndView();
 		if (search == null || search.equals("")) {
-		List<HashMap> list = ns.noticeList();
 			List<HashMap> list = ns.noticesearch("",p);
 			int size = ns.getSPageSize("");
 			int lastsize = ns.getSPageSize("");
@@ -53,10 +52,20 @@ public class MainController {
 		}
 		return mav;
 	}*/
+	
+	// 5개씩 찍어주는거랑..  페이지 사이즈... 
 	@RequestMapping("/notice")
-	public ModelAndView noticelist(){
+	public ModelAndView noticelist(@RequestParam(defaultValue = "1") int p, @RequestParam(defaultValue = "5") int endp){
 		ModelAndView mav = new ModelAndView();
-		List<HashMap> list = ns.noticeList();
+		List<HashMap> list = ns.noticesearch("",p);
+		int size = ns.getSPageSize("");
+		int lastsize = ns.getSPageSize("");
+		if(size > endp){
+			size=endp;
+		}
+		mav.addObject("lastsize",lastsize);
+		mav.addObject("size", size);
+		
 		mav.addObject("noticelist",list);
 		mav.setViewName("t:notice/board");
 		return mav;

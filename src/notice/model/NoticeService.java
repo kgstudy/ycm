@@ -24,6 +24,7 @@ public class NoticeService {
 	}
 	
 	
+	// 공지 글 쓰기.
 	public boolean noticeInput(String title, String content){
 		SqlSession ss = fac.openSession();
 		HashMap<String,String> map = new HashMap<>();
@@ -114,6 +115,7 @@ public class NoticeService {
 			ss.close();
 			return list;
 		}
+	 
 	 
 	 public int getSPageSize(String search){
 			SqlSession ss = fac.openSession();

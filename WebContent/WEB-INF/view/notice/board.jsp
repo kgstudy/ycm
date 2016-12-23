@@ -40,10 +40,10 @@
 		<c:forEach var="i" begin="${var3*5+1 }" end="${size }">
 			<c:choose>
 				<c:when test="${i==size}">
-					<a href="/notice?p=${i }&endp=${size}&search=${param.search }">${i }</a>
+					<a href="/notice/page/${i }/${size}/${param.search }">${i }</a>
 				</c:when>
 				<c:otherwise>
-					<a href="/notice?p=${i }&endp=${size}&search=${param.search }">${i }</a> |
+					<a href="/notice/page/${i }/${size}/${param.search }">${i }</a> |
 				</c:otherwise>
 			</c:choose>
 		</c:forEach> 
@@ -60,7 +60,7 @@
 	</c:if>
 	
 	<div align="center">
-		<form action="/notice" method="post">
+		<form action="/notice" method="post"><!--  여기 경로 수정 -->
 			<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px" name="search" value="${param.search }"/>&nbsp;&nbsp;
 			<input type="submit" class="btn btn-default" value="검색"/>
 		</form>
@@ -72,7 +72,7 @@
      <fmt:parseNumber var="size" value="${(var3+1)*5}"  integerOnly="true" />
 </c:if>
 
-<script>
+<!-- <script>
 function nextpage() {
     endp = ${size + 5 };
     p = ${size + 1 };
@@ -83,6 +83,6 @@ function nextpage() {
     p = endp - 4;
     location.href = "/notice?p="+ p + "&endp=" + endp+"&search=${param.search }";;
  }
-</script>
+</script> -->
 
 
