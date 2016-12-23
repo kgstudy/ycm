@@ -6,7 +6,7 @@
 <form action="/notice/input" method="post">
 <b>제목 : </b><input type="text" name="title" required="required"><br/>
 <b>내용  </b> <br/>
-<textarea rows="15" cols="115" name="content" required="required"></textarea>
+<textarea rows="15" cols="115" name="content" required="required" style="resize: false;"></textarea>
 
 <input type="submit" class="btn btn-default" value="글등록"/>
 </form>
