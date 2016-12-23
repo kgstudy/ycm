@@ -21,6 +21,9 @@
 	});
 	
 	$("#passSearch").click(function(){
-		
+		$("#searchModal").fadeOut(300);
+		setTimeout(function() {
+			$("#findPwModal").fadeIn(300);
+		}, 500);
 	});
 </script>

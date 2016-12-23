@@ -16,4 +16,25 @@
 	<select id="info" resultType="java.util.HashMap">
 		select * from member where id = #{id}
 	</select>
+	<select id="findId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from member where name = #{name} and email = #{email}
+	</select>
+	<update id="emailAuth" parameterType="java.util.HashMap">
+		update emailAuth set uuid = #{uuid} where name = #{name}
+	</update>
+	<select id="checkNum" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from emailAuth where name = #{name} and uuid = #{num}
+	</select>
+	<select id="findPw" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from member where id = #{id} and email = #{email}
+	</select>
+	<update id="emailAuth2" parameterType="java.util.HashMap">
+		update emailAuth2 set uuid = #{uuid} where id = #{id}
+	</update>
+	<select id="checkNum2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from emailAuth2 where id = #{id} and uuid = #{num}
+	</select>
+	<update id="changePw" parameterType="java.util.HashMap">
+		update member set password = #{pw} where id = #{id}
+	</update>
 </mapper>
