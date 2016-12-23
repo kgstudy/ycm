@@ -2,7 +2,7 @@
     pageEncoding="EUC-KR"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-공지제목 눌렀을때 공지사항 읽는뷰  <br/>
+<!-- 공지제목 눌렀을때 공지사항 읽는뷰  <br/> -->
 
 <b>제목 : </b>${noticeview.NOTICE_TITLE } <br/>
 <b>조회수 : </b>${noticeview.NOTICE_COUNT} <br/>
