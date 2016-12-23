@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import notice.model.NoticeService;
 import question.model.QuestionService;
+import storage.model.StorageService;
 
 @Controller
 public class MainController {
@@ -17,6 +18,8 @@ public class MainController {
 	NoticeService ns;
 	@Autowired
 	QuestionService qs;
+	@Autowired
+	StorageService ss;
 
 	@RequestMapping("/")
 	public String index(){
@@ -89,9 +92,102 @@ public class MainController {
 		return "t:practice/practice";
 	}
 	@RequestMapping("/storage")
-	public String storage(){
-		return "t:storage/board";
+	public ModelAndView storageList(@RequestParam(defaultValue = "1") int p, @RequestParam(defaultValue = "") String mode,
+			@RequestParam(defaultValue = "") String search) {
+		ModelAndView mav = new ModelAndView();
+		if (mode.equals("")) {
+			if (search.equals("")) {
+				List list = ss.GetRnage(p);
+				int size = ss.size();
+				if (size >= 5) {
+					if (p - 2 < 1) {
+						size = 3;
+					} else if (p + 2 > size) {
+						size = size - 2;
+					} else {
+						size = p;
+					}
+				} else {
+					size = size;
+				}
+				int bestsize = ss.size();
+				mav.addObject("storagebestsize", bestsize);
+				mav.addObject("storagedata", list);
+				mav.addObject("storagesize", size);
+				mav.addObject("storagesetlist", p);
+				mav.setViewName("t:storage/board");
+				return mav;
+			} else {
+				List list = ss.searchstorage(search, p);
+				int size = ss.searchstoragesize(search);
+				if (size >= 5) {
+					if (p - 2 < 1) {
+						size = 3;
+					} else if (p + 2 > size) {
+						size = size - 2;
+					} else {
+						size = p;
+					}
+				} else {
+					size = size;
+				}
+				int bestsize = ss.searchstoragesize(search);
+				mav.addObject("storagebestsize", bestsize);
+				mav.addObject("storagedata", list);
+				mav.addObject("storagesize", size);
+				mav.addObject("storagesearch", search);
+				mav.setViewName("t:storage/board");
+				return mav;
+
+			}
+		} else {
+			if (search.equals("")) {
+				List list = ss.GetMode(p, mode);
+				int size = ss.casize(mode);
+				if (size >= 5) {
+					if (p - 2 < 1) {
+						size = 3;
+					} else if (p + 2 > size) {
+						size = size - 2;
+					} else {
+						size = p;
+					}
+				} else {
+					size = size;
+				}
+				int bestsize = ss.casize(mode);
+				mav.addObject("storagebestsize", bestsize);
+				mav.addObject("storagedata", list);
+				mav.addObject("storagesize", size);
+				mav.addObject("storagemode", mode);
+				mav.setViewName("t:storage/board");
+				return mav;
+			} else {
+				List list = ss.searchstoragemode(search, p, mode);
+				int size = ss.searchstoragesizemode(search, mode);
+				if (size >= 5) {
+					if (p - 2 < 1) {
+						size = 3;
+					} else if (p + 2 > size) {
+						size = size - 2;
+					} else {
+						size = p;
+					}
+				} else {
+					size = size;
+				}
+				int bestsize = ss.searchstoragesizemode(search, mode);
+				mav.addObject("storagebestsize", bestsize);
+				mav.addObject("storagedata", list);
+				mav.addObject("storagesize", size);
+				mav.addObject("storagesearch", search);
+				mav.addObject("storagemode", mode);
+				mav.setViewName("t:storage/board");
+				return mav;
+			}
+		}
 	}
+
 	@RequestMapping("/video")
 	public String video(){
 		return "t:video/board";
