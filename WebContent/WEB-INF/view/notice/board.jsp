@@ -89,12 +89,20 @@
 function nextpage() {
     endp = ${size + 5 };
     p = ${size + 1 };
-    location.href = "/notice/page/"+ p + "/" + endp +"/${param.search }";
+    if("${param.search}"!=null){
+    	location.href = "/notice/search/"+ p + "/" + endp +"?search=${param.search }";
+    }else{
+	    location.href = "/notice/page/"+ p + "/" + endp ;
+    };
  }
  function backpage() {
     endp = ${size - 5 };
     p = endp - 4;
-    location.href = "/notice/page/"+ p + "/" + endp+"/${param.search }";
+    if("${param.search}"!=null){
+    	location.href = "/notice/search/"+ p + "/" + endp +"?search=${param.search }";
+    }else{
+	    location.href = "/notice/page/"+ p + "/" + endp ;
+    };
  }
 </script>
 
