@@ -8,7 +8,13 @@ HW student#<br/>
 ${list.CONTENT }
 </div>
 <form id='homeworkForm' action='/homework/write' >
-	<textarea id='homeworkContent' name='content' cols='100' rows='20' ></textarea>	
+	<textarea id='homeworkContent' name='content' cols='100' rows='20' >		
+		class Homework{
+			public static void main(String[] args){
+				System.out.println("Hello! WebCoding~~");
+			}
+		}
+	</textarea>	
 	<c:if test='false' >
 		<textarea rows="7" cols="30"></textarea><br/>
 	</c:if>	
@@ -36,24 +42,48 @@ ${list.CONTENT }
 	$("#run").on("click", function(){
 		checkAnswer();		
 	});
+// handle <tab> in textarea
+	$(document).delegate('#homeworkContent', 'keydown', function(e) {
+	  var keyCode = e.keyCode || e.which;
+	  console.log(e.keycode);
+	  console.log(e.which);
+	  console.log(keyCode);
+	  if (keyCode == 9) {
+	    e.preventDefault();
+	    var start = $(this).get(0).selectionStart;
+	    var end = $(this).get(0).selectionEnd;
+	
+	    // set textarea value to: text before caret + tab + text after caret
+	    $(this).val($(this).val().substring(0, start)
+	                + "\t"
+	                + $(this).val().substring(end));
+	
+	    // put caret at right position again
+	    $(this).get(0).selectionStart =
+	    $(this).get(0).selectionEnd = start + 1;
+	  }
+	});
 	
 	function checkAnswer(){
-		var $answer = $("#homeworkContent").val();
-		console.log($answer);
-		$("#consoleView").empty();
-		$("#consoleView").append($answer+"<br/>");
-		if($answer=="love"){
-			$("#consoleView").append("<span class='correct' >Correct!!!</span><br/>");
-			recordRank();
-		}else{
-			$("#consoleView").append("<span class='incorrect' >incorrect..</span><br/>");
-		}
+ 		var $answer = $("#homeworkContent").val();
+// 		$("#consoleView").empty();
+// 		$("#consoleView").append($answer+"<br/>");
+// 		if($answer=="love"){
+// 			$("#consoleView").append("<span class='correct' >Correct!!!</span><br/>");
+// 			recordRank();
+// 		}else{
+// 			$("#consoleView").append("<span class='incorrect' >incorrect..</span><br/>");
+// 		}
 		
 		$.ajax({
 			url : "/homework/compile",
 			type : "post",
 			data : {
-				"source" : "public static void(String[] args){ return void; }"
+				"java" : $answer
+			},
+			success : function(r){
+		 		$("#consoleView").empty();
+		 		$("#consoleView").append(r+"<br/>");
 			}
 		});
 	}

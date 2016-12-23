@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="question">
-	<select id="list" parameterType="java.util.HashMap">
+	<!-- 글 목록 -->
+	<select id="list" resultType="java.util.HashMap">
 		select * from question order by num desc
 	</select>
+	
+	<!-- 글 읽기 -->
+	<select id="qBoard" resultType="java.util.HashMap">
+		select * from question where num=#{num}
+	</select>
+	
+	<!-- 글 등록 -->
 	<insert id="write" parameterType="java.util.HashMap">
-		insert into question values (QNUM_SEQ nextval, title, writer, sysdate, 0, content)
+		insert into question values (QNUM_SEQ.nextval, #{title}, #{writer}, sysdate, 0, #{content}, #{check})
 	</insert>
+	
+	<!-- 조회수 증가 -->
+	<update id="upCount" parameterType="java.lang.Integer">
+		update question set count=count+1 where num=#{num}
+	</update>
 </mapper>

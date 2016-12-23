@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
-
+	<insert id="join" parameterType="java.util.HashMap">
+		insert into join values(#{id}, #{password}, #{name}, #{phone}, #{email}, sysdate)
+	</insert>
+	<insert id="commit" parameterType="java.util.HashMap">
+		insert into member values(#{id}, #{password}, #{name}, #{phone}, #{eamil}, 0, 'rookie', sysdate)
+	</insert>
+	<select id="member" resultType="java.util.HashMap">
+		select * from member
+	</select>
+	<select id="login" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		select * from member where id = #{id} and password = #{password}
+	</select>
+	<select id="info" resultType="java.util.HashMap">
+		select * from member where id = #{id}
+	</select>
 </mapper>

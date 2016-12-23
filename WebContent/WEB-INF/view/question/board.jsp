@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="w3-container" align="center">
-	<h2 style="margin-top: 100px; margin-bottom: 50px">Title</h2>
+	<h2 style="margin-top: 100px; margin-bottom: 50px">질문 게시판</h2>
 
 	<table class="w3-table-all w3-hoverable">
 		<thead style="border: solid gray 2px">
@@ -17,15 +17,15 @@
 		</thead>
 		<tbody>
 			<!-- forEach 주석풀고 작업 -->
-<%-- 			<c:forEach> --%>
+<c:forEach var="q" items="${qread }">
 				<tr>
-					<td>#</td>
-					<td><a href="#"><b>Title</b></a></td>
-					<td>Writer</td>
-					<td>Date</td>
-					<td>Count</td>
+					<td>${q.NUM }</td>
+					<td><a href="/question/writeBoard/${q.NUM }"><b>${q.TITLE }</b></a></td>
+					<td>${q.WRITER }</td>
+					<td>${q.QDATE }</td>
+					<td>${q.COUNT }</td>
 				</tr>
-<%-- 			</c:forEach> --%>
+</c:forEach>
 		</tbody>
 	</table><br/>
 	<div align="center">

@@ -14,10 +14,13 @@
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler />
 	<context:component-scan base-package="main"/>
+	<context:component-scan base-package="admin"/>
 	<context:component-scan base-package="practice"/>
 	<context:component-scan base-package="homework" />
 	<context:component-scan base-package="notice"/>
 	<context:component-scan base-package="storage"/>
+	<context:component-scan base-package="question"/>
+	<context:component-scan base-package="member"/>
 	
 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"
 		id="beanNameViewResolver" p:order="2" />

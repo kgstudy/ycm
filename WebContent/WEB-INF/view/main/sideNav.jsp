@@ -8,26 +8,33 @@
 		style="width: 100%; font-size: 22px"><font style="color: white">Close Menu</font></a>
 	<div class="w3-container" align="center">
 		<h4 style="margin-top: 60px">
-			<b>이름</b>
+			<b>${login.NAME }</b>
 		</h4>
 		님 반갑습니다.<br/>
-		<input type="button" class="btn btn-default" value="내정보"/>&nbsp;&nbsp;
-		<input type="button" class="btn btn-default" value="로그아웃"/>
+		<input type="button" class="btn btn-default" value="내정보" id="info"/>&nbsp;&nbsp;
+		<input type="button" class="btn btn-default" value="로그아웃" id="logout"/>
 	</div><br/>
-	<a href="/" class="w3-padding w3-hover-gray"><font style="color: white">Home</font></a>
-	<a href="/notice" class="w3-padding w3-hover-gray"><font style="color: white">공지사항</font></a>
-	<a href="/question" class="w3-padding w3-hover-gray"><font style="color: white">질문 게시판</font></a>
-	<a href="/homework" class="w3-padding w3-hover-gray"><font style="color: white">과제 게시판</font></a>
-	<a href="/practice" class="w3-padding w3-hover-gray"><font style="color: white">코딩연습</font></a>
-	<a href="/storage" class="w3-padding w3-hover-gray"><font style="color: white">자료실</font></a>
-	<a href="/video" class="w3-padding w3-hover-gray"><font style="color: white">동영상 자료실</font></a>
-	<a onclick="drop()" class="w3-padding w3-hover-gray"><font style="color: white">기수 게시판</font></a>
+	<a href="/member/login" class="w3-padding w3-hover-gray"><font style="color: white" id="home">Home</font></a>
+	<a href="/notice" class="w3-padding w3-hover-gray"><font style="color: white" id="notice">공지사항</font></a>
+	<a href="/question" class="w3-padding w3-hover-gray"><font style="color: white" id="question">질문 게시판</font></a>
+	<a href="/homework" class="w3-padding w3-hover-gray"><font style="color: white" id="homework">과제 게시판</font></a>
+	<a href="/practice" class="w3-padding w3-hover-gray"><font style="color: white" id="practice">코딩연습</font></a>
+	<a href="/storage" class="w3-padding w3-hover-gray"><font style="color: white" id="storage">자료실</font></a>
+	<a href="/video" class="w3-padding w3-hover-gray"><font style="color: white" id="video">동영상 자료실</font></a>
+	<a onclick="drop()" class="w3-padding w3-hover-gray"><font style="color: white" id="drop">기수 게시판</font></a>
 	<div id="class" class="w3-dropdown-content w3-border" style='background-color: black'>
-      <a href="/classes" class="w3-hover-gray"><font style="color: white">1기</font></a>
-      <a href="/classes" class="w3-hover-gray"><font style="color: white">2기</font></a>
-      <a href="/classes" class="w3-hover-gray"><font style="color: white">3기</font></a>
+      <a href="/classes" class="w3-hover-gray"><font style="color: white" id="class_1">1기</font></a>
+      <a href="/classes" class="w3-hover-gray"><font style="color: white" id="class_2">2기</font></a>
+      <a href="/classes" class="w3-hover-gray"><font style="color: white" id="class_3">3기</font></a>
     </div>
-	<a href="/admin" class="w3-padding w3-hover-gray"><font style="color: white">관리자 전용</font></a>
+    <c:choose>
+    	<c:when test="${login.NAME=='admin' }">
+			<a href="/admin" class="w3-padding w3-hover-gray"><font style="color: white" id="admin">관리자 전용</font></a>
+    	</c:when>
+    	<c:otherwise>
+    		<a class="w3-padding w3-hover-gray"><font style="color: white">관리자 전용</font></a>
+    	</c:otherwise>
+    </c:choose>
 </nav>
 
 <!-- Top menu on small screens -->
@@ -51,4 +58,8 @@
 	        x.className = x.className.replace(" w3-show", "");
 	    }
 	}
+	
+	$("#logout").click(function(){
+		location.href="/member/logout";
+	});
 </script>
