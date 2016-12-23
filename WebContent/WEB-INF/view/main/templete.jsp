@@ -36,6 +36,11 @@ body {
 }
 </style>
 <body>
+	<c:if test="${login == null }">
+		<script>
+			location.href="/"
+		</script>
+	</c:if>
 
 	<!-- Sidenav/menu -->
 	<tile:insertAttribute name="sideNav"/>
