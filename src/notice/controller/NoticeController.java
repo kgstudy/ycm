@@ -31,14 +31,31 @@ public class NoticeController {
 		mav.setViewName("t:notice/board");
 		return mav;
 	}*/ 
-	// 공지에서 페이지 선택했을때 
-	@RequestMapping("/page/{p}/{size}/{search}")
-	public ModelAndView page(@PathVariable(name = "p") int p,@PathVariable(name = "size") int size){
+	
+	// 공지에서 페이지 선택했을때
+	@RequestMapping("/page/{p}/{size}")
+	public ModelAndView page(@PathVariable(name = "p") int p,@PathVariable(name = "size") int endp){
 		ModelAndView mav = new ModelAndView();
+			List<HashMap> list = ns.noticesearch("",p);
+			int size = ns.getSPageSize("");
+			int lastsize = ns.getSPageSize("");
+			if(size > endp){
+				size=endp;
+			}
+		mav.addObject("lastsize",lastsize);
+		mav.addObject("size", size);
+		mav.addObject("noticelist",list);
+		mav.setViewName("t:notice/board");
 		
 		return mav;
 	}
-
+	
+	// 공지사항에서 검색했을때
+	@RequestMapping("/search")
+	public ModelAndView search(){
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
 	@RequestMapping("/write") // 공지사항 글쓰기 버튼 눌렀을때 
 	public ModelAndView writeview(){
 		ModelAndView mav = new ModelAndView();
