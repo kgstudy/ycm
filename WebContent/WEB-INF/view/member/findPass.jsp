@@ -148,7 +148,7 @@
 		var id = $("#findPw_id").val();
 		var pw = $("#rstPw").val();
 		var pw2 = $("#rstPw2").val();
-		if(pw.length>0 && pw2.length>0){
+		if(pw.length>7 && pw2.length>7){
 			if(pw==pw2){
 				$.ajax({
 					type : "post",
@@ -183,6 +183,7 @@
 								$("#findPwCancel").show();
 								$("#rstPw").val("");
 								$("#rstPw2").val("");
+								$("#pw_rst_failMessage").hide();
 							}, 1300);
 						} else {
 							$("#pw_pwCheck").hide();
@@ -222,5 +223,6 @@
 		$("#pw_pwCheck").hide();
 		$("#pw_pwCheck2").hide();
 		$("#pw_pwCheck3").hide();
+		$("#pw_rst_failMessage").hide();
 	});
 </script>

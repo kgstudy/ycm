@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import admin.model.*;
 import homework.model.HomeworkService;
 import notice.model.NoticeService;
 import question.model.QuestionService;
@@ -25,7 +26,8 @@ public class MainController {
 	HomeworkService hwSvc;
 	@Autowired
 	StorageService ss;
-	
+	@Autowired
+	AdministratorService as;
 
 	@RequestMapping("/")
 	public String index(){
@@ -202,7 +204,10 @@ public class MainController {
 		return "t:classes/board";
 	}
 	@RequestMapping("/admin")
-	public String admin(){
-		return "t:admin/admin";
+	public ModelAndView admin(){
+		ModelAndView mav = new ModelAndView("t:admin/admin");
+		List<HashMap> list = as.member();
+		mav.addObject("list", list);
+		return mav;
 	}
 }
