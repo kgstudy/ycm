@@ -24,11 +24,12 @@ public class StudentController {
 	public String homeworkWriteForm(){
 		return "/homework/writing.jsp";
 	}
-	@RequestMapping("/read/{num }")
+	@RequestMapping("/read/{num}")
 	public String homeworkWrite(Map map, @PathVariable int num){
 		map.put("map", hwSvc.read(num));
-		return "t:hw/student";
+		return "t:hw/default";
 	}
+
 //	@RequestMapping("/read")
 //	public String homeworkRead(Map map, int num){
 //		map.put("list", hwSvc.read(num));

@@ -4,8 +4,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <link href="/css/homework.css" rel="stylesheet" >
 <div id='problemView'>
-HW student#<br/>
-${list.CONTENT }
+<b>HW #${map.num }</b><br/>
+${map.CONTENT }
 </div>
 <form id='homeworkForm' action='/homework/write' >
 	<textarea id='homeworkContent' name='content' cols='100' rows='20' >		
