@@ -93,10 +93,9 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("/input") //글등록이니까... DB에 저장! 
-	// 관리자 이름 넣는거 아직 안함
-	public ModelAndView noticeinput(String title, String content){
+	public ModelAndView noticeinput(String title, String content, String writer){
 		ModelAndView mav = new ModelAndView();
-		boolean b = ns.noticeInput(title, content);
+		boolean b = ns.noticeInput(title, content, writer);
 		if(b){
 			mav.setViewName("redirect:/notice");
 		}
@@ -140,9 +139,9 @@ public class NoticeController {
 	
 	// 공지 수정하고 글등록.
 	@RequestMapping("/reinput/{num}")
-	public ModelAndView reinput(@PathVariable(name = "num") int num, String title, String content){
+	public ModelAndView reinput(@PathVariable(name = "num") int num, String title, String content, String writer){
 		ModelAndView mav = new ModelAndView();
-		boolean b = ns.noticeUpdate(title, content, num);
+		boolean b = ns.noticeUpdate(title, content, num, writer);
 		if(b){
 			mav.setViewName("redirect:/notice");
 		}

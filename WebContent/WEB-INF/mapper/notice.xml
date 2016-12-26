@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="notice">
+	
+	<!--  이거 안씀 -->
 	<select id="nolist" resultType="java.util.HashMap">
 		select * from notice order by notice_num desc
 	</select>
 	
-	<!--  '은선'은 작성자자리 나중에 관리자 이름으로.... -->
+	<!-- 글 등록하는거 -->
 	<insert id="noinput" parameterType="java.util.HashMap">
-		insert into notice values(NOTICE_SEQ.nextval,'은선',#{title},#{content},sysdate,0)
+		insert into notice values(NOTICE_SEQ.nextval,#{writer},#{title},#{content},sysdate,0)
 	</insert> 
 	
 	<!--  공지뷰 보기  -->
@@ -22,8 +24,7 @@
 	
 	<!-- 공지사항 내용 수정 -->
 	<update id="writeupdate" parameterType="java.util.HashMap">
-		update notice set
-		notice_title = #{title} , notice_content = #{content} where notice_num = #{num}
+		update notice set notice_writer = #{writer}, notice_title = #{title} , notice_content = #{content} where notice_num = #{num}
 	</update>
 	
 	<!--  공지사항 글삭제 -->
@@ -44,6 +45,7 @@
 		]]>
 	</select>
 	
+	<!--  검색어 일치하는거 몇개인지 찾음 -->
 	<select id="searchpage" resultType="java.lang.Integer"  parameterType="java.util.HashMap">
 		select count(*) from notice where notice_title like #{search} or notice_content like #{search}
 	</select>

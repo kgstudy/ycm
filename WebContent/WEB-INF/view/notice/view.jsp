@@ -12,7 +12,8 @@
 
 
 <hr/>
-<c:if test="${login.ID=='admin'}">	
+	<input type="button"  class="btn btn-default" value="목록" onclick="javascript:location.href='/notice'"/>
+<c:if test="${login.CLASS=='master'}">	
 	<input type="button"  class="btn btn-default" value="글수정" onclick="javascript:location.href='/notice/rewrite/${noticeview.NOTICE_NUM}'"/>
 	<button type="button"  class="btn btn-default" data-toggle="modal" data-target="#myModal" >글삭제</button>
 </c:if>

@@ -15,21 +15,14 @@ public class NoticeService {
 	@Autowired
 	SqlSessionFactory fac;
 	
-	public List noticeList(){
-		SqlSession ss = fac.openSession();
-//		HashMap<String,Object> map = new HashMap<>(); 쓸일있음
-		List<HashMap> list = ss.selectList("notice.nolist");
-		ss.close();
-		return list;
-	}
-	
 	
 	// 공지 글 쓰기.
-	public boolean noticeInput(String title, String content){
+	public boolean noticeInput(String title, String content, String writer){
 		SqlSession ss = fac.openSession();
 		HashMap<String,String> map = new HashMap<>();
 		map.put("title", title);
 		map.put("content", content);
+		map.put("writer", writer);
 		try{
 		ss.insert("notice.noinput", map);
 		ss.commit();
@@ -62,12 +55,13 @@ public class NoticeService {
 	}
 	
 	// 공지 글수정~~ 
-	 public boolean noticeUpdate(String title, String content, int num){
+	 public boolean noticeUpdate(String title, String content, int num, String writer){
 		SqlSession ss = fac.openSession();
 			HashMap<String,Object> map = new HashMap<>();
 			map.put("title", title);
 			map.put("content", content);
 			map.put("num", num);
+			map.put("writer", writer);
 			try{
 				ss.update("notice.writeupdate", map);
 				ss.commit();
@@ -115,6 +109,7 @@ public class NoticeService {
 			ss.close();
 			return list;
 		}
+	 
 	 
 	 
 	 public int getSPageSize(String search){
