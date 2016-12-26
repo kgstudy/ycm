@@ -19,7 +19,7 @@ public class AdminController {
 	public String admin(Map map){
 		System.out.println("index");
 		map.put("list", hws.read());
-		return "t:homework/admin";
+		return "t:hw/admin";
 	}
 	@RequestMapping("/write")
 	public String homeworkWrite(String title, String content){

@@ -21,8 +21,8 @@ public class SourceCompileController {
 	
 	@RequestMapping("/compile")
 	@ResponseBody
-	public String getSource(String java){		
+	public String getSource(String java, String ip){
 		
-		return csvc.javaCompile(java, context.getRealPath("/classpath")); 
+		return csvc.javaCompile(java, context.getRealPath("/classpath"), ip); 
 	}
 }

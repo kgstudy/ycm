@@ -17,36 +17,63 @@ public class CompileService {
 	
 	static final String JAVA_HOME = System.getenv().get("JAVA_HOME");
 	
-	public String javaCompile(String java, String classPath){
-		System.out.println(java);
-		System.out.println(classPath);
+	public String javaCompile(String java, String classPath, String ip) {
+	
+		BufferedWriter bw = null;
+		BufferedReader error = null;
+		BufferedReader br = null;
+		String line;
+		String result = "";
 //		Properties prop = System.getProperties();		
-//		System.out.println(prop);		
+//		System.out.println(prop);
+		String hwFile = "Homework"+ip.replace(".", "");		
 		try {			
-			PrintWriter fw = new PrintWriter(classPath+"\\Homework.java");
-			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(java);
-			bw.close();
+			PrintWriter fw = new PrintWriter(classPath+"\\"+hwFile+".java");
+			bw = new BufferedWriter(fw);
+			bw.write(java);			
 			Runtime rt = Runtime.getRuntime();
-			Process ps = rt.exec(JAVA_HOME+"\\bin\\javac.exe "+classPath+"\\Homework.java");
-			ps.waitFor();
-			Process ps2 = rt.exec(JAVA_HOME+"\\bin\\java.exe -classpath "+classPath+" Homework");
+			System.out.println(java);
+			// Compile
+			System.out.println("\""+JAVA_HOME+"\\bin\\javac.exe\" "+classPath+"\\"+hwFile+".java");
+			Process ps = rt.exec(JAVA_HOME+"\\bin\\javac.exe "+classPath+"\\"+hwFile+".java");
+			System.out.println("컴파일 중...");
+//			error = new BufferedReader( new InputStreamReader(ps.getErrorStream()) );
+//			while((line = error.readLine()) != null){
+//				System.out.println(line);
+//				result+=line;			    
+//			}
+//			if(result.length()>0){
+//				return result;
+//			}	
+//			br = new BufferedReader( new InputStreamReader(ps.getInputStream()) );
+//			
+//			while((line=br.readLine())!=null){
+//				System.out.print("compile: ");
+//				System.out.println(line);
+//				result += line;
+//			}			
+			ps.waitFor();			
 			
-			String line;
 			
-			BufferedReader error = new BufferedReader(new InputStreamReader(ps2.getErrorStream()));			
+			// Class Run
+			result="";
+			Process ps2 = rt.exec(JAVA_HOME+"\\bin\\java.exe -classpath "+classPath+" "+hwFile);			
+			
+			error = new BufferedReader( new InputStreamReader(ps2.getErrorStream()) );			
+			
 			while((line = error.readLine()) != null){
-			    System.out.println(line);
+				System.out.println("jre : "+line);
+				result+=line;			    
 			}
-			error.close();
+			if(result.length()>0){
+				return result;
+			}				
+			br = new BufferedReader( new InputStreamReader(ps2.getInputStream()) );
 			
-			BufferedReader br = new BufferedReader( new InputStreamReader(ps2.getInputStream()) );
-			String result = "";
 			while((line=br.readLine())!=null){
-				System.out.println(line);
+				System.out.println("result : "+line);
 				result += line;
 			}			
-			br.close();
 			
 //			OutputStream outputStream = ps2.getOutputStream();
 //			PrintStream printStream = new PrintStream(outputStream);
@@ -57,6 +84,14 @@ public class CompileService {
 			return result;
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
+		}finally{
+			try{
+				bw.close();
+				error.close();			
+				br.close();
+			}catch (IOException e) {
+				e.printStackTrace();
+			}		
 		}
 		return "";
 	}

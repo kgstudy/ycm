@@ -1,3 +1,4 @@
+<%@page import="java.util.Enumeration"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -6,9 +7,18 @@
 <div id='problemView'>
 HW student#<br/>
 ${list.CONTENT }
+<%
+	Enumeration e = request.getAttributeNames();
+	while(e.hasMoreElements()){
+		out.print(e.nextElement()+"\n");
+	}
+%>
+a
+${pageContext.request.remoteAddr }
+${request }
 </div>
 <form id='homeworkForm' action='/homework/write' >
-	<textarea id='homeworkContent' name='content' cols='100' rows='20' >		
+	<textarea id='homeworkSource' name='content' cols='100' rows='20' >		
 		class Homework{
 			public static void main(String[] args){
 				System.out.println("Hello! WebCoding~~");
@@ -40,13 +50,11 @@ ${list.CONTENT }
 	}
 // event handler	
 	$("#run").on("click", function(){
-		checkAnswer();		
+		sendHomework();		
 	});
 // handle <tab> in textarea
-	$(document).delegate('#homeworkContent', 'keydown', function(e) {
+	$(document).delegate('#homeworkSource', 'keydown', function(e) {
 	  var keyCode = e.keyCode || e.which;
-	  console.log(e.keycode);
-	  console.log(e.which);
 	  console.log(keyCode);
 	  if (keyCode == 9) {
 	    e.preventDefault();
@@ -64,28 +72,32 @@ ${list.CONTENT }
 	  }
 	});
 	
-	function checkAnswer(){
- 		var $answer = $("#homeworkContent").val();
-// 		$("#consoleView").empty();
-// 		$("#consoleView").append($answer+"<br/>");
-// 		if($answer=="love"){
-// 			$("#consoleView").append("<span class='correct' >Correct!!!</span><br/>");
-// 			recordRank();
-// 		}else{
-// 			$("#consoleView").append("<span class='incorrect' >incorrect..</span><br/>");
-// 		}
+	function sendHomework(){
+ 		var $source = $("#homeworkSource").val(); 		
 		
 		$.ajax({
 			url : "/homework/compile",
 			type : "post",
 			data : {
-				"java" : $answer
+				"java" : $source,
+				"ip" : "${header.host}"
 			},
 			success : function(r){
 		 		$("#consoleView").empty();
 		 		$("#consoleView").append(r+"<br/>");
+		 		checkAnswer(r);
 			}
 		});
+	}
+	
+	function checkAnswer(r){
+		var rightAnswer = 5;
+		if(r==rightAnswer){
+			$("#consoleView").append("<span class='correct' >Correct!!!</span><br/>");
+			recordRank();
+		}else{
+			$("#consoleView").append("<span class='incorrect' >incorrect..</span><br/>");
+		}
 	}
 	
 	function recordRank(){

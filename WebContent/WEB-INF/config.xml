@@ -72,6 +72,29 @@
 	<bean
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
 		id="multipartResolver" />
+	
+	<bean id = "dummyTask" class="homework.scheduler.DummyTask" />
+	<bean name="dummyJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
+		p:jobClass="homework.scheduler.DummyJobBean"
+		p:durability="true" >
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="dummyTask" value-ref="dummyTask" />
+			</map>
+		</property>
+	</bean>
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" 
+		p:jobDetail-ref="dummyJob"
+		p:startDelay="1000"
+		p:cronExpression="0/3 * * * * ?"
+	/>
+<!-- 	<bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >  -->
+<!-- 		<property name="triggers" > -->
+<!-- 			<list> -->
+<!-- 				<ref bean="cronTrigger" /> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
 		
 	<bean class="homework.websocket.HomeSocket" id="homeSocket" />
 	<websocket:handlers>

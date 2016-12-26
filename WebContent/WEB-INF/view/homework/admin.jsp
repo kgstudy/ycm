@@ -8,22 +8,44 @@
 
 <body>
 <form id='homeworkForm' action='/homework/admin/write' >
-<input type='text' name='title' value='${list.TITLE }' >
+<input type='text' name='title' value='${list.TITLE }' ><br/>
 <textarea id="view" name='content' cols='100' rows='20' disabled="disabled" >
 ${list.CONTENT }
 </textarea>
+<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
 <textarea id='homeworkAnswer' name='answer' rows='10' cols='100' ></textarea>
 <br/>
 <input id='homeworkModify' type='button' value='수정' />
 </form>
 </body>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1840024262900424',
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+  };
 
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 <script>	
 
-	$.get("/homework/admin/readJSON", function(r){
-		console.log(r);
-		var content = r.CONTENT.replace(/\r\n/g, "<br/>");		
-	});
+// 	$.get("/hw/admin/readJSON", function(r){
+// 		console.log(r);
+// 		var content = r.CONTENT.replace(/\r\n/g, "<br/>");		
+// 	});
 	$("#homeworkModify").on("click", function(){
 		if(this.value=="수정"){
 			console.log($("#view").attr("disabled"));
