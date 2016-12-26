@@ -67,7 +67,7 @@
 	</c:if>		
 	</div>
 	
-	<c:if test="${login.ID=='admin'}">	
+	<c:if test="${login.CLASS=='master'}">	
 		<div align="right">
 			<input type="button" class="btn btn-default" value="글작성" onclick="javascript:location.href='/notice/write'"/>
 		</div>
