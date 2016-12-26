@@ -25,6 +25,7 @@ public class MemberService {
 			ss.close();
 			return true;
 		} catch(Exception e){
+			e.printStackTrace();
 			ss.rollback();
 			ss.close();
 			return false;

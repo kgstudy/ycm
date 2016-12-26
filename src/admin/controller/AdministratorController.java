@@ -14,9 +14,21 @@ public class AdministratorController {
 	@Autowired
 	AdministratorService as;
 	
-	@RequestMapping("/other")
+	@RequestMapping("/other/{p}/{category}")
 	@ResponseBody
-	public List<HashMap> other(int p, String category){
+	public List<HashMap> other(@PathVariable(name="p")int p, @PathVariable(name="category")String category){
 		return as.member(p, category);
+	}
+	
+	@RequestMapping("/group/{ar}/{group}")
+	@ResponseBody
+	public boolean group(@PathVariable(name="ar")String[] ar, @PathVariable(name="group")String group){
+		return as.group(ar, group);
+	}
+	
+	@RequestMapping("/accept/{ar}")
+	@ResponseBody
+	public boolean accept(@PathVariable(name="ar")String[] ar){
+		return as.accept(ar);
 	}
 }
