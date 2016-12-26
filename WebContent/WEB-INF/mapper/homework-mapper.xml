@@ -9,7 +9,7 @@
 		select HOMEWORK_SEQ.CURRVAL from dual
 	</select>
 	<select id="list" resultType="java.util.HashMap" >
-		select NUM, NAME, WRITEDATE from homework 
+		select NUM, TITLE, WRITEDATE from homework order by NUM desc
 	</select>
 	<select id="read" resultType="homework.model.pojo.HomeworkPojo" >
 		select * from homework where num=#{num }
