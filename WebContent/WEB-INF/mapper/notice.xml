@@ -50,4 +50,11 @@
 		select count(*) from notice where notice_title like #{search} or notice_content like #{search}
 	</select>
 	
+	
+	<!--  공지사항 댓글!!!  -->
+	<insert id="cominput" parameterType="java.util.HashMap">
+		insert into notice_comment values(#{writer},#{content},sysdate,comment_SEQ.nextval,#{num})
+	</insert> 
+	
+	
 </mapper>
