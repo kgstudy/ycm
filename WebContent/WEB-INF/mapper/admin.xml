@@ -2,6 +2,15 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
 	<select id="member" resultType="java.util.HashMap" parameterType="java.util.HashMap">
-		select * from (select rownum rnum, m.* from member m)mm where mm.rnum &gt;= #{start} and mm.rnum &lt;= #{end} order by #{category} asc;
+		select * from (select rownum rnum, m.* from member m)mm where mm.rnum &gt;= #{start} and mm.rnum &lt;= #{end} and grade != 'join' order by #{category} asc
 	</select>
+	<update id="class" parameterType="java.util.HashMap">
+		update member set class = #{class} where id = #{id}
+	</update>
+	<select id="joinMember" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from (select rownum rnum, m.* from member m where grade = 'join')mm where mm.rnum &gt;= #{start} and mm.rnum &lt;= ${end} order by name asc
+	</select>
+	<update id="joinAccept">
+		update member set grade = 'rookie' where id = #{id}
+	</update>
 </mapper>

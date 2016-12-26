@@ -48,10 +48,57 @@
 				</div>
 				<div class="w3-col s12 m4 l4" style="padding-top: 10px">
 					<label><font style="font-size: 20px">그룹 지정</font></label><br/>
-					<input type="text" readonly="readonly" id="g_id"/><br/>
+					<label>아이디</label><br/>
+					<input type="text" readonly="readonly" id="g_id" style="width: 60%"/><br/><br/>
+					<label>Class</label><br/>
+					<input type="text" id="g_name" style="width: 60%"><br/><br/>
+					<input type="button" value="확인" id="g_btn" class="btn btn-default"/><br/>
+					<span id="g_btn_rst" style="display: none"></span>
 				</div>
 				<div class="w3-col s12 m4 l4" style="padding-top: 10px">
-					<label><font style="font-size: 20px">가입 요청 리스트</font></label>
+					<label><font style="font-size: 20px">가입 요청 리스트</font></label><br/>
+					<table style="width: 100%">
+						<c:choose>
+							<c:when test="${list2.size() > 0 }">
+								<tr>
+									<td>
+										<label><input type="checkbox" id="checkAll"/>&nbsp;전체선택</label>
+									</td>
+								</tr>
+								<c:forEach var="t" begin="0" end="${list2.size()-1 }">
+									<tr style="margin-left: 100px">
+										<td>
+											<p class="w3-tooltip">
+												<label><input type="checkbox" id="${t }_" class="joinCheck"/>&nbsp;<font id="${t }__">${list2.get(t).ID }</font>&nbsp;(${list2.get(t).NAME })</label>
+												<span style="position:absolute; left: 0; top: 20px" class="w3-text w3-tag">
+													<font style="font-size: 10px">
+														${list2.get(t).PHONE } / ${list2.get(t).EMAIL } / 
+														<c:choose>
+															<c:when test="${list2.get(t).CLASS == null }">
+																없음
+															</c:when>
+															<c:otherwise>
+																${list2.get(t).CLASS }
+															</c:otherwise>
+														</c:choose>
+													</font>
+												</span>
+											</p>
+										</td>
+									</tr>
+								</c:forEach>
+								<tr>
+									<td align="center">
+										<input type="button" class="btn btn-default" value="승인" id="joinAccept"/><br/>
+										<span id="j_btn_rst" style="display: none"></span>
+									</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								가입 요청 목록이 없습니다.
+							</c:otherwise>
+						</c:choose>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -137,15 +184,99 @@
 	var classes = new Array($("#class_1").html(), $("#class_2").html(), $("#class_3").html());
 	var admin = $("#admin").html();
 	
+	$("#checkAll").click(function(){
+		var check = $("#checkAll").prop("checked");
+		$(".joinCheck").prop("checked", check);
+	})
+	
+	$("#joinAccept").click(function(){
+		var n = 0;
+		var array = new Array();
+		for(var i=0; i<${list2.size()}; i++){
+			if($("#"+i+"_").prop("checked")){
+				array[i] = $("#"+i+"__").html();
+			} else {
+				n++;
+			}
+		}
+		if(n!=0){
+			var html = "<font style='color: red'>선택된 항목이 없습니다.</font>";
+			$("#j_btn_rst").html(html);
+			$("#j_btn_rst").show();
+		} else {
+			$.ajax({
+				type : "post",
+				url : "/admin/accept/"+array,
+				async : false,
+				success : function(txt){
+					if(txt==true){
+						var html = "<font style='color: green'>승인되었습니다.</font>";
+						$("#j_btn_rst").html(html);
+						$("#j_btn_rst").show();
+						setTimeout(function() {
+							location.href="/admin";
+						}, 700);
+					} else {
+						var html = "<font style='color: red'>승인에 실패하였습니다<br/>잠시후 다시 시도해주세요.</font>";
+						$("#j_btn_rst").html(html);
+						$("#j_btn_rst").show();
+					}
+				}
+			});
+		}
+	});
+	
+	$("#g_btn").click(function(){
+		var id = $("#g_id").val();
+		var array = id.split(', ');
+		var group = $("#g_name").val();
+		if(id.length>0 && group.length>0){
+			$.ajax({
+				type : "post",
+				url : "/admin/group/"+array+"/"+group,
+				async : false,
+				success : function(txt){
+					if(txt==true){
+						var html = "<font style='color: green'>그룹설정이 완료되었습니다.</font>";
+						$("#g_btn_rst").html(html);
+						$("#g_btn_rst").show();
+						setTimeout(function() {
+							location.href="/admin";
+						}, 700);
+					} else {
+						var html = "<font style='color: red'>그룹설정에 실패하였습니다.<br/>잠시후 다시 시도해주세요.</font>";
+						$("#g_btn_rst").html(html);
+						$("#g_btn_rst").show();
+					}
+				}
+			});
+		} else {
+			var html = "<font style='color: red'>이름 또는 class를 입력해주세요.</font>";
+			$("#g_btn_rst").html(html);
+			$("#g_btn_rst").show();
+		}
+	});
+	
 	function check(element){
 		var id = element.id;
 		id = $("#"+id+"_").html();
 		var g_id = $("#g_id").val();
 		if(g_id.indexOf(id)>=0){
-			var r_g_id = g_id.substring(0, g_id.indexOf(id));
-			r_g_id += g_id.substring(g_id.indexOf(id)+id.length);
-			alert(r_g_id);
+			var r_g_id = "";
+			if(g_id.indexOf(id)==0){
+				r_g_id = g_id.substring(0, g_id.indexOf(id));
+				r_g_id += g_id.substring(g_id.indexOf(id)+id.length+2);
+			} else {
+				r_g_id = g_id.substring(0, g_id.indexOf(id)-2);
+				r_g_id += g_id.substring(g_id.indexOf(id)-2+id.length+2);
+			}
+			$("#g_id").val(r_g_id);
 		} else {
+			if(g_id.length==0){
+				id = $("#"+id+"_").html();
+			} else {
+				id = ", "+$("#"+id+"_").html();
+			}
 			$("#g_id").val(g_id+id);
 		}
 	}

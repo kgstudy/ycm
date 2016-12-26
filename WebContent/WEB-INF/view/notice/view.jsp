@@ -18,6 +18,21 @@
 	<button type="button"  class="btn btn-default" data-toggle="modal" data-target="#myModal" >글삭제</button>
 </c:if>
 
+<hr/>
+댓글나오기.... <br/>
+<form action="/comment/input" method="post">
+	<input type="hidden" name="num" value="${noticeview.NOTICE_NUM}"/> 
+	<input type="hidden" name="writer" value="${login.NAME}">
+	<input type="text" name="content" required="required"> <input type="submit"  class="btn btn-default" value="댓글등록" />
+</form> 
+<div>
+	foreach....<br/>
+	notice num으로 댓글 리스트.. 
+	등록된 댓글 수정,삭제 (등록한 사람이)
+	관리자는 전부 삭제버튼 잇고.. 
+</div>
+
+
   <!-- 글 삭제 버튼 Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">

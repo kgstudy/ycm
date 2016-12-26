@@ -207,7 +207,9 @@ public class MainController {
 	public ModelAndView admin(){
 		ModelAndView mav = new ModelAndView("t:admin/admin");
 		List<HashMap> list = as.member(1, null);
+		List<HashMap> list2 = as.joinMember(1);
 		mav.addObject("list", list);
+		mav.addObject("list2", list2);
 		return mav;
 	}
 }
