@@ -1,4 +1,4 @@
-package homework.service;
+package homework.model;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

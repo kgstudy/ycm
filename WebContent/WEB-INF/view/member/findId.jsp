@@ -151,6 +151,7 @@
 		$("#rstId").val("");
 		$("#findId_ok").hide();
 		$("#findId_pw").hide();
+		$("#rst_failMessage").hide();
 		$("#findIdCancel").show();
 	});
 	
@@ -174,6 +175,7 @@
 		$("#rstId").val("");
 		$("#findId_ok").hide();
 		$("#findId_pw").hide();
+		$("#rst_failMessage").hide();
 		$("#findIdCancel").show();
 		setTimeout(function() {
 			$("#findPwModal").fadeIn(300);
@@ -196,5 +198,6 @@
 		$("#writeNum").hide();
 		$("#findId_name").val("");
 		$("#findId_email").val("");
+		$("#rst_failMessage").hide();
 	});
 </script>

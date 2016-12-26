@@ -4,14 +4,52 @@
 
 <div class="w3-container" align="center">
 	<h2 style="margin-top: 100px; margin-bottom: 50px">Management</h2>
-	<div class="w3-container">
+	<div class="w3-container" style="width: 80%;">
 		<ul class="w3-navbar w3-black">
-			<li><a href="javascript:void(0)" class="tablink w3-red" onclick="openTab(event, 'Homepage');"><font style="color: white" id="HomepageFont" class="font">Homepage</font></a></li>
-			<li><a href="javascript:void(0)" class="tablink" onclick="openTab(event, 'Student');"><font style="color: red" id="StudentFont" class="font">Student</font></a></li>
+			<li><a href="javascript:void(0)" class="tablink w3-red" onclick="openTab(event, 'Student');"><font style="color: white" id="StudentFont" class="font">Student</font></a></li>
+			<li><a href="javascript:void(0)" class="tablink" onclick="openTab(event, 'Homepage');"><font style="color: red" id="HomepageFont" class="font">Homepage</font></a></li>
 			<li><a href="javascript:void(0)" class="tablink" onclick="openTab(event, 'Tokyo');"><font style="color: red" id="TokyoFont" class="font">Tokyo</font></a></li>
 		</ul>
 		
-		<div id="Homepage" class="w3-container w3-border tab">
+		<div id="Student" class="w3-container w3-border tab">
+			<div class="w3-row">
+				<div class="w3-col s12 m6 l6" style="padding-top: 10px">
+					<label><font style="font-size: 20px">회원 리스트</font></label><br/>
+					<table class="w3-table-all w3-hoverable">
+						<thead align="center" style="border-bottom: solid gray 2px">
+							<tr>
+								<td><label>선택</label></td>
+								<td><label>아이디</label></td>
+								<td><label>이름</label></td>
+								<td><label>전화번호</label></td>
+								<td><label>이메일</label></td>
+								<td><label>class</label></td>
+							</tr>
+						</thead>
+						<tbody align="center">
+							<c:forEach var="t" items="${list }">
+								<tr>
+									<td><input type="checkbox" id="${t.ID }"/></td>
+									<td>${t.ID }</td>
+									<td>${t.NAME }</td>
+									<td>${t.PHONE }</td>
+									<td>${t.EMAIL }</td>
+									<td>${t.CLASS }</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+				<div class="w3-col s12 m4 l4" style="padding-top: 10px">
+					가입 요청 리스트
+				</div>
+				<div class="w3-col s12 m2 l2" style="padding-top: 10px">
+					그룹 정하기
+				</div>
+			</div>
+		</div>
+		
+		<div id="Homepage" class="w3-container w3-border tab" style="display: none">
 			<div class="w3-row">
 				<div class="w3-col m3 l3 w3-padding w3-black" style="z-index: 3; font-weight: bold; height: 40%">
 					<label class="w3-padding w3-hover-gray">
@@ -72,11 +110,6 @@
 					form
 				</div>
 			</div>
-		</div>
-		
-		<div id="Student" class="w3-container w3-border tab" style="display:none">
-			<h2>Student</h2>
-			<p>Paris is the capital of France.</p> 
 		</div>
 		
 		<div id="Tokyo" class="w3-container w3-border tab" style="display:none">
