@@ -206,7 +206,7 @@ public class MainController {
 	@RequestMapping("/admin")
 	public ModelAndView admin(){
 		ModelAndView mav = new ModelAndView("t:admin/admin");
-		List<HashMap> list = as.member();
+		List<HashMap> list = as.member(1, null);
 		mav.addObject("list", list);
 		return mav;
 	}

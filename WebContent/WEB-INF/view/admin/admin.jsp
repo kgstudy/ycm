@@ -13,38 +13,45 @@
 		
 		<div id="Student" class="w3-container w3-border tab">
 			<div class="w3-row">
-				<div class="w3-col s12 m6 l6" style="padding-top: 10px">
+				<div class="w3-col s12 m4 l4" style="padding-top: 10px">
 					<label><font style="font-size: 20px">회원 리스트</font></label><br/>
-					<table class="w3-table-all w3-hoverable">
-						<thead align="center" style="border-bottom: solid gray 2px">
-							<tr>
-								<td><label>선택</label></td>
-								<td><label>아이디</label></td>
-								<td><label>이름</label></td>
-								<td><label>전화번호</label></td>
-								<td><label>이메일</label></td>
-								<td><label>class</label></td>
+					<div align="right">
+						<select style="width: 120px; heigth: 5%" id="select">
+							<option>이름순</option>
+							<option>빈 class 만</option>
+						</select>
+					</div>
+					<table style="width: 100%">
+						<c:forEach var="t" items="${list }">
+							<tr style="margin-left: 100px">
+								<td>
+									<p class="w3-tooltip">
+										<label><input type="checkbox" id="${t.ID }" onclick="check(this)"/>&nbsp;<font id="${t.ID }_">${t.ID }</font>&nbsp;(${t.NAME })</label>
+										<span style="position:absolute; left: 0; top: 20px" class="w3-text w3-tag">
+											<font style="font-size: 10px">
+												${t.PHONE } / ${t.EMAIL } / 
+												<c:choose>
+													<c:when test="${t.CLASS == null }">
+														없음
+													</c:when>
+													<c:otherwise>
+														${t.CLASS }
+													</c:otherwise>
+												</c:choose>
+											</font>
+										</span>
+									</p>
+								</td>
 							</tr>
-						</thead>
-						<tbody align="center">
-							<c:forEach var="t" items="${list }">
-								<tr>
-									<td><input type="checkbox" id="${t.ID }"/></td>
-									<td>${t.ID }</td>
-									<td>${t.NAME }</td>
-									<td>${t.PHONE }</td>
-									<td>${t.EMAIL }</td>
-									<td>${t.CLASS }</td>
-								</tr>
-							</c:forEach>
-						</tbody>
+						</c:forEach>
 					</table>
 				</div>
 				<div class="w3-col s12 m4 l4" style="padding-top: 10px">
-					가입 요청 리스트
+					<label><font style="font-size: 20px">그룹 지정</font></label><br/>
+					<input type="text" readonly="readonly" id="g_id"/><br/>
 				</div>
-				<div class="w3-col s12 m2 l2" style="padding-top: 10px">
-					그룹 정하기
+				<div class="w3-col s12 m4 l4" style="padding-top: 10px">
+					<label><font style="font-size: 20px">가입 요청 리스트</font></label>
 				</div>
 			</div>
 		</div>
@@ -129,6 +136,19 @@
 	var video = $("#video").html();
 	var classes = new Array($("#class_1").html(), $("#class_2").html(), $("#class_3").html());
 	var admin = $("#admin").html();
+	
+	function check(element){
+		var id = element.id;
+		id = $("#"+id+"_").html();
+		var g_id = $("#g_id").val();
+		if(g_id.indexOf(id)>=0){
+			var r_g_id = g_id.substring(0, g_id.indexOf(id));
+			r_g_id += g_id.substring(g_id.indexOf(id)+id.length);
+			alert(r_g_id);
+		} else {
+			$("#g_id").val(g_id+id);
+		}
+	}
 	
 	function openTab(evt, tabName) {
 	  var i, x, tablinks, font;
