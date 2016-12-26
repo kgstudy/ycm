@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import homework.model.CompileService;
 
 @Controller
-@RequestMapping("/homework")
+@RequestMapping("/hw")
 public class SourceCompileController {
 	@Autowired
 	CompileService csvc;

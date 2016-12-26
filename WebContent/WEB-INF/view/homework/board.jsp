@@ -18,8 +18,8 @@
 			<c:forEach var="one" items="${list }" >
 				<tr>
 					<td>${one.NUM }</td>
-					<td><a href="/hw/student/title/${one.NUM }">${one.TITLE }</a></td>					
-					<td><fmt:formatDate value="${one.WRITEDATE }" pattern="mm / dd"/></td>					
+					<td><a href="/hw/student/read/${one.NUM }">${one.TITLE }</a></td>				
+					<td><fmt:formatDate value="${one.WRITEDATE }" pattern="MM / dd"/></td>					
 				</tr>
 			</c:forEach>
 		</tbody>
