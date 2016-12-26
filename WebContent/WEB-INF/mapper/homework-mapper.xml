@@ -14,8 +14,10 @@
 	<select id="read" resultType="homework.model.pojo.HomeworkPojo" >
 		select * from homework where num=#{num }
 	</select>
-	<update id="update" parameterType="homework.model.pojo.HomeworkPojo" >
-		update homework set where num=#{num }
+	<update id="update" >
+		update homework set title=#{title}, content=#{content }, sysdate,
+		 0, 0, 0, '', '' , '', output=#{output }, input=#{input }
+		 where num=#{num }
 	</update>
 	<update id="modiAnswer">
 		update homework set answer=#{answer } where num=#{num }

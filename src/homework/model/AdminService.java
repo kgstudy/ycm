@@ -34,10 +34,9 @@ public class AdminService {
 	}
 	
 	public int update(HomeworkPojo pojo){
-		SqlSession sql = fac.openSession();
-		
-		int r = sql.update("homework.update", pojo);
-		sql.close();
+		SqlSession sql = fac.openSession();		
+		int r = sql.update("homework.update", pojo.getNum());
+		sql.close();		
 		return r;
 	}
 	
