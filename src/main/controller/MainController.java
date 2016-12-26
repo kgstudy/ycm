@@ -2,12 +2,15 @@ package main.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import homework.model.HomeworkService;
 import notice.model.NoticeService;
 import question.model.QuestionService;
 import storage.model.StorageService;
@@ -19,7 +22,10 @@ public class MainController {
 	@Autowired
 	QuestionService qs;
 	@Autowired
+	HomeworkService hwSvc;
+	@Autowired
 	StorageService ss;
+	
 
 	@RequestMapping("/")
 	public String index(){
@@ -83,7 +89,8 @@ public class MainController {
 		return mav;
 	}
 	@RequestMapping("/homework")
-	public String homework(){
+	public String homework(Map map){
+		map.put("list", hwSvc.list());
 		return "t:homework/board";
 	}
 	@RequestMapping("/practice")

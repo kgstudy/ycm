@@ -4,11 +4,20 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <link href="/css/homework.css" rel="stylesheet" >
 
-<form id='homeworkForm' action='/homework/admin/write' >
-	<input type='title' id='homeworkTitle' name='title' ><br/>
-	<textarea id='homeworkContent' name='content' rows='20' cols='100'></textarea>
-	<textarea id='homeworkAnswer' name='answer' rows='10' cols='100' ></textarea>	
+<form id='homeworkForm' action='/homework/admin/write' >	
+	<div id='problemViewWrap' style='float: left;' >
+		<div id='problemView' ></div>	
+		<section id='inputExam' class='exam' style='float: left;'>
+			<div class='headline' >출력 예제</div>
+			<pre class='examPre' ></pre>
+		</section>
+		<section id='outputExam' class='exam' style='float: left;'>
+			<div class='headline' >입력 예제</div>
+			<pre class='examPre' ></pre>
+		</section>	
+	</div>
 <br/>
+<div class='clearfix' ></div>
 <input id='run' type='button' value='실행' >
 <input type='hidden' value='글쓰기' >
 </form>
