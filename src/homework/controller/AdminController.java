@@ -1,7 +1,12 @@
 package homework.controller;
 
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,8 +29,8 @@ public class AdminController {
 	@RequestMapping("/read/{num}")
 	public String admin(Map map, @PathVariable int num){
 		System.out.println("index");
-		map.put("pojo", aSvc.read(num));
-		return "t:homework/default";
+		map.put("pojo", hwSvc.read(num));
+		return "t:hw/default";
 	}
 	@RequestMapping("/writeForm")
 	public String writeForm(){
@@ -36,18 +41,38 @@ public class AdminController {
 	public int homeworkWrite(Map map, HomeworkPojo pojo){		
 		return aSvc.write(pojo);
 	}
+	@RequestMapping("/modify")
+	@ResponseBody
+	public int homeworkModi(Map map, HomeworkPojo pojo){
+		return aSvc.update(pojo);
+	}
 	
 	@RequestMapping("/modify/answer")
 	@ResponseBody
-	public int homeworkmodiAnswer(Map map, String answer){
+	public int homeworkModiAnswer(Map map, String answer){
 		
 		return aSvc.modiAnswer(answer);
-	}
-	
+	}	
 	@RequestMapping("/modify/source")
 	@ResponseBody
-	public int homeworkmodiSource(Map map, String source){
+	public int homeworkModiSource(Map map, String source){
 		
 		return aSvc.modiSource(source);
+	}
+	@RequestMapping("/delete")
+	@ResponseBody
+	public int homeworkDelete(Map map, HttpServletRequest req){
+		System.out.println(req.getContextPath());
+		Enumeration e = req.getAttributeNames();
+		while(e.hasMoreElements()){
+			System.out.println("attr: "+e.nextElement());
+		}
+		System.out.println("param : "+req.getParameterMap());
+		
+		Enumeration e2 = req.getHeaderNames();
+		while(e2.hasMoreElements()){
+			System.out.println("header : "+e2.nextElement());
+		}
+		return 1;
 	}
 }
