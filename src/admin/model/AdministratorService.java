@@ -14,6 +14,10 @@ public class AdministratorService {
 	public List<HashMap> member(int p, String category){
 		if(category == null){
 			category = "name";
+		} else if(category.equals("ÀÌ¸§¼ø")){
+			category = "name";
+		} else if(category.equals("ºó class ¸¸")){
+			category = "name";
 		}
 		SqlSession ss = fac.openSession();
 		HashMap map = new HashMap();
@@ -33,6 +37,20 @@ public class AdministratorService {
 		List<HashMap> list = ss.selectList("admin.joinMember", map);
 		ss.close();
 		return list;
+	}
+	
+	public int memberSize(){
+		SqlSession ss = fac.openSession();
+		int n = ss.selectOne("admin.memSize");
+		ss.close();
+		return n/10==0 ? n/10 : n/10+1;
+	}
+	
+	public int joinMemSize(){
+		SqlSession ss = fac.openSession();
+		int n = ss.selectOne("admin.joinMemSize");
+		ss.close();
+		return n/10==0 ? n/10 : n/10+1;
 	}
 	
 	public boolean group(String[] ar, String group){

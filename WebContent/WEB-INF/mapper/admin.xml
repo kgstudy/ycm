@@ -13,4 +13,10 @@
 	<update id="joinAccept">
 		update member set grade = 'rookie' where id = #{id}
 	</update>
+	<select id="memSize" resultType="java.lang.Integer">
+		select count(*) from member where grade != 'join'
+	</select>
+	<select id="joinMemSize" resultType="java.lang.Integer">
+		select count(*) from member where grade = 'join'
+	</select>
 </mapper>

@@ -21,7 +21,7 @@
 							<option>빈 class 만</option>
 						</select>
 					</div>
-					<table style="width: 100%">
+					<table style="width: 100%" id="memTable">
 						<c:forEach var="t" items="${list }">
 							<tr style="margin-left: 100px">
 								<td>
@@ -45,6 +45,9 @@
 							</tr>
 						</c:forEach>
 					</table>
+					<c:forEach var="t" begin="1" end="${size }">
+						<label><a onclick="page(this)">${t }</a></label>
+					</c:forEach>
 				</div>
 				<div class="w3-col s12 m4 l4" style="padding-top: 10px">
 					<label><font style="font-size: 20px">그룹 지정</font></label><br/>
@@ -57,9 +60,9 @@
 				</div>
 				<div class="w3-col s12 m4 l4" style="padding-top: 10px">
 					<label><font style="font-size: 20px">가입 요청 리스트</font></label><br/>
-					<table style="width: 100%">
-						<c:choose>
-							<c:when test="${list2.size() > 0 }">
+					<c:choose>
+						<c:when test="${list2.size() > 0 }">
+							<table style="width: 100%" id="joinMemTable">
 								<tr>
 									<td>
 										<label><input type="checkbox" id="checkAll"/>&nbsp;전체선택</label>
@@ -89,16 +92,23 @@
 								</c:forEach>
 								<tr>
 									<td align="center">
+										<c:forEach var="t" begin="0" end="${size2 }">
+											<label><a onclick="page2(this)">${t+1 }</a></label>
+										</c:forEach>
+									</td>
+								</tr>
+								<tr>
+									<td align="center">
 										<input type="button" class="btn btn-default" value="승인" id="joinAccept"/><br/>
 										<span id="j_btn_rst" style="display: none"></span>
 									</td>
 								</tr>
-							</c:when>
-							<c:otherwise>
-								가입 요청 목록이 없습니다.
-							</c:otherwise>
-						</c:choose>
-					</table>
+							</table>
+						</c:when>
+						<c:otherwise>
+							<br/>가입 요청 목록이 없습니다.
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
@@ -183,6 +193,32 @@
 	var video = $("#video").html();
 	var classes = new Array($("#class_1").html(), $("#class_2").html(), $("#class_3").html());
 	var admin = $("#admin").html();
+	
+	function page(element){
+		var table = $("#memTable");
+		var page = element.innerHTML;
+		$.ajax({
+			type : "post",
+			url : "/admin/other/"+page+"/"+$("#select").val(),
+			async : false,
+			success : function(txt){
+				table.html(txt);
+			}
+		});
+	}
+
+	function page2(element){
+		var table = $("#joinMemTable");
+		var page = element.innerHTML;
+		$.ajax({
+			type : "post",
+			url : "/admin/other/"+page,
+			async : false,
+			success : function(txt){
+				table.html(txt);
+			}
+		});
+	}
 	
 	$("#checkAll").click(function(){
 		var check = $("#checkAll").prop("checked");
