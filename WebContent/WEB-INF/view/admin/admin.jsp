@@ -4,7 +4,7 @@
 
 <div class="w3-container" align="center">
 	<h2 style="margin-top: 100px; margin-bottom: 50px">Management</h2>
-	<div class="w3-container" style="width: 80%;">
+	<div class="w3-container" style="width: 100%;">
 		<ul class="w3-navbar w3-black">
 			<li><a href="javascript:void(0)" class="tablink w3-red" onclick="openTab(event, 'Student');"><font style="color: white" id="StudentFont" class="font">Student</font></a></li>
 			<li><a href="javascript:void(0)" class="tablink" onclick="openTab(event, 'Homepage');"><font style="color: red" id="HomepageFont" class="font">Homepage</font></a></li>
@@ -14,7 +14,10 @@
 		<div id="Student" class="w3-container w3-border tab">
 			<div class="w3-row">
 				<div class="w3-col s12 m4 l4" style="padding-top: 10px">
-					<label><font style="font-size: 20px">회원 리스트</font></label><br/>
+					<label>
+						<font style="font-size: 20px">회원 리스트</font>
+						(총 <font style="color: blue" id="total">${total }</font> 명)
+					</label><br/>
 					<div align="right">
 						<select style="width: 120px; heigth: 5%" id="select">
 							<option>이름순</option>
@@ -45,9 +48,11 @@
 							</tr>
 						</c:forEach>
 					</table>
-					<c:forEach var="t" begin="1" end="${size }">
-						<label><a onclick="page(this)">${t }</a></label>
-					</c:forEach>
+					<span id="memPage">
+						<c:forEach var="t" begin="1" end="${size }">
+							<label><a onclick="page(this)">${t }</a></label>
+						</c:forEach>
+					</span>
 				</div>
 				<div class="w3-col s12 m4 l4" style="padding-top: 10px">
 					<label><font style="font-size: 20px">그룹 지정</font></label><br/>
@@ -92,8 +97,8 @@
 								</c:forEach>
 								<tr>
 									<td align="center">
-										<c:forEach var="t" begin="0" end="${size2 }">
-											<label><a onclick="page2(this)">${t+1 }</a></label>
+										<c:forEach var="t" begin="1" end="${size2 }">
+											<label><a onclick="page2(this)">${t }</a></label>
 										</c:forEach>
 									</td>
 								</tr>
@@ -193,6 +198,39 @@
 	var video = $("#video").html();
 	var classes = new Array($("#class_1").html(), $("#class_2").html(), $("#class_3").html());
 	var admin = $("#admin").html();
+	
+	$("#select").change(function(){
+		var select = $("#select").val();
+		var table = $("#memTable");
+		$.ajax({
+			type : "post",
+			url : "/admin/other/"+1+"/"+select,
+			async : false,
+			success : function(txt){
+				table.html(txt);
+				$.ajax({
+					type : "post",
+					url : "/admin/size/"+select,
+					async : false,
+					success : function(txt){
+						var html = "";
+						for(var i=0; i<txt; i++){
+							html += "<label><a onclick='page(this)'>"+(i+1)+"</a></label>&nbsp;";
+						}
+						$("#memPage").html(html);
+						$.ajax({
+							type : "post",
+							url : "/admin/total/"+select,
+							async : false,
+							success : function(txt){
+								$("#total").html(txt);
+							}
+						});
+					}
+				});
+			}
+		});
+	});
 	
 	function page(element){
 		var table = $("#memTable");

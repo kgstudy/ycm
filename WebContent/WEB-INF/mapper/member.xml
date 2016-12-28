@@ -2,7 +2,7 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 	<insert id="join" parameterType="java.util.HashMap">
-		insert into member values(#{id}, #{password}, #{name}, #{phone}, #{email}, 0, 'join', sysdate, null)
+		insert into member values(#{id}, #{password}, #{name}, #{phone}, #{email}, 0, 'join', sysdate, '없음')
 	</insert>
 	<update id="commit">
 		update member set grade = 'rookie' where id = #{id}

@@ -15,6 +15,7 @@ public class AdministratorController {
 	@Autowired
 	AdministratorService as;
 	
+	// 멤버 리스트
 	@RequestMapping("/other/{p}/{category}")
 	public ModelAndView other(@PathVariable(name="p")int p, @PathVariable(name="category")String category){
 		ModelAndView mav = new ModelAndView("/admin/ajaxMem.jsp");
@@ -22,6 +23,7 @@ public class AdministratorController {
 		return mav;
 	}
 
+	// 가입요청 멤버 리스트
 	@RequestMapping("/other/{p}")
 	public ModelAndView other2(@PathVariable(name="p")int p){
 		ModelAndView mav = new ModelAndView("/admin/ajaxMem2.jsp");
@@ -29,15 +31,35 @@ public class AdministratorController {
 		return mav;
 	}
 	
+	// 그룹지정
 	@RequestMapping("/group/{ar}/{group}")
 	@ResponseBody
 	public boolean group(@PathVariable(name="ar")String[] ar, @PathVariable(name="group")String group){
 		return as.group(ar, group);
 	}
 	
+	// 가입요청 수락
 	@RequestMapping("/accept/{ar}")
 	@ResponseBody
 	public boolean accept(@PathVariable(name="ar")String[] ar){
 		return as.accept(ar);
+	}
+	
+	// 멤버 사이즈
+	@RequestMapping("/size/{category}")
+	@ResponseBody
+	public int size(@PathVariable(name="category")String category){
+		return as.memberSize(category);
+	}
+	
+	// 총 회원수
+	@RequestMapping("/total/{category}")
+	@ResponseBody
+	public int total(@PathVariable(name="category")String category){
+		if(category.equals("빈 class 만")){
+			return as.size2();
+		} else {
+			return as.size();
+		}
 	}
 }
