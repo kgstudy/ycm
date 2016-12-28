@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="storage">
+	
+		<insert id="write" parameterType="java.util.HashMap">
+		insert into storage values
+		(STORAGE_SEQ.nextval, #{title }, #{content },#{id }
+		,sysdate,0,#{category})
+	</insert>
+	
+		<select id="pageNum" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+	<![CDATA[
+
+	select * from
+       (select rownum rnum, temp.* from	(
+		  select * from storage order by num desc
+	  ) temp ) temp2
+   	where temp2.rnum >=#{start} and temp2.rnum <=#{end}
+	]]>
+
+	</select>
+
+	<select id="modeNum" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+	<![CDATA[
+
+	select * from
+       (select rownum rnum, temp.* from	(
+		  select * from storage order by num desc
+	  ) temp ) temp2
+   	where temp2.rnum >=#{start} and temp2.rnum <=#{end} and category = #{mode }
+	]]>
+
+	</select>
+
+	<select id="pagesize" resultType="java.lang.Integer">
+		select count(*) from storage
+	</select>
+
+	<select id="capagesize" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		select count(*) from storage where category = #{mode}
+	</select>
+	
+		<select id="storagesearchmode" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+	<![CDATA[
+		select * from
+       (select rownum rnum, temp.* from	(
+		  select * from storage where (title like #{search } or content like #{search } ) and category = #{mode }  order by num desc
+	  ) temp ) temp2
+   	where temp2.rnum >=#{start } and temp2.rnum <= #{end }
+	
+	]]>
+	</select>
+
+	<select id="storagecategory" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+
+		select * from storage where category = #{category}
+	</select>
+
+	<select id="storagesearchmodesize" parameterType="java.util.HashMap"
+		resultType="java.lang.Integer">
+		select count(*) from storage where (title like #{search } or
+		content like #{search })and category = #{mode }
+	</select>
+
+	<select id="storagesearch" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+	<![CDATA[
+	select * from
+       (select rownum rnum, temp.* from	(
+		  select * from storage where  title like #{search } or content like #{search }  order by num desc
+	  ) temp ) temp2
+   	where temp2.rnum >=#{start } and temp2.rnum <=#{end }	
+	]]>
+	</select>
+
+	<select id="searchstoragesize" parameterType="java.util.HashMap"
+		resultType="java.lang.Integer">
+		select count(*) from storage where title like #{search } or
+		content like #{search }
+	</select>
+	
+</mapper>

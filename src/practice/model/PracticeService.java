@@ -30,14 +30,10 @@ public class PracticeService {
 			for(int i=0; i<ar.length; i++){
 				fos.write(ar[i]);
 			}
-			System.out.println("파일생성완료");
 			
 			ProcessBuilder builder = new ProcessBuilder("cmd", "/c", "javac", title+".java");
-			System.out.println("빌더생성");
 			builder.directory(new File(dir));
-			System.out.println("빌더 경로 설정");
 			Process process  = builder.start();
-			System.out.println("프로세스 실행");
 			process.waitFor();
 			BufferedReader error = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 			if(error.readLine() != null){

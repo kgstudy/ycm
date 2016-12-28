@@ -2,6 +2,9 @@ package question.model;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -22,19 +25,15 @@ public class QuestionService {
 	}
 	
 	//글 쓰기
-//	public boolean qwrite(HashMap map) {
-//		SqlSession session = fac.openSession();
-//		boolean r = session.insert("question.write", map) == 1 ? true : false;
-//		return r;
-//	}
-	//글 쓰기
-	public boolean qwrite(String title, String content, boolean check) {
+	public boolean qwrite(String title, HttpSession login, String content, boolean check) {
 		SqlSession session = fac.openSession();
 		HashMap map = new HashMap();
+		HashMap<String, String> smap = (HashMap)login.getAttribute("login");
+		String writer = smap.get("NAME");
 		map.put("title", title);
+		map.put("writer", writer);
 		map.put("content", content);
 		map.put("check", check);
-		System.out.println(title+"/"+content+"/"+check);
 		
 		try {
 			session.insert("question.write", map);
@@ -47,5 +46,13 @@ public class QuestionService {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	//글 읽기
+	public HashMap qBoard(int num) {
+		SqlSession session = fac.openSession();
+		HashMap map = session.selectOne("question.qBoard", num);
+		session.close();
+		return map;
 	}
 }

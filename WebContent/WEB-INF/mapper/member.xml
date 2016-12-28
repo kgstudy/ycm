@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
-
+	<insert id="join" parameterType="java.util.HashMap">
+		insert into member values(#{id}, #{password}, #{name}, #{phone}, #{email}, 0, 'join', sysdate, null)
+	</insert>
+	<update id="commit">
+		update member set grade = 'rookie' where id = #{id}
+	</update>
+	<select id="member" resultType="java.util.HashMap">
+		select * from member
+	</select>
+	<select id="login" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		select * from member where id = #{id} and password = #{password}
+	</select>
+	<select id="info" resultType="java.util.HashMap">
+		select * from member where id = #{id}
+	</select>
+	<select id="findId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from member where name = #{name} and email = #{email}
+	</select>
+	<update id="emailAuth" parameterType="java.util.HashMap">
+		update emailAuth set uuid = #{uuid} where name = #{name}
+	</update>
+	<select id="checkNum" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from emailAuth where name = #{name} and uuid = #{num}
+	</select>
+	<select id="findPw" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from member where id = #{id} and email = #{email}
+	</select>
+	<update id="emailAuth2" parameterType="java.util.HashMap">
+		update emailAuth2 set uuid = #{uuid} where id = #{id}
+	</update>
+	<select id="checkNum2" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from emailAuth2 where id = #{id} and uuid = #{num}
+	</select>
+	<update id="changePw" parameterType="java.util.HashMap">
+		update member set password = #{pw} where id = #{id}
+	</update>
 </mapper>

@@ -7,22 +7,52 @@ footer{
 	margin-top: 20px;
 	padding-top: 5px;
 }
-
+.clearfix{
+	clear: both;
+}
+div{
+	margin: 0px;
+	padding: 5px;
+}
+textarea{
+	width: 100%;
+}
+#sourceCodeWrap{
+	height : 100%;
+	display : inline-block;
+	border-left: 2px solid gray;
+}
 #problemView{
-	width : 500px;
+	width: 100%;
 	height: 300px;
-	background-color: #ececec;
+	
 }
 #consoleView{
-	width : 500px;
+	width : 100%;
 	height: 100px;
 	background-color: #FAECC5;
 }
 
 #rankView{
-	width : 500px;
+	width : 100%;
 	height: 200px;
 	background-color: #E4F7BA;
+}
+#controllBar{
+	width : 100%;
+	height : 5%;
+	background-color: #111111;
+}
+
+.headline{
+	width : 100%;
+	height : 20px;
+	background-color: #dfdfdf;
+}
+.examPre{
+	width: 100%;
+	height : 150px;
+	background-color: #efefef;
 }
 .correct{
 	color : blue;
