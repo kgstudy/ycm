@@ -19,17 +19,22 @@
 </c:if>
 
 <hr/>
-댓글나오기.... <br/>
 <form action="/comment/input" method="post">
 	<input type="hidden" name="num" value="${noticeview.NOTICE_NUM}"/> 
 	<input type="hidden" name="writer" value="${login.NAME}">
 	<input type="text" name="content" required="required"> <input type="submit"  class="btn btn-default" value="댓글등록" />
 </form> 
 <div>
-	foreach....<br/>
-	notice num으로 댓글 리스트.. 
-	등록된 댓글 수정,삭제 (등록한 사람이)
-	관리자는 전부 삭제버튼 잇고.. 
+	<c:forEach var="i" items="${commentlist}">
+		<font id="${i.COMMENT_NUM }_">- ${i.COMMENT_CONTENT}</font> 
+		<input type="text" value="${i.COMMENT_CONTENT }" style="display: none" id="${i.COMMENT_NUM }"/>
+			<c:if test="${login.ID==i.COMMENT_WRITER}">
+				<input type="button" class="btn btn-default" value="수정" id="recom${i.COMMENT_NUM }" onclick="recom(this)">
+				<input type="button" class="btn btn-default" value="완료" id="finish${i.COMMENT_NUM }"  style="display: none" onclick="finish(this)" >
+				<input type="button" class="btn btn-default" value="삭제" id="delete">
+			</c:if>
+		<br/>
+	</c:forEach>
 </div>
 
 
@@ -53,6 +58,29 @@
       
     </div>
   </div>
+  <script>
+  	function recom(element){
+  		var id = element.id.substring(element.id.indexOf('m')+1);
+  		$("#finish"+id).show();
+  		$("#"+element.id).hide();
+  		$("#delete").hide();
+  		$("#"+id).show();
+  		$("#"+id+"_").hide();
+  		/* alert($("#"+id).val()); */
+  	}
+  	
+  	function finish(element){
+  		var id = element.id.substring(element.id.indexOf('h')+1);
+  		$.ajax({
+  			type : "post",
+  			url : "/comment/recom/"+$("#"+id).val()+"/"+id,
+  			async : false,
+  			success : function(txt){
+  				alert(txt);
+  			}
+  		});
+  	}
+  </script>
   
  <script>
  function deleteYes() {

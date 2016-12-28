@@ -1,6 +1,7 @@
 package notice.model;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -12,6 +13,7 @@ public class CommentService {
 	@Autowired
 	SqlSessionFactory fac;
 	
+	// 댓글 등록하는거
 	public boolean commtentInput(int num, String content, String writer){
 		SqlSession ss = fac.openSession();
 		HashMap<String,Object> map = new HashMap<>();
@@ -30,4 +32,31 @@ public class CommentService {
 		}
 		return false;
 	}
+	
+	// 댓글 리스트 뿌리는거 
+	public List<HashMap> commentList(int num){
+		SqlSession ss = fac.openSession();
+		List<HashMap> list = ss.selectList("notice.comlist", num);
+		ss.close();
+		return list;
+	}
+	
+	// 댓글 수정하는거 
+	public boolean commentFinish(String content, int num){
+		SqlSession ss = fac.openSession();
+		HashMap<Object,Object> map = new HashMap<>();
+		map.put("num", num);
+		map.put("content", content);
+		int n = ss.update("notice.comupdate", map);
+		if(n>0){
+			ss.commit();
+			ss.close();
+			return true;
+		} else {
+			ss.rollback();
+			ss.close();
+			return false;
+		}
+	}
+	
 }
