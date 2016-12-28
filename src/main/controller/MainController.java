@@ -208,12 +208,14 @@ public class MainController {
 		ModelAndView mav = new ModelAndView("t:admin/admin");
 		List<HashMap> list = as.member(1, null);
 		List<HashMap> list2 = as.joinMember(1);
-		int size = as.memberSize();
+		int size = as.memberSize(null);
 		int size2 = as.joinMemSize();
+		int total = as.size();
 		mav.addObject("list", list);
 		mav.addObject("list2", list2);
 		mav.addObject("size", size);
 		mav.addObject("size2", size2);
+		mav.addObject("total", total);
 		return mav;
 	}
 }
