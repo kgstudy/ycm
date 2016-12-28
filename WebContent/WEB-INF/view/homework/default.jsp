@@ -34,7 +34,8 @@ label{
 		
 			<input type='hidden' name='writer' value='${login.ID }'>
 			<input type='hidden' name='loginClass' value='${login.CLASS }'>			
-			<input type='hidden' name='num' value='${pojo.num }' >					
+			<input type='hidden' name='num' value='${pojo.num }' >
+			<input type="hidden" value='${pojo.answer }'>				
 			 <label>제목 :</label><input id='title' type='text' name='title' value='${pojo.title }'
 				readonly="readonly" required><br />
 			<textarea id='problemView' name='content' readonly="readonly" style='width: 100%' >
@@ -60,12 +61,12 @@ label{
 <!-- SourceCode -->	
 	<div id='sourceCodeWrap' class='w3-col l7 m6' >
 		<label>Class Name &nbsp;&nbsp; : </label>
-		<input id='className' type="text" name="className" readonly="readonly" required value="${pojo.num }" ><br/>
+		<input id='className' type="text" name="className" readonly="readonly" required value="${pojo.className }" ><br/>
 		<label>Method Name : </label>
 		<input id='methodName' type="text" name="methodName" readonly="readonly"
-			 required value="${pojo.num }" style="margin-left: -2px;">
+			 required value="${pojo.methodName }" style="margin-left: -2px;">
 			 	
-		<textarea id='sourceCode' name='content' cols='80' rows='20' style='margin: 0px'>
+		<textarea id='sourceCode' name='source' cols='80' rows='20' style='margin: 0px'>
 			class Homework{
 				public static void main(String[] args){
 					System.out.println("Hello! WebCoding~~");
@@ -108,12 +109,13 @@ label{
 	var lastRank = 0;	
 	
 	var path = location.pathname.split("/");
+	var auth = path[2];
 	console.log(path);
 	console.log(path[2]);
 	console.log()
 	$(document).ready(function(){
 		console.log($("#headtemp").html());
-		switch(path[2]){
+		switch(auth){
 		case "admin" :
 			if (path[3] == 'writeForm') {
 				$("input[type='hidden'][name='num']").removeAttr("name");
@@ -247,7 +249,7 @@ label{
  		var className = $("#className").val();
  		var methodName = $("#methodName").val();
  		$.ajax({
-			url : "/hw/compile",
+			url : "/hw/"+auth+"/compile",
 			type : "post",
 			data : {
 				"java" : $answer,
@@ -257,12 +259,13 @@ label{
 			success : function(r){
 		 		$("#consoleView").empty();
 		 		$("#consoleView").append(r+"<br/>");
-		 		checkAnswer(r);
+		 		if(auth=="student")
+		 			checkAnswer(r);
 			}
 		});
 	}
 	function checkAnswer(r){ 		
-
+		var answer=$("#answer").val();
 		if(r==answer){
 			$("#consoleView").append("<span class='correct' >Correct!!!</span><br/>");
 			recordRank();
