@@ -5,6 +5,7 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.*;
 
 import admin.model.*;
 
@@ -15,9 +16,17 @@ public class AdministratorController {
 	AdministratorService as;
 	
 	@RequestMapping("/other/{p}/{category}")
-	@ResponseBody
-	public List<HashMap> other(@PathVariable(name="p")int p, @PathVariable(name="category")String category){
-		return as.member(p, category);
+	public ModelAndView other(@PathVariable(name="p")int p, @PathVariable(name="category")String category){
+		ModelAndView mav = new ModelAndView("/admin/ajaxMem.jsp");
+		mav.addObject("list", as.member(p, category));
+		return mav;
+	}
+
+	@RequestMapping("/other/{p}")
+	public ModelAndView other2(@PathVariable(name="p")int p){
+		ModelAndView mav = new ModelAndView("/admin/ajaxMem2.jsp");
+		mav.addObject("list2", as.joinMember(p));
+		return mav;
 	}
 	
 	@RequestMapping("/group/{ar}/{group}")
