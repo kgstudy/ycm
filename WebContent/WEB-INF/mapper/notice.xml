@@ -51,10 +51,17 @@
 	</select>
 	
 	
-	<!--  공지사항 댓글!!!  -->
+	<!--  공지사항 댓글등록  -->
 	<insert id="cominput" parameterType="java.util.HashMap">
 		insert into notice_comment values(#{writer},#{content},sysdate,comment_SEQ.nextval,#{num})
 	</insert> 
-	
-	
+	<!--  공지사항 댓글 리스트  -->
+	 <select id="comlist" resultType="java.util.HashMap">
+	 	select * from notice_comment where notice_num = #{num}
+	 </select>
+	 <!--  공지사항 댓글 수정하기 -->
+	 <update id="comupdate" parameterType="java.util.HashMap">
+		update notice_comment set comment_content = #{content} where comment_num = #{num}
+	</update>
+	 
 </mapper>

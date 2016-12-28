@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import notice.model.CommentService;
 import notice.model.NoticeService;
 
 @Controller
@@ -21,6 +22,8 @@ import notice.model.NoticeService;
 public class NoticeController {
 	@Autowired
 	NoticeService ns;
+	@Autowired
+	CommentService cs;
 	
 	// 공지 리스트 뿌리는거 
 	// 페이지처리, 이전다음, 검색 누르고 페이지 처리
@@ -103,7 +106,7 @@ public class NoticeController {
 	}
 	
 	// 공지 제목 눌렀을때 내용 보여주는거 + 조회수 올리는거 
-	// 여기도 페이지를..... 
+	// 댓글 리스트도 같이 넘김.
 	@RequestMapping("/view/{num}")
 	public ModelAndView noticeview(@PathVariable(name = "num") int num, HttpServletRequest req,
 			HttpServletResponse resp){
@@ -123,6 +126,7 @@ public class NoticeController {
 	         cc.setPath("/");
 	         resp.addCookie(cc);
 	      }
+	    mav.addObject("commentlist", cs.commentList(num));
 		mav.addObject("noticeview",ns.getOneByNum(num));
 		mav.setViewName("t:notice/view");
 		return mav;
