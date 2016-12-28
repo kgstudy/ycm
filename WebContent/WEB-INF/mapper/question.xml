@@ -20,4 +20,13 @@
 	<update id="upCount" parameterType="java.lang.Integer">
 		update question set count=count+1 where num=#{num}
 	</update>
+	
+	<!-- 댓글 목록 -->
+	<select id="Rlist" resultType="java.util.HashMap">
+		select * from question_reply1 order by num desc
+	</select>
+	<!-- 댓글 작성 -->
+	<insert id="Rwrite" parameterType="java.util.HashMap">
+		insert into question_reply1 values (QRNUM_SEQ.nextval, #{qnum}, #{qrwriter}, #{qrcontent}, sysdate)
+	</insert>
 </mapper>
