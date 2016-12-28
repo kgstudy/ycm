@@ -20,7 +20,16 @@
 <c:forEach var="q" items="${qread }">
 				<tr>
 					<td>${q.NUM }</td>
-					<td><a href="/question/writeBoard/${q.NUM }"><b>${q.TITLE }</b></a></td>
+					<td>
+					<c:choose>
+						<c:when test="${q.NAME ==  }">
+							<a href="/question/writeBoard/${q.NUM }"><b>${q.TITLE }</b></a>
+						</c:when>
+						<c:otherwise>
+							<b>${q.TITLE }</b>
+						</c:otherwise>
+					</c:choose>
+					</td>
 					<td>${q.WRITER }</td>
 					<td>${q.QDATE }</td>
 					<td>${q.COUNT }</td>
