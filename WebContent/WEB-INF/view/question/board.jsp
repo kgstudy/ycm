@@ -21,12 +21,32 @@
 				<tr>
 					<td>${q.NUM }</td>
 					<td>
+					<%-- 관리자 --%>
 					<c:choose>
-						<c:when test="${q.NAME ==  }">
+						<c:when test="${login.CLASS == 'master' }">
 							<a href="/question/writeBoard/${q.NUM }"><b>${q.TITLE }</b></a>
 						</c:when>
 						<c:otherwise>
-							<b>${q.TITLE }</b>
+							<%-- 관리자 이 외 --%>
+							<c:choose>
+								<%-- 비밀글 체크 시 --%>
+								<c:when test="${q.QCHECK == 1 }">
+									<c:choose>
+										<%-- 로그인한 이름과 작성자가 같을 때 --%>
+										<c:when test="${login.NAME == q.WRITER }">
+											<a href="/question/writeBoard/${q.NUM }"><b>${q.TITLE }</b></a>
+										</c:when>
+										<%-- 로그인한 이름과 같지 않을 때 --%>
+										<c:otherwise>
+											<b>${q.TITLE }</b>
+										</c:otherwise>
+									</c:choose>
+								</c:when>
+								<%-- 공개글일 때 --%>
+								<c:when test="${q.QCHECK == 0 }">
+									<a href="/question/writeBoard/${q.NUM }"><b>${q.TITLE }</b></a>
+								</c:when>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 					</td>
