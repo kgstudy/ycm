@@ -18,14 +18,15 @@ public class MemberController {
 	@Autowired
 	MemberService ms;
 	
-	@RequestMapping("/joinForm")
+	@RequestMapping("/join")
 	public String joinForm(){
 		return "t:join";
 	}
 	
-	@RequestMapping("/join/{id}/{password}/{name}/{phone}/{email}")
+	@RequestMapping("/join/{id}/{password}/{name}/{phone}")
+	@ResponseBody
 	public boolean join(@PathVariable(name="id")String id, @PathVariable(name="password")String password, @PathVariable(name="name")String name,
-									@PathVariable(name="phone")String phone, @PathVariable(name="email")String email){
+									@PathVariable(name="phone")String phone, @RequestParam(name="email")String email){
 		return ms.join(id, password, name, phone, email);
 	}
 	
@@ -55,5 +56,41 @@ public class MemberController {
 	public String logout(HttpSession session){
 		session.removeAttribute("login");
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/idcheck/{id}")
+	@ResponseBody
+	public boolean idCheck(@PathVariable(name="id")String id){
+		return ms.idCheck(id);
+	}
+	
+	@RequestMapping("/findId/{name}")
+	@ResponseBody
+	public boolean findId(@PathVariable(name="name")String name, @RequestParam(name="email")String email){
+		return ms.findId(name, email);
+	}
+	
+	@RequestMapping("/checkNum/{name}/{num}")
+	@ResponseBody
+	public String checkNum(@PathVariable(name="name")String name, @PathVariable(name="num")String num){
+		return ms.checkNum(name, num);
+	}
+	
+	@RequestMapping("/findPw/{id}")
+	@ResponseBody
+	public boolean findPw(@PathVariable(name="id")String id, @RequestParam(name="email")String email){
+		return ms.findPw(id, email);
+	}
+	
+	@RequestMapping("/checkNum2/{id}/{num}")
+	@ResponseBody
+	public boolean checkNum2(@PathVariable(name="id")String id, @PathVariable(name="num")String num){
+		return ms.checkNum2(id, num);
+	}
+	
+	@RequestMapping("/changePw/{id}/{pw}")
+	@ResponseBody
+	public boolean changePw(@PathVariable(name="id")String id, @PathVariable(name="pw")String pw){
+		return ms.changePw(id, pw);
 	}
 }

@@ -18,6 +18,7 @@
 	<context:component-scan base-package="practice"/>
 	<context:component-scan base-package="homework" />
 	<context:component-scan base-package="notice"/>
+	<context:component-scan base-package="storage"/>
 	<context:component-scan base-package="question"/>
 	<context:component-scan base-package="member"/>
 	
@@ -73,7 +74,7 @@
 	<bean
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
 		id="multipartResolver" />
-		
+				
 	<bean class="homework.websocket.HomeSocket" id="homeSocket" />
 	<websocket:handlers>
 		<websocket:mapping handler="homeSocket" path="/homework/homesocket"/>

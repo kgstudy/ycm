@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import notice.model.NoticeService;
@@ -30,8 +31,60 @@ public class NoticeController {
 		mav.addObject("noticelist",list);
 		mav.setViewName("t:notice/board");
 		return mav;
-	}*/
-
+	}*/ 
+	
+	// 공지에서 페이지 선택했을때
+	@RequestMapping("/page/{p}/{size}")
+	public ModelAndView page(@PathVariable(name = "p") int p,@PathVariable(name = "size") int endp){
+		ModelAndView mav = new ModelAndView();
+			List<HashMap> list = ns.noticesearch("",p);
+			int size = ns.getSPageSize("");
+			int lastsize = ns.getSPageSize("");
+			if(size > endp){
+				size=endp;
+			}
+		mav.addObject("lastsize",lastsize);
+		mav.addObject("size", size);
+		mav.addObject("noticelist",list);
+		mav.setViewName("t:notice/board");
+		
+		return mav;
+	}
+	
+	@RequestMapping("/search/{p}/{size}")
+	public ModelAndView page(@PathVariable(name = "p") int p,@PathVariable(name = "size") int endp, String search){
+		ModelAndView mav = new ModelAndView();
+			List<HashMap> list = ns.noticesearch(search,p);
+			int size = ns.getSPageSize(search);
+			int lastsize = ns.getSPageSize(search);
+			if(size > endp){
+				size=endp;
+			}
+		mav.addObject("lastsize",lastsize);
+		mav.addObject("size", size);
+		mav.addObject("noticelist",list);
+		mav.setViewName("t:notice/board");
+		return mav;
+	}
+	
+	// 공지사항에서 검색했을때.. 검색하고 페이지 선택했을때
+	@RequestMapping("/search")
+	public ModelAndView search(@RequestParam(defaultValue = "1") int p, @RequestParam(defaultValue = "5") int endp,String search){
+		ModelAndView mav = new ModelAndView();
+		List<HashMap> list = ns.noticesearch(search, p);
+		int size = ns.getSPageSize(search);
+		int lastsize = ns.getSPageSize(search);
+		if(size > endp){
+			size=endp;
+		}
+		mav.addObject("lastsize",lastsize);
+		mav.addObject("size", size);
+		mav.addObject("noticelist",list);
+		mav.setViewName("t:notice/board");
+		
+		return mav;
+	}
+	
 	@RequestMapping("/write") // 공지사항 글쓰기 버튼 눌렀을때 
 	public ModelAndView writeview(){
 		ModelAndView mav = new ModelAndView();
@@ -40,10 +93,9 @@ public class NoticeController {
 	}
 	
 	@RequestMapping("/input") //글등록이니까... DB에 저장! 
-	// 관리자 이름 넣는거 아직 안함
-	public ModelAndView noticeinput(String title, String content){
+	public ModelAndView noticeinput(String title, String content, String writer){
 		ModelAndView mav = new ModelAndView();
-		boolean b = ns.noticeInput(title, content);
+		boolean b = ns.noticeInput(title, content, writer);
 		if(b){
 			mav.setViewName("redirect:/notice");
 		}
@@ -87,9 +139,9 @@ public class NoticeController {
 	
 	// 공지 수정하고 글등록.
 	@RequestMapping("/reinput/{num}")
-	public ModelAndView reinput(@PathVariable(name = "num") int num, String title, String content){
+	public ModelAndView reinput(@PathVariable(name = "num") int num, String title, String content, String writer){
 		ModelAndView mav = new ModelAndView();
-		boolean b = ns.noticeUpdate(title, content, num);
+		boolean b = ns.noticeUpdate(title, content, num, writer);
 		if(b){
 			mav.setViewName("redirect:/notice");
 		}

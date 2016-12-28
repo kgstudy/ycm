@@ -2,8 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="tile" uri="http://tiles.apache.org/tags-tiles" %>
-
-<!DOCTYPE html>
 <html>
 <title>Yoon's Class Management</title>
 <meta charset="UTF-8">
@@ -38,7 +36,7 @@
 	<tile:insertAttribute name="header"/>
 
 	<!-- !PAGE CONTENT! -->
-	<div class="w3-main" style="margin-left: 340px; margin-right: 40px">
+	<div class="w3-main" style="margin: -13px 0 0 0;" >
 		<tile:insertAttribute name="article"/>
 		<!-- End page content -->
 	</div>

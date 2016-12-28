@@ -11,5 +11,7 @@
 	<definition name="t:hw/*" extends="t:hw">
 		<put-attribute name="article" value="/WEB-INF/view/homework/{1}.jsp"/>
 	</definition>
-	
+	<definition name="t:hw/*/*" extends="t:hw">
+		<put-attribute name="article" value="/WEB-INF/view/homework/{2}.jsp"/>
+	</definition>
 </tiles-definitions>
