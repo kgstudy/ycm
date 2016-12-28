@@ -119,4 +119,57 @@ public class AdministratorService {
 			return false;
 		}
 	}
+	
+	// 메뉴 위치 변경
+	public List<String> menu(String menu, String arrow){
+		SqlSession ss = fac.openSession();
+		String oldMenu = ss.selectOne("admin.menu");
+		String[] menus = oldMenu.split(",");
+		List<String> menuList = new Vector<>();
+		for(int i=0; i<menus.length; i++){
+			menuList.add(menus[i]);
+		}
+		if(menu==null || arrow==null){
+			return menuList;
+		} else {
+			if(arrow.equals("up")){
+				if(menu.equals(menus[0])){
+					ss.close();
+					return menuList;
+				} else {
+					return menuWork(ss, menuList, menu, -1);
+				}
+			} else{
+				if(menu.equals(menus[menus.length-1])){
+					ss.close();
+					return menuList;
+				} else {
+					return menuWork(ss, menuList, menu, 1);
+				}
+			}
+		}
+	}
+	
+	public List<String> menuWork(SqlSession ss, List<String> menuList, String menu, int a){
+		String newMenu = "";
+		int n = 0;
+		for(int i=0; i<menuList.size(); i++){
+			if(menu.equals(menuList.get(i))){
+				n = i;
+				break;
+			}
+		}
+		menuList.remove(menu);
+		menuList.add(n+a, menu);
+		for(int i=0; i<menuList.size(); i++){
+			newMenu += menuList.get(i);
+			if(i!=menuList.size()-1){
+				newMenu += ",";
+			}
+		}
+		ss.update("admin.menuUpdate", newMenu);
+		ss.commit();
+		ss.close();
+		return menuList;
+	}
 }

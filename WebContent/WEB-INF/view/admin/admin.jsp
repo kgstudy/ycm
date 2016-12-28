@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="w3-container" align="center">
 	<h2 style="margin-top: 100px; margin-bottom: 50px">Management</h2>
@@ -120,63 +121,29 @@
 		
 		<div id="Homepage" class="w3-container w3-border tab" style="display: none">
 			<div class="w3-row">
-				<div class="w3-col m3 l3 w3-padding w3-black" style="z-index: 3; font-weight: bold; height: 40%">
-					<label class="w3-padding w3-hover-gray">
-						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
-						<font style="color: white" id="homeM">Home</font>
-					</label><br/>
-					<label class="w3-padding w3-hover-gray">
-						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
-						<font style="color: white" id="noticeM">공지사항</font>
-					</label><br/>
-					<label class="w3-padding w3-hover-gray">
-						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
-						<font style="color: white" id="questionM">질문 게시판</font>
-					</label><br/>
-					<label class="w3-padding w3-hover-gray">
-						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
-						<font style="color: white" id="homeworkM">과제 게시판</font>
-					</label><br/>
-					<label class="w3-padding w3-hover-gray">
-						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
-						<font style="color: white" id="practiceM">코딩연습</font>
-					</label><br/>
-					<label class="w3-padding w3-hover-gray">
-						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
-						<font style="color: white" id="storageM">자료실</font>
-					</label><br/>
-					<label class="w3-padding w3-hover-gray">
-						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
-						<font style="color: white" id="videoM">동영상 자료실</font>
-					</label><br/>
-					<label onclick="dropM()" class="w3-padding w3-hover-gray">
-						<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
-						<font style="color: white" id="dropM">기수 게시판</font>
-					</label><br/>
-					<div id="classM" class="w3-dropdown-content w3-border" style='background-color: black'>
-				    	<label class="w3-hover-gray">
-				    		<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
-				    		<font style="color: white" id="class_1M">1기</font>
-						</label><br/>
-						<label class="w3-hover-gray">
-							<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
-							<font style="color: white" id="class_2M">2기</font>
-						</label><br/>
-						<label class="w3-hover-gray">
-							<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
-							<font style="color: white" id="class_3M">3기</font>
-						</label><br/>
-				    </div>
-				    <label class="w3-padding w3-hover-gray">
-				    	<input type="checkbox" class="w3-check"/>&nbsp;&nbsp;
-				    	<font style="color: white" id="adminM">관리자 전용</font>
-				    	</label>
+				<div class="w3-col m4 l4" style="padding-top: 10px">
+					<label><font style="font-size: 20px">Menu 위치변경</font></label><br/>
+					<table id="menuTable">
+						<c:forEach var="t" items="${menu }">
+							<tr>
+								<td>
+									<label><input type="radio" name="menuRadio" id="menu${t }"/>&nbsp;<font id="menu${t }_">${t }</font></label>
+								</td>
+							</tr>
+						</c:forEach>
+						<tr>
+							<td align="center">
+								<i class="fa fa-arrow-up" onclick="position(this)" id="up"></i>&nbsp;
+								<i class="fa fa-arrow-down" onclick="position(this)" id="down"></i>
+							</td>
+						</tr>
+					</table>
 				</div>
-				<div class="w3-col m4 l4">
-					<h3>Content</h3>
+				<div class="w3-col m4 l4" style="padding-top: 10px">
+					<label><font style="font-size: 20px">Menu 추가</font></label><br/>
 				</div>
-				<div class="w3-col m5 l5">
-					form
+				<div class="w3-col m4 l4" style="padding-top: 10px">
+					<label><font style="font-size: 20px">Menu 보이기 / 숨기기</font></label><br/>
 				</div>
 			</div>
 		</div>
@@ -198,6 +165,30 @@
 	var video = $("#video").html();
 	var classes = new Array($("#class_1").html(), $("#class_2").html(), $("#class_3").html());
 	var admin = $("#admin").html();
+	var menus = new Array($("#menuHome"), $("#menuNotice"), $("#menuQuestion"), $("#menuHomework"), $("#menuPractice"), $("#menuStorage"), $("#menuVideo"),
+											$("#menuClass"), $("#menuAdmin"));
+	
+	function position(element){
+		var arrow = element.id;
+		var menu = "";
+		for(var i=0; i<menus.length; i++){
+			if(menus[i].prop("checked")){
+				menu = $("#"+menus[i].prop("id")+"_").html();
+				break;
+			}
+		}
+		$.ajax({
+			type : "post",
+			url : "/admin/menu/"+menu+"/"+arrow,
+			async : false,
+			success : function(txt){
+				$("#menuTable").html(txt);
+				menus = new Array($("#menuHome"), $("#menuNotice"), $("#menuQuestion"), $("#menuHomework"), $("#menuPractice"), $("#menuStorage"), $("#menuVideo"),
+													$("#menuClass"), $("#menuAdmin"));
+				$("#menu"+menu).prop("checked", true);
+			}
+		});
+	}
 	
 	$("#select").change(function(){
 		var select = $("#select").val();

@@ -62,4 +62,12 @@ public class AdministratorController {
 			return as.size();
 		}
 	}
+	
+	// 메뉴 위치 변경
+	@RequestMapping("/menu/{menu}/{arrow}")
+	public ModelAndView menu(@PathVariable(name="menu")String menu, @PathVariable(name="arrow")String arrow){
+		ModelAndView mav = new ModelAndView("/admin/ajaxMenu.jsp");
+		mav.addObject("menu", as.menu(menu, arrow));
+		return mav;
+	}
 }
