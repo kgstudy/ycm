@@ -31,27 +31,39 @@ label{
 <div class = 'w3-container w3-row' style='margin : 0px; padding : 0px;'>
 	<form id='homeworkForm' >
 	<div id='problemViewWrap' class='w3-col l5 m6' >
-		
-			<input type='hidden' name='writer' value='${login.ID }'>
+			
+			<input type='submit' style="display: none; " >
+			<input type='hidden' name='writer' value='${login.ID }' required >
 			<input type='hidden' name='loginClass' value='${login.CLASS }'>			
 			<input type='hidden' name='num' value='${pojo.num }' >
-			<input type="hidden" value='${pojo.answer }'>				
+			<input type="hidden" value='${pojo.answer }'>
+			
 			 <label>제목 :</label><input id='title' type='text' name='title' value='${pojo.title }'
-				readonly="readonly" required><br />
-			<textarea id='problemView' name='content' readonly="readonly" style='width: 100%'
+				readonly="readonly" required ><br />	
+			
+			<div id="starEmpty" style="width: 80; overflow: hidden; 
+				background-image: url('/image/empty stars.jpg');
+					background-size: 80px 15px;" >
+				<div id="starScore" style="width: ${(80/5)*pojo.adminLevel }; height: 15; display: inline-block; 
+					background-image: url('/image/5 stars.jpg');
+					background-size: 80px 15px;" >
+					<input id="adminLevel" type="text" name="adminLevel" required value="${pojo.adminLevel }" 
+				 	style="height 0px; opacity: 0; position: absolute;" >
+				</div>
+			</div>
+			
+			<textarea id='problemView' name='content' readonly="readonly" style='width: 100%' required
 			 >${pojo.content }</textarea>
 			<br />
 			<section id='inputExam' class='w3-col l6 m12' >
 				<div class='headline'>입력 예제</div>
-				<textarea class='examPre' readonly="readonly" name='input'>
-					${pojo.input }
-				</textarea>
+				<textarea id='inputText' class='examPre' readonly="readonly" name='input'
+				>${pojo.input }</textarea>
 			</section>
 			<section id='outputExam' class='w3-col l6 m12' >
 				<div class='headline'>출력 예제</div>
-					<textarea class='examPre' readonly="readonly" name='output'>
-					${pojo.output }
-				</textarea>
+					<textarea id='outputText' class='examPre' readonly="readonly" name='output'
+					>${pojo.output }</textarea>
 			</section>
 			<br/>
 		<div id='rankView' class='w3-col l12' ></div>
@@ -63,7 +75,7 @@ label{
 		<input id='className' type="text" name="className" readonly="readonly" required value="${pojo.className }" ><br/>
 		<label>Method Name : </label>
 		<input id='methodName' type="text" name="methodName" readonly="readonly"
-			 required value="${pojo.methodName }" style="margin-left: -2px;">
+			 value="${pojo.methodName }" style="margin-left: -2px;">
 			 	
 		<textarea id='sourceCode' name='source' cols='80' rows='20' style='margin: 0px'
 		>${pojo.source }</textarea>	
@@ -116,8 +128,10 @@ label{
 				$("textarea, input[type='text']").attr("readonly", false).css("background-color", "white")
 					.css("border", "1px solid aqua");
 				$("#run").after("<input id='regist' type='button' value='글쓰기' >");
+				$("#starEmpty").on("click", function(e){
+					starScore(e);
+				});				
 				$("#regist").click(function(e) {
-					alert("submit");
 					insertHomework("write");					
 				});
 			}else if(path[3] == "read" ){
@@ -137,7 +151,10 @@ label{
 				console.log($("textarea"));
 				console.log($("input[type='text']"));
 				$("textarea, input[type='text']").attr("readonly", false).css("background-color", "white")
-					.css("border", "1px solid aqua");				 
+					.css("border", "1px solid aqua");
+				$("#starEmpty").on("click", function(e){
+					starScore(e);
+				});	
 				$("#modi > a").html("완료");
 				break;
 			case "완료":
@@ -161,21 +178,39 @@ label{
 	//Event Handler	
 	$('#deleteConfirm').click(function(e){
 		insertHomework("delete");
-	});
-	
+	});	
 	$("#run").on("click", function() {
 		compile();		
 	});
 	
+	$(document).on("keypress", ":input:not(textarea)", function(event) {
+	    return event.keyCode != 13;
+	});
+	
+	function starScore(e){
+		var adminLevel = parseInt(e.offsetX/16)+1;		
+		$("#starScore").animate({ width : 80*adminLevel/5 });
+		document.getElementById("adminLevel").value = adminLevel;
+		console.log($("#adminLevel").val());
+	}
 	
 	function insertHomework(insertType){
 		var hwData;
 		switch(insertType){
 		case "write":
+			$("#homeworkForm").submit(function(e){
+				e.preventDefault();
+			});
+			$("input[type='submit']").click();
 			hwData = $("#homeworkForm").serializeArray();
 			
 			break;
 		case "modify":
+				
+			$("#homeworkForm").submit(function(e){			
+				e.preventDefault();
+			});
+ 			$("input[type='submit']").click();		
 			hwData = $("#homeworkForm").serializeArray();
 			
 			break;
@@ -216,7 +251,7 @@ label{
 	  console.log(e.which);
 	  console.log(keyCode);
 	  if (keyCode == 9) {
-	    e.preventDefault();
+		e.preventDefault();
 	    var start = $(this).get(0).selectionStart;
 	    var end = $(this).get(0).selectionEnd;
 	
@@ -230,6 +265,7 @@ label{
 	    $(this).get(0).selectionEnd = start + 1;
 	  }
 	});
+	
 	function compile(){
 		var $answer = $("#sourceCode").val();
  		var className = $("#className").val();
@@ -238,7 +274,7 @@ label{
 			"java" : $answer,
 			"className" : className,
 			"methodName" : methodName,
-			"args" : "3,5"
+			"args" : $("#inputText").val()
 		}	
 		
 		
@@ -267,8 +303,8 @@ label{
 	}
 	
 	function recordRank(){
-		ws.send("aaa");
-		$("#rankView").append((lastRank+1), " aaa", "<br/>");
+		ws.send("${login.ID}");
+		$("#rankView").append((lastRank+1), " ${login.ID}", "<br/>");
 		lastRank++;
 	}
 	

@@ -25,7 +25,7 @@ public class StreamGobbler implements Runnable{
 				if(line.equals("start builder")){
 					
 				}
-				cSvc.result+=line;			    
+				cSvc.result+=line+"<br/>";			    
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
