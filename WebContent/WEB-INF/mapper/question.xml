@@ -25,11 +25,16 @@
 	<!-- 댓글1 -->
 	<!-- 댓글 목록 -->
 	<select id="Rlist" resultType="java.util.HashMap">
-		select * from question_reply1 order by qrnum desc
+		select * from question_reply1 where qnum=#{qnum} order by qrnum desc
 	</select>
 	
 	<!-- 댓글 작성 -->
 	<insert id="Rwrite" parameterType="java.util.HashMap">
 		insert into question_reply1 values (QRNUM_SEQ.nextval, #{qnum}, #{qrwriter}, #{qrcontent}, sysdate)
 	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="upReply1" parameterType="java.util.HashMap">
+		update question_reply1 set qrcontent=#{qrcontent} where qrnum=#{qrnum}
+	</update>
 </mapper>

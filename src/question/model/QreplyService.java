@@ -28,4 +28,11 @@ public class QreplyService {
 		session.close();
 		return r;
 	}
+	
+	//´ñ±Û ¼öÁ¤
+	public boolean upReply1(HashMap map) {
+		SqlSession session = fac.openSession();
+		boolean r = session.update("question.upReply1", map)==1? true : false;
+		return r;
+	}
 }
