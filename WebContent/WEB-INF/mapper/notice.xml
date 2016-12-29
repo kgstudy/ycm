@@ -31,6 +31,10 @@
 	<delete id="noticedelete" parameterType="java.lang.Integer">
 		delete notice where notice_num = #{num}
 	</delete>
+	<!--  공지 글 삭제할때 댓글도 삭제! -->
+	<delete id="nocomdelete" parameterType="java.lang.Integer">
+		delete notice_comment where notice_num = #{num}
+	</delete>
 	
 	<!-- 공지사항 글 검색하기 제목 + 내용 페이지-->
 	<select id="noticesearch" resultType="java.util.HashMap"
@@ -63,5 +67,8 @@
 	 <update id="comupdate" parameterType="java.util.HashMap">
 		update notice_comment set comment_content = #{content} where comment_num = #{num}
 	</update>
-	 
+	<!--  댓글 삭제 하기  -->
+	 <delete id="comdelete" parameterType="java.lang.Integer">
+		delete notice_comment where comment_num = #{comnum}
+	</delete>
 </mapper>
