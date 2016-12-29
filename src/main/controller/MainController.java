@@ -193,10 +193,10 @@ public class MainController {
 		}
 	}
 
-	@RequestMapping("/video")
+	/*@RequestMapping("/video")
 	public String video(){
 		return "t:video/board";
-	}
+	}*/
 	@RequestMapping("/classes")
 	public String classes(){
 		return "t:classes/board";
