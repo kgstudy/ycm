@@ -12,5 +12,11 @@
 <div style="padding-left:5%;">
 	<h4>댓글</h4>
 	<b>${qBoard.WRITER }</b><br/>
-	<textarea rows="3" placeholder="내용을 입력하세요.." cols="60%" style="resize:none; vertical-align:middle; "></textarea><input type="submit" style="height:72px; vertical_align:middle;" value="등록"/>
+	<textarea rows="3" placeholder="내용을 입력하세요." cols="60%" style="resize:none; vertical-align:middle; "></textarea><input type="submit" style="height:72px; vertical_align:middle;" value="등록"/>
+</div>
+<hr/>
+<div style="padding-left:5%;">
+	<b>${qReply1.QRWRITER }</b> (${qReply1.QRDATE })<br/>
+	${qReply1.QRCONTENT }
+	<hr/>
 </div>
