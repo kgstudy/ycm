@@ -12,6 +12,7 @@
 <tr>
 	<td align="center">
 		<i class="fa fa-arrow-up" onclick="position(this)" id="up"></i>&nbsp;
-		<i class="fa fa-arrow-down" onclick="position(this)" id="down"></i>
+		<i class="fa fa-arrow-down" onclick="position(this)" id="down"></i>&nbsp;
+		<input type="button" class="btn btn-default" value="적용" onclick="menuCommit()"/>
 	</td>
 </tr>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="t:index" template="/WEB-INF/view/main/templete.jsp">
+		<put-attribute name="title" value="Yoon's Class Management"/>
+		<put-attribute name="sideNav" value="/WEB-INF/view/main/sideNav.jsp"/>
+		<put-attribute name="article" value="/WEB-INF/view/main/article.jsp"/>
+	</definition>
+	
+	<definition name="t:video/*" extends="t:index">
+		<put-attribute name="article" value="/WEB-INF/view/video/{1}.jsp"/>
+	</definition>
+	
+</tiles-definitions>

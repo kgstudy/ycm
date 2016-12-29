@@ -40,7 +40,9 @@
 <%-- 		</c:forEach> --%>
 	</div>
 	<div align="right">
-		<a href='/hw/admin/writeForm' ><input id='quizWrite' type="button" class="btn btn-default" value="글작성"/></a>
+		<c:if test="${login.CLASS=='master' }">
+			<a href='/hw/admin/writeForm' ><input id='quizWrite' type="button" class="btn btn-default" value="글작성"/></a>
+		</c:if>		
 	</div>
 	<div align="center">
 		<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px"/>&nbsp;&nbsp;

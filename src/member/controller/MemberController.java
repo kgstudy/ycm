@@ -49,6 +49,7 @@ public class MemberController {
 		List<HashMap> list = ms.endLogin(id);
 		mav.addObject("list", list);
 		session.setAttribute("login", list.get(0));
+		List<HashMap> list2 = ms.menu();
 		return mav;
 	}
 	

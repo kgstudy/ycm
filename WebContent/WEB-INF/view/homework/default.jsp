@@ -38,9 +38,8 @@ label{
 			<input type="hidden" value='${pojo.answer }'>				
 			 <label>제목 :</label><input id='title' type='text' name='title' value='${pojo.title }'
 				readonly="readonly" required><br />
-			<textarea id='problemView' name='content' readonly="readonly" style='width: 100%' >
-				${pojo.content }
-			</textarea>
+			<textarea id='problemView' name='content' readonly="readonly" style='width: 100%'
+			 >${pojo.content }</textarea>
 			<br />
 			<section id='inputExam' class='w3-col l6 m12' >
 				<div class='headline'>입력 예제</div>
@@ -66,9 +65,8 @@ label{
 		<input id='methodName' type="text" name="methodName" readonly="readonly"
 			 required value="${pojo.methodName }" style="margin-left: -2px;">
 			 	
-		<textarea id='sourceCode' name='source' cols='80' rows='20' style='margin: 0px'>
-			${pojo.source }			
-		</textarea>	
+		<textarea id='sourceCode' name='source' cols='80' rows='20' style='margin: 0px'
+		>${pojo.source }</textarea>	
 		<br/>
 		
 		<div id='consoleView' ></div>
@@ -175,19 +173,11 @@ label{
 		switch(insertType){
 		case "write":
 			hwData = $("#homeworkForm").serializeArray();
-			var source = {
-				name : "source",
-				value : $(sourceCode).val()
-			};
-			hwData.push(source);
+			
 			break;
 		case "modify":
 			hwData = $("#homeworkForm").serializeArray();
-			var source = {
-				name : "source",
-				value : $(sourceCode).val()
-			};
-			hwData.push(source);
+			
 			break;
 		case "delete":
 			hwData = { num : $("input[type='hidden'][name='num']").val() };
@@ -262,13 +252,13 @@ label{
 		 		$("#consoleView").empty();
 		 		$("#consoleView").append(r.result+"<br/>");
 		 		if(auth=="student")
-		 			checkAnswer(r);
+		 			checkAnswer(r.check);
 			}
 		});
 	}
 	function checkAnswer(r){ 		
 		var answer=$("#answer").val();
-		if(r==answer){
+		if(r){
 			$("#consoleView").append("<span class='correct' >Correct!!!</span><br/>");
 			recordRank();
 		}else{
