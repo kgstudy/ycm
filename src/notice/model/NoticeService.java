@@ -80,6 +80,7 @@ public class NoticeService {
 			SqlSession ss = fac.openSession();
 			int i = ss.delete("notice.noticedelete", num);
 			if(i!=0){	// 글 삭제 성공했을때 
+				ss.delete("notice.nocomdelete", num);
 				ss.commit();
 				ss.close();
 				return true;
