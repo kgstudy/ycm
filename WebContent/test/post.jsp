@@ -12,6 +12,5 @@
 		<source src="/video/73427908-673d-47fe-868d.wmv">
 	</video>
 	<img src="/video/intro.png"/>
-	<c:import url="/test/aa.jsp"/>
 </body>
 </html>
