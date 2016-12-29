@@ -59,4 +59,19 @@ public class CommentService {
 		}
 	}
 	
+	// 댓글 삭제하는거
+	public boolean commentDelete(int comnum){
+		SqlSession ss = fac.openSession();
+		int i = ss.delete("notice.comdelete", comnum);
+		if(i!=0){	// 삭제 성공했을때 
+			ss.commit();
+			ss.close();
+			return true;
+		}else{
+			ss.rollback();
+			ss.close();
+			return false;
+		}
+	}
+	
 }
