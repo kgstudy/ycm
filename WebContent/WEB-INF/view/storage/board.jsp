@@ -36,6 +36,7 @@
 				<td><label>Title</label></td>
 				<td><label>Writer</label></td>
 				<td><label>Date</label></td>
+				<td><label>Download</label></td>
 				<td><label>Count</label></td>
 			</tr>
 		</thead>
@@ -44,10 +45,10 @@
 				<tr align="center">
 					<td align="center"><label>${storage.NUM }</label></td>
 					<td align="center"><label>${storage.CATEGORY }</label></td>
-					<td><label><a
-							href="/storage/storagedetails/${storage.NUM }?pn=${storagesetlist}">${storage.TITLE }</a></label></td>
+					<td><label>${storage.TITLE }</label></td>
 					<td><label>${storage.ID }</label></td>
 					<td><label>${storage.TIME }</label></td>
+					<td><input type="button" value="내려받기" class="btn btn-default" />
 					<td><label>${storage.COUNT }</label></td>
 			</c:forEach>
 		</tbody>

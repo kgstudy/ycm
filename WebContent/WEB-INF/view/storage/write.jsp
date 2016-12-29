@@ -24,10 +24,12 @@
 			<label for="title" style="width: 15%"><font size="4">제목</font></label>
 			<input type="text" id="title" name="title"
 					class="form-control" style="width: 25%" placeholder="제목을 입력하세요." required="required"/><br/>
-			<label for="content" style="width: 15%"><font size="4">내용</font></label><br/>
-			<textarea rows="10" cols="100" style="width: 50%; resize: none;" placeholder="내용을 입력하세요." name="content" required="required"></textarea><br/><br/>
+			<label for="content" style="width: 15%"><font size="4">파일 올리기</font></label><br />
+			<input type="file" name="content"><br />
 			<input type="submit" class="btn btn-default" value="등록" />&nbsp;&nbsp;
 			<input type="button" class="btn btn-default" value="취소" onclick="javascript:location.href='/storage'"/>
 		</div>
+		
+		
 	</form>
 </div>
