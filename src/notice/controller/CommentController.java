@@ -25,7 +25,7 @@ public class CommentController {
 		ModelAndView mav = new ModelAndView();
 		boolean b = cs.commtentInput(num, content, writer);
 		if(b){
-			mav.setViewName("t:notice/board");
+			mav.setViewName("redirect:/notice/view/"+num);
 		}else{
 			mav.addObject("commentfail", "commentfail");
 		}
