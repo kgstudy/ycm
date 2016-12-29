@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import homework.model.CheckAnswer;
@@ -26,14 +27,19 @@ public class SourceCompileController {
 	
 	@RequestMapping("/student/compile")
 	@ResponseBody
-	public Map studentCompile(HttpSession session, HttpServletRequest req, String java, String className, String methodName){
+	public Map studentCompile(HttpSession session, HttpServletRequest req,
+						String java, String className, String methodName, String args){
 		String ip = req.getRemoteAddr().replace(".", "");		
-		return ca.check(java, className, methodName, context.getRealPath("/classpath"), ip);
+		return ca.check(java, className, methodName, context.getRealPath("/classpath"), ip, args);
 	}
 	@RequestMapping("/admin/compile")
 	@ResponseBody
-	public Map adminCompile(HttpSession session, HttpServletRequest req, String java, String className, String methodName){
+	public Map adminCompile(HttpSession session, HttpServletRequest req,
+						String java, String className, String methodName, String args){
+		System.out.println("Method : "+methodName);
+		System.out.println("args : "+args);
+		System.out.println("class: "+className);
 		String ip = req.getRemoteAddr().replace(".", "");		
-		return ca.compile(java, className, methodName, context.getRealPath("/classpath"), ip);
+		return ca.compile(java, className, methodName, context.getRealPath("/classpath"), args);
 	}
 }

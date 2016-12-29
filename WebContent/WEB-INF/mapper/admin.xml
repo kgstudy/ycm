@@ -31,4 +31,10 @@
 	<select id="size2" resultType="java.lang.Integer">
 		select count(*) from member where class='없음'
 	</select>
+	<select id="menu" resultType="java.lang.String">
+		select * from menu
+	</select>
+	<update id="menuUpdate" parameterType="java.lang.String">
+		update menu set menu = #{newMenu}
+	</update>
 </mapper>

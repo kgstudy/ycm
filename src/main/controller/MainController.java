@@ -1,8 +1,6 @@
 package main.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -216,6 +214,8 @@ public class MainController {
 		mav.addObject("size", size);
 		mav.addObject("size2", size2);
 		mav.addObject("total", total);
+		List<String> menu = as.menu(null, null);
+		mav.addObject("menu", menu);
 		return mav;
 	}
 }

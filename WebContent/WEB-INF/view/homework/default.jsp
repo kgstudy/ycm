@@ -67,11 +67,7 @@ label{
 			 required value="${pojo.methodName }" style="margin-left: -2px;">
 			 	
 		<textarea id='sourceCode' name='source' cols='80' rows='20' style='margin: 0px'>
-			class Homework{
-				public static void main(String[] args){
-					System.out.println("Hello! WebCoding~~");
-				}
-			}
+			${pojo.source }			
 		</textarea>	
 		<br/>
 		
@@ -248,17 +244,23 @@ label{
 		var $answer = $("#sourceCode").val();
  		var className = $("#className").val();
  		var methodName = $("#methodName").val();
- 		$.ajax({
+		var sourceData = {
+			"java" : $answer,
+			"className" : className,
+			"methodName" : methodName,
+			"args" : "3,5"
+		}	
+		
+		
+		console.log(sourceData);
+		$.ajax({
 			url : "/hw/"+auth+"/compile",
 			type : "post",
-			data : {
-				"java" : $answer,
-				"className" : className,
-				"methodName" : methodName
-			},
+			data : sourceData,
 			success : function(r){
+				console.log(r);				
 		 		$("#consoleView").empty();
-		 		$("#consoleView").append(r+"<br/>");
+		 		$("#consoleView").append(r.result+"<br/>");
 		 		if(auth=="student")
 		 			checkAnswer(r);
 			}

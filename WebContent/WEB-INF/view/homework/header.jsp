@@ -8,13 +8,13 @@
 </style>
 <nav class="navbar navbar-default" style='margin : 0px;'>
   <div class="container-fluid">
-    <div class="navbar-header">
+    <div class="navbar-header" style="border-bottom: 2px solid #efefef">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
 				data-target="#myNavbar">
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/member/login">Yoon's Class</a>
+			<a class="navbar-brand" href="/member/login" >Yoon's Class</a>
 	</div>
 	<div class="collapse navbar-collapse" id="myNavbar">
 	    <ul id='homeworkNav' class="nav navbar-nav">

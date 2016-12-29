@@ -5,16 +5,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.lang.ProcessBuilder.Redirect;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Scanner;
-
-import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
+import java.util.List;
+import java.util.Vector;
 
 import org.springframework.stereotype.Component;
 
@@ -24,13 +18,13 @@ public class CompileService {
 	static final String JAVA_HOME = System.getenv().get("JAVA_HOME");	
 	static String result = "";
 	
-	public String javaCompile(String java, String className, String methodName, String classPath) {
-		return javaCompile(java, className, methodName, classPath, true);
+	public String javaCompile(String java, String className, String methodName, String classPath, String args) {
+		return javaCompile(java, className, methodName, classPath, args, true);
 	}
-	public String getAnswer(String java, String className, String methodName, String classPath) {
-		return javaCompile(java, className, methodName, classPath, false);
+	public String getAnswer(String java, String className, String methodName, String classPath, String args) {
+		return javaCompile(java, className, methodName, classPath, args, false);
 	}
-	public String javaCompile(String java, String className, String methodName, String classPath, boolean comp) {
+	public String javaCompile(String java, String className, String methodName, String classPath, String args, boolean comp) {
 		
 		BufferedWriter bw = null;
 		BufferedReader error = null;
@@ -76,11 +70,27 @@ public class CompileService {
 			}
 
 // class run
-			String[] args = {
-					
-			};
-			builder = new ProcessBuilder("java", "-classpath", dir.toString(), className);
+			String[] ar = args.split(",");			
 			
+			
+			List list = new Vector<String>();
+			list.add("java");			
+			list.add("-classpath");
+			list.add(dir.toString());
+			list.add(className);
+			for(String str : ar){
+				try{
+					int num = Integer.parseInt(str);
+					System.out.println("parse: "+num);
+					list.add(num);
+				}catch(Exception e){
+					System.out.println("parse: "+str);
+					list.add(str);
+				}				
+			}
+			
+//			builder = new ProcessBuilder("java", "-classpath", dir.toString(), className);
+			builder = new ProcessBuilder(list);
 			ps = builder.start();
 			
 			OutputStreamWriter stdin = new OutputStreamWriter(ps.getOutputStream());
