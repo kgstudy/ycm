@@ -8,7 +8,7 @@
 	<div class="w3-container" style="width: 100%;">
 		<ul class="w3-navbar w3-black">
 			<li><a href="javascript:void(0)" class="tablink w3-red" onclick="openTab(event, 'Student');"><font style="color: white" id="StudentFont" class="font">Student</font></a></li>
-			<li><a href="javascript:void(0)" class="tablink" onclick="openTab(event, 'Homepage');"><font style="color: red" id="HomepageFont" class="font">Homepage</font></a></li>
+			<li><a href="javascript:void(0)" class="tablink" onclick="openTab(event, 'Menu');"><font style="color: red" id="MenuFont" class="font">Menu</font></a></li>
 			<li><a href="javascript:void(0)" class="tablink" onclick="openTab(event, 'Tokyo');"><font style="color: red" id="TokyoFont" class="font">Tokyo</font></a></li>
 		</ul>
 		
@@ -53,8 +53,9 @@
 						<c:forEach var="t" begin="1" end="${size }">
 							<label><a onclick="page(this)">${t }</a></label>
 						</c:forEach>
-					</span>
+					</span><br/>
 				</div>
+				<hr class="w3-hide-large w3-hide-medium" style="border: solid black 1px"/>
 				<div class="w3-col s12 m4 l4" style="padding-top: 10px">
 					<label><font style="font-size: 20px">그룹 지정</font></label><br/>
 					<label>아이디</label><br/>
@@ -62,8 +63,9 @@
 					<label>Class</label><br/>
 					<input type="text" id="g_name" style="width: 60%"><br/><br/>
 					<input type="button" value="확인" id="g_btn" class="btn btn-default"/><br/>
-					<span id="g_btn_rst" style="display: none"></span>
+					<span id="g_btn_rst" style="display: none"></span><br/>
 				</div>
+				<hr class="w3-hide-large w3-hide-medium" style="border: solid black 1px"/>
 				<div class="w3-col s12 m4 l4" style="padding-top: 10px">
 					<label><font style="font-size: 20px">가입 요청 리스트</font></label><br/>
 					<c:choose>
@@ -119,10 +121,10 @@
 			</div>
 		</div>
 		
-		<div id="Homepage" class="w3-container w3-border tab" style="display: none">
+		<div id="Menu" class="w3-container w3-border tab" style="display: none">
 			<div class="w3-row">
 				<div class="w3-col m4 l4" style="padding-top: 10px">
-					<label><font style="font-size: 20px">Menu 위치변경</font></label><br/>
+					<label><font style="font-size: 20px">위치변경</font></label><br/>
 					<table id="menuTable">
 						<c:forEach var="t" items="${menu }">
 							<tr>
@@ -134,16 +136,27 @@
 						<tr>
 							<td align="center">
 								<i class="fa fa-arrow-up" onclick="position(this)" id="up"></i>&nbsp;
-								<i class="fa fa-arrow-down" onclick="position(this)" id="down"></i>
+								<i class="fa fa-arrow-down" onclick="position(this)" id="down"></i>&nbsp;
+								<input type="button" class="btn btn-default" value="적용"/><br/>
+								<span id="menuRst" style="display: none"><font style="color: red">메뉴를 선택해주세요.</font></span>
 							</td>
 						</tr>
-					</table>
+					</table><br/>
 				</div>
+				<hr class="w3-hide-large w3-hide-medium" style="border: solid black 1px"/>
 				<div class="w3-col m4 l4" style="padding-top: 10px">
-					<label><font style="font-size: 20px">Menu 추가</font></label><br/>
+					<label><font style="font-size: 20px">추가</font></label><br/>
+					<label>메뉴 이름</label><br/>
+					<input type="text" style="width: 60%" id="newMenuName"/><br/><br/>
+					<input type="button" class="btn btn-default" value="추가" id="addMenu"/><br/><br/>
+					<label><font style="font-size: 20px">삭제</font></label><br/>
+					<label>메뉴 이름</label><br/>
+					<input type="text" style="width: 60%" id="removeMenuName"/><br/><br/>
+					<input type="button" class="btn btn-default" value="삭제" id="removeMenu"/><br/><br/>
 				</div>
+				<hr class="w3-hide-large w3-hide-medium" style="border: solid black 1px"/>
 				<div class="w3-col m4 l4" style="padding-top: 10px">
-					<label><font style="font-size: 20px">Menu 보이기 / 숨기기</font></label><br/>
+					<label><font style="font-size: 20px">보이기 / 숨기기</font></label><br/>
 				</div>
 			</div>
 		</div>
@@ -165,29 +178,85 @@
 	var video = $("#video").html();
 	var classes = new Array($("#class_1").html(), $("#class_2").html(), $("#class_3").html());
 	var admin = $("#admin").html();
-	var menus = new Array($("#menuHome"), $("#menuNotice"), $("#menuQuestion"), $("#menuHomework"), $("#menuPractice"), $("#menuStorage"), $("#menuVideo"),
-											$("#menuClass"), $("#menuAdmin"));
+	var menus = new Array();
+	
+	window.onload = function(){
+		$.ajax({
+			type : "post",
+			url : "/admin/menu",
+			async : false,
+			success : function(txt){
+				for(var i=0; i<txt.length; i++){
+					menus[i] = $("#menu"+txt[i]);
+				}
+			}
+		});
+	}
+	
+	$("#addMenu").click(function(){
+		var name = $("#newMenuName").val();
+		$.ajax({
+			type : "post",
+			url : "/admin/menu/new/"+name,
+			async : false,
+			success : function(txt){
+				$("#menuTable").html(txt);
+				menus = new Array();
+				$.ajax({
+					type : "post",
+					url : "/admin/menu",
+					async : false,
+					success : function(txt){
+						for(var i=0; i<txt.length; i++){
+							menus[i] = $("#menu"+txt[i]);
+						}
+					}
+				});
+				menus[menus.length] = $("#menu"+name);
+				$("#newMenuName").val("");
+			}
+		});
+	});
+	
+	function menuCommit(){
+		location.href="/member/login";
+	}
 	
 	function position(element){
 		var arrow = element.id;
 		var menu = "";
+		var b = false;
 		for(var i=0; i<menus.length; i++){
 			if(menus[i].prop("checked")){
 				menu = $("#"+menus[i].prop("id")+"_").html();
+				b = true;
+				$("#menuRst").hide();
 				break;
 			}
 		}
-		$.ajax({
-			type : "post",
-			url : "/admin/menu/"+menu+"/"+arrow,
-			async : false,
-			success : function(txt){
-				$("#menuTable").html(txt);
-				menus = new Array($("#menuHome"), $("#menuNotice"), $("#menuQuestion"), $("#menuHomework"), $("#menuPractice"), $("#menuStorage"), $("#menuVideo"),
-													$("#menuClass"), $("#menuAdmin"));
-				$("#menu"+menu).prop("checked", true);
-			}
-		});
+		if(b){
+			$.ajax({
+				type : "post",
+				url : "/admin/menu/"+menu+"/"+arrow,
+				async : false,
+				success : function(txt){
+					$("#menuTable").html(txt);
+					$.ajax({
+						type : "post",
+						url : "/admin/menu",
+						async : false,
+						success : function(txt){
+							for(var i=0; i<txt.length; i++){
+								menus[i] = $("#menu"+txt[i]);
+							}
+						}
+					});
+					$("#menu"+menu).prop("checked", true);
+				}
+			});
+		} else {
+			$("#menuRst").show();
+		}
 	}
 	
 	$("#select").change(function(){
@@ -342,6 +411,7 @@
 			} else {
 				id = ", "+$("#"+id+"_").html();
 			}
+// 			id += "<a onclick='delete(this)' id='"+id+"'>x</a>";
 			$("#g_id").val(g_id+id);
 		}
 	}

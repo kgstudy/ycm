@@ -150,6 +150,42 @@ public class AdministratorService {
 		}
 	}
 	
+	// 메뉴 추가
+	public List<String> newMenu(String name){
+		SqlSession ss = fac.openSession();
+		String menu = ss.selectOne("admin.menu");
+		String[] ar = menu.split(",");
+		List<String> list = new Vector<>();
+		for(String s : ar){
+			list.add(s);
+		}
+		menu += ","+name;
+		int n = ss.update("admin.menuUpdate", menu);
+		if(n>0){
+			list.add(name);
+			ss.commit();
+			ss.close();
+		} else {
+			ss.rollback();
+			ss.close();
+		}
+		return list;
+	}
+	
+	// 메뉴 리스트
+	public List<String> menuList(){
+		SqlSession ss = fac.openSession();
+		String menu = ss.selectOne("admin.menu");
+		String[] ar = menu.split(",");
+		List<String> list = new Vector<>();
+		for(String s : ar){
+			list.add(s);
+		}
+		ss.close();
+		return list;
+	}
+	
+	// 메뉴 위치변경 내부메서드
 	public List<String> menuWork(SqlSession ss, List<String> menuList, String menu, int a){
 		String newMenu = "";
 		int n = 0;
