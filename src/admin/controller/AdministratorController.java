@@ -70,4 +70,19 @@ public class AdministratorController {
 		mav.addObject("menu", as.menu(menu, arrow));
 		return mav;
 	}
+	
+	// 메뉴 추가
+	@RequestMapping("/menu/new/{name}")
+	public ModelAndView newMenu(@PathVariable(name="name")String name){
+		ModelAndView mav = new ModelAndView("/admin/ajaxMenu.jsp");
+		mav.addObject("menu", as.newMenu(name));
+		return mav;
+	}
+	
+	// 메뉴 리스트
+	@RequestMapping("/menu")
+	@ResponseBody
+	public List<String> menuList(){
+		return as.menuList();
+	}
 }
