@@ -185,6 +185,58 @@ public class AdministratorService {
 		return list;
 	}
 	
+	// 메뉴 삭제
+	public List<String> removeMenu(String name){
+		SqlSession ss = fac.openSession();
+		String menu = ss.selectOne("admin.menu");
+		String[] ar = menu.split(",");
+		List<String> list = new Vector<>();
+		for(int i=0; i<ar.length; i++){
+			if(ar[i].equals(name)){
+				continue;
+			} else {
+				list.add(ar[i]);
+			}
+		}
+		menu = "";
+		for(int i=0; i<list.size(); i++){
+			menu += list.get(i);
+			if(i!=list.size()-1){
+				menu += ",";
+			}
+		}
+		int n = ss.update("admin.menuUpdate", menu);
+		if(n>0){
+			ss.commit();
+			menu = ss.selectOne("admin.menu");
+			ar = menu.split(",");
+			list = new Vector<>();
+			for(String s : ar){
+				list.add(s);
+			}
+			ss.close();
+			return list;
+		} else {
+			ss.rollback();
+			menu = ss.selectOne("admin.menu");
+			ar = menu.split(",");
+			list = new Vector<>();
+			for(String s : ar){
+				list.add(s);
+			}
+			ss.close();
+			return list;
+		}
+	}
+	
+	// Class 메뉴
+	public List<HashMap> classList(){
+		SqlSession ss = fac.openSession();
+		List<HashMap> list= ss.selectList("admin.classList");
+		ss.close();
+		return list;
+	}
+	
 	// 메뉴 위치변경 내부메서드
 	public List<String> menuWork(SqlSession ss, List<String> menuList, String menu, int a){
 		String newMenu = "";

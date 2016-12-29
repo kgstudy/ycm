@@ -85,4 +85,12 @@ public class AdministratorController {
 	public List<String> menuList(){
 		return as.menuList();
 	}
+	
+	// 메뉴 삭제
+	@RequestMapping("/removeMenu/{name}")
+	public ModelAndView removeMenu(@PathVariable(name="name")String name){
+		ModelAndView mav = new ModelAndView("/admin/ajaxMenu.jsp");
+		mav.addObject("menu", as.removeMenu(name));
+		return mav;
+	}
 }

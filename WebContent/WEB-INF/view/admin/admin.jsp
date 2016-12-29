@@ -148,15 +148,20 @@
 					<label><font style="font-size: 20px">추가</font></label><br/>
 					<label>메뉴 이름</label><br/>
 					<input type="text" style="width: 60%" id="newMenuName"/><br/><br/>
-					<input type="button" class="btn btn-default" value="추가" id="addMenu"/><br/><br/>
+					<input type="button" class="btn btn-default" value="추가" id="addMenu"/><br/>
+					<span id="addMenuSpan" style="display: none"><font style="color: red">메뉴 이름을 입력해주세요.</font></span><br/><br/>
 					<label><font style="font-size: 20px">삭제</font></label><br/>
 					<label>메뉴 이름</label><br/>
 					<input type="text" style="width: 60%" id="removeMenuName"/><br/><br/>
-					<input type="button" class="btn btn-default" value="삭제" id="removeMenu"/><br/><br/>
+					<input type="button" class="btn btn-default" value="삭제" id="removeMenu"/><br/>
+					<span id="removeMenuSpan" style="display: none"><font style="color: red">메뉴 이름을 입력해주세요.</font></span><br/>
 				</div>
 				<hr class="w3-hide-large w3-hide-medium" style="border: solid black 1px"/>
 				<div class="w3-col m4 l4" style="padding-top: 10px">
-					<label><font style="font-size: 20px">보이기 / 숨기기</font></label><br/>
+					<label><font style="font-size: 20px">Class</font></label><br/>
+					<c:forEach var="i" begin="0" end="${class.size()-1 }">
+						<input type="checkbox" id="class${i }"/>${class.get(i).NAME }<br/>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
@@ -193,29 +198,100 @@
 		});
 	}
 	
-	$("#addMenu").click(function(){
-		var name = $("#newMenuName").val();
-		$.ajax({
-			type : "post",
-			url : "/admin/menu/new/"+name,
-			async : false,
-			success : function(txt){
-				$("#menuTable").html(txt);
-				menus = new Array();
+	$("#removeMenu").click(function(){
+		var name = $("#removeMenuName").val();
+		var b = false;
+		var html = "";
+		for(var i=0; i<menus.length; i++){
+			var id = menus[i].prop("id");
+			id = id.substring(id.indexOf('u')+1);
+			if($("#menu"+id+"_").html()==name){
+				b = true;
+				break;
+			}
+		}
+		if(name.length!=0){
+			if(b){
 				$.ajax({
 					type : "post",
-					url : "/admin/menu",
+					url : "/admin/removeMenu/"+name,
 					async : false,
 					success : function(txt){
-						for(var i=0; i<txt.length; i++){
-							menus[i] = $("#menu"+txt[i]);
-						}
+						$("#menuTable").html(txt);
+						menus = new Array();
+						$.ajax({
+							type : "post",
+							url : "/admin/menu",
+							async : false,
+							success : function(txt){
+								for(var i=0; i<txt.length; i++){
+									menus[i] = $("#menu"+txt[i]);
+								}
+							}
+						});
+						menus[menus.length] = $("#menu"+name);
+						$("#removeMenuSpan").hide();
+						$("#removeMenuName").val("");
 					}
 				});
-				menus[menus.length] = $("#menu"+name);
-				$("#newMenuName").val("");
+			} else {
+				html = "<font style='color: red'>존재하지 않는 메뉴입니다.</font>";
+				$("#removeMenuSpan").html(html);
+				$("#removeMenuSpan").show();
 			}
-		});
+		} else {
+			html = "<font style='color: red'>메뉴 이름을 입력해주세요.</font>";
+			$("#removeMenuSpan").html(html);
+			$("#removeMenuSpan").show();
+		}
+	});
+	
+	$("#addMenu").click(function(){
+		var name = $("#newMenuName").val();
+		var b = true;
+		var html = "";
+		for(var i=0; i<menus.length; i++){
+			var id = menus[i].prop("id");
+			id = id.substring(id.indexOf('u')+1);
+			if($("#menu"+id+"_").html()==name){
+				b = false;
+				break;
+			}
+		}
+		if(name.length!=0){
+			if(b){
+				$.ajax({
+					type : "post",
+					url : "/admin/menu/new/"+name,
+					async : false,
+					success : function(txt){
+						$("#menuTable").html(txt);
+						menus = new Array();
+						$.ajax({
+							type : "post",
+							url : "/admin/menu",
+							async : false,
+							success : function(txt){
+								for(var i=0; i<txt.length; i++){
+									menus[i] = $("#menu"+txt[i]);
+								}
+							}
+						});
+						menus[menus.length] = $("#menu"+name);
+						$("#newMenuName").val("");
+						$("#addMenuSpan").hide();
+					}
+				});
+			} else {
+				html = "<font style='color: red'>이미 존재하는 메뉴입니다.</font>";
+				$("#addMenuSpan").html(html);
+				$("#addMenuSpan").show();
+			}
+		} else {
+			html = "<font style='color: red'>메뉴 이름을 입력해주세요.</font>";
+			$("#addMenuSpan").html(html);
+			$("#addMenuSpan").show();
+		}
 	});
 	
 	function menuCommit(){

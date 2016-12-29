@@ -216,6 +216,8 @@ public class MainController {
 		mav.addObject("total", total);
 		List<String> menu = as.menu(null, null);
 		mav.addObject("menu", menu);
+		List<HashMap> list3 = as.classList();
+		mav.addObject("class", list3);
 		return mav;
 	}
 }
