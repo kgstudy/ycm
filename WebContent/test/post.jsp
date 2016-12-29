@@ -9,7 +9,7 @@
 <body>
 	<h4>aaa</h4>
 	<video autoplay="autoplay" controls="controls">
-		<source src="/video/73427908-673d-47fe-868d.wmv">
+		<source src="/video/9475eeca-678c-4ea5-8f1d.wmv">
 	</video>
 	<img src="/video/intro.png"/>
 </body>
