@@ -20,7 +20,9 @@ public class CheckAnswer {
 			map.put("check", true);
 		}
 		map.put("result", report);
-		
+		System.out.println("check: "+map.get("check"));
+		System.out.println("report: "+report);
+		System.out.println("answer: "+answer);
 		return map;
 	}
 	public Map compile(String java, String className, String methodName, String classPath, String args){
