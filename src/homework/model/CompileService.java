@@ -50,21 +50,22 @@ public class CompileService {
 				// 자바 컴파일
 				builder = new ProcessBuilder("javac", dir.getPath()+"\\"+className+".java");			
 				ps = builder.start();			
+				String compileResult = "";
 				
 				error = new BufferedReader(new InputStreamReader(ps.getErrorStream()));
 				if((line=error.readLine())!=null){
 					String[] ar = line.split("\\\\");
 					line = ar[ar.length-1];
-					result += line+"<br/>";
+					compileResult += line+"<br/>";
 				}			
 				while((line = error.readLine()) != null){
 					System.out.println("while : "+line);
-					result +=line+"<br/>";
+					compileResult +=line+"<br/>";
 				}
 				error.close();
-				if(result.length()>0){
+				if(compileResult.length()>0){
 					System.out.println("error : "+result);
-					return result;
+					return compileResult;
 				}			
 				ps.waitFor(); // compile complete
 			}
@@ -73,20 +74,14 @@ public class CompileService {
 			String[] ar = args.split(",");			
 			
 			
-			List list = new Vector<String>();
+			List list = new Vector();
 			list.add("java");			
 			list.add("-classpath");
 			list.add(dir.toString());
 			list.add(className);
 			for(String str : ar){
-				try{
-					int num = Integer.parseInt(str);
-					System.out.println("parse: "+num);
-					list.add(num);
-				}catch(Exception e){
-					System.out.println("parse: "+str);
-					list.add(str);
-				}				
+				System.out.println("args: "+str);
+				list.add(str);								
 			}
 			
 //			builder = new ProcessBuilder("java", "-classpath", dir.toString(), className);
@@ -99,15 +94,16 @@ public class CompileService {
 			br = new BufferedReader( new InputStreamReader(ps.getInputStream()) );		
 
 			System.out.println("stream gobbler");
-
+			
+			result = "";
 			StreamGobbler readGobbler = new StreamGobbler(br);
 			StreamGobbler errGobbler = new StreamGobbler(error);	
 			new Thread(readGobbler).start();
 			new Thread(errGobbler).start();
-			writer.write("aaa");
-			writer.write("\r\n");
-			writer.flush();
-			System.out.println("5넣기 시작");			
+// Scanner writer			
+//			writer.write("aaa");
+//			writer.write("\r\n");
+//			writer.flush();
 			ps.waitFor();
 			System.out.println("result: "+result);
 			return result;
