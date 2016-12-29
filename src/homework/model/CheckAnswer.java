@@ -11,9 +11,9 @@ public class CheckAnswer {
 	@Autowired
 	CompileService cSvc;
 	
-	public Map check(String java, String className, String methodName, String classPath, String ip){
-		String answer = cSvc.getAnswer(java, className, methodName, classPath+"/admin");
-		String report = cSvc.javaCompile(java, className, methodName, classPath+"/"+ip);
+	public Map check(String java, String className, String methodName, String classPath, String ip, String args){
+		String answer = cSvc.getAnswer(java, className, methodName, classPath+"/admin", args);
+		String report = cSvc.javaCompile(java, className, methodName, classPath+"/"+ip, args);
 		Map map = new HashMap();
 		map.put("check", false);
 		if(answer.equals(report)){
@@ -23,8 +23,8 @@ public class CheckAnswer {
 		
 		return map;
 	}
-	public Map compile(String java, String className, String methodName, String classPath, String ip){
-		String answer = cSvc.javaCompile(java, className, methodName, classPath+"/admin");
+	public Map compile(String java, String className, String methodName, String classPath, String args){
+		String answer = cSvc.javaCompile(java, className, methodName, classPath+"/admin", args);
 		Map map = new HashMap();		
 		map.put("result", answer);
 		
