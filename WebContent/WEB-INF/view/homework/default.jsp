@@ -112,7 +112,7 @@ label{
 
 
 <script>
-	var lastRank = 0;	
+	var lastRank = new Number(0);	
 	
 	var path = location.pathname.split("/");
 	var auth = path[2];
@@ -303,9 +303,9 @@ label{
 	}
 	
 	function recordRank(){
-		ws.send("${login.ID}");
-		$("#rankView").append((lastRank+1), " ${login.ID}", "<br/>");
-		lastRank++;
+// 		ws.send("${login.ID}");
+// 		$("#rankView").append((lastRank+1), " ${login.ID}", "<br/>");
+// 		lastRank++;
 	}
 	
 	// WebSocket	
@@ -315,6 +315,13 @@ label{
 	};
 	ws.onmessage = function(e) {
 		console.log(e.data);
+		console.log(typeof lastRank);
+		var rank = 0;
+		console.log(typeof rank);
+		rank = parseInt(lastRank)+parseInt(1);
+		console.log(typeof rank);
+		$("#rankView").append(rank, e.data, "<br/>");
+ 		lastRank++;
 	}
 	
 	
