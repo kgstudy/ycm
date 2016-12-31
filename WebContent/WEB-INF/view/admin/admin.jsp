@@ -159,8 +159,8 @@
 				<hr class="w3-hide-large w3-hide-medium" style="border: solid black 1px"/>
 				<div class="w3-col m4 l4" style="padding-top: 10px">
 					<label><font style="font-size: 20px">Class</font></label><br/>
-					<c:forEach var="i" begin="0" end="${class.size()-1 }">
-						<input type="checkbox" id="class${i }"/>${class.get(i).NAME }<br/>
+					<c:forEach var="i" begin="0" end="${classes.size()-1 }">
+						<input type="checkbox" id="class${i }"/>&nbsp;${classes.get(i).NAME }<br/>
 					</c:forEach>
 				</div>
 			</div>
