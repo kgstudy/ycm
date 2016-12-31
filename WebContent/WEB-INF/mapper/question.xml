@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="question">
+	<!-- 글 -->
 	<!-- 글 목록 -->
 	<select id="list" resultType="java.util.HashMap">
 		select * from question order by num desc
@@ -21,12 +22,19 @@
 		update question set count=count+1 where num=#{num}
 	</update>
 	
+	<!-- 댓글1 -->
 	<!-- 댓글 목록 -->
 	<select id="Rlist" resultType="java.util.HashMap">
-		select * from question_reply1 order by num desc
+		select * from question_reply1 where qnum=#{qnum} order by qrnum desc
 	</select>
+	
 	<!-- 댓글 작성 -->
 	<insert id="Rwrite" parameterType="java.util.HashMap">
 		insert into question_reply1 values (QRNUM_SEQ.nextval, #{qnum}, #{qrwriter}, #{qrcontent}, sysdate)
 	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="upReply1" parameterType="java.util.HashMap">
+		update question_reply1 set qrcontent=#{qrcontent} where qrnum=#{qrnum}
+	</update>
 </mapper>

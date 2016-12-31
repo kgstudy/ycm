@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import question.model.QreplyService;
 import question.model.QuestionService;
 
 @Controller
@@ -19,6 +20,9 @@ import question.model.QuestionService;
 public class QuestionController {
 	@Autowired
 	QuestionService qs;
+	
+	@Autowired
+	QreplyService qr;
 	
 	//글 쓰기 페이지
 	@RequestMapping("/write")
@@ -47,7 +51,12 @@ public class QuestionController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("t:question/writeBoard");
 		HashMap map = qs.qBoard(num);
+		List<HashMap> list1 = qr.qReply1(num);
 		mav.addObject("qBoard", map);
+		mav.addObject("qReply1", list1);
+		if(session.getAttribute("login")!=null) {
+			
+		}
 		return mav;
 	}
 }

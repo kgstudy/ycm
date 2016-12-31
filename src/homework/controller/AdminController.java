@@ -28,7 +28,6 @@ public class AdminController {
 	
 	@RequestMapping("/read/{num}")
 	public String admin(Map map, @PathVariable int num){
-		System.out.println("index");
 		map.put("pojo", hwSvc.read(num));
 		return "t:hw/default";
 	}
@@ -44,6 +43,7 @@ public class AdminController {
 	@RequestMapping("/modify")
 	@ResponseBody
 	public int homeworkModi(Map map, HomeworkPojo pojo){
+		System.out.println(pojo.getAdminLevel());
 		return aSvc.update(pojo);
 	}
 	
