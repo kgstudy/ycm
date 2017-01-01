@@ -1,10 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link href="/css/homework.css" rel="stylesheet" >
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
+	<!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script> 
+	<script> 
+ 		hljs.initHighlightingOnLoad();		
+ 	</script> -->
+<!--  	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=java&amp;skin=doxy"></script>	 -->
+	<link rel="stylesheet" href="/css/prettify.css" >
+	<script src="/js/prettify.js" ></script>
 </head>
 <style>
 input[type="text"], textarea{	
@@ -75,11 +84,12 @@ label{
 		<input id='className' type="text" name="className" readonly="readonly" required value="${pojo.className }" ><br/>
 		<label>Method Name : </label>
 		<input id='methodName' type="text" name="methodName" readonly="readonly"
-			 value="${pojo.methodName }" style="margin-left: -2px;">
-			 	
-		<textarea id='sourceCode' name='source' cols='80' rows='20' style='margin: 0px'
-		>${pojo.source }</textarea>	
-		<br/>
+			 value="${pojo.methodName }" style="margin-left: -2px;">			 	
+
+		<div>
+			<pre class="prettyprint linenums:1" contenteditable="true" style="height: 58%;"
+			>${fn:replace(pojo.source, '<', '&lt;') }</pre>		
+		</div>
 		
 		<div id='consoleView' ></div>
 		<div id='controllBar' align='center' >
@@ -167,12 +177,15 @@ label{
 				break;
 			}
 		});
+	// sourceCode height css
 		var height = $("#problemViewWrap").css("height");
 		console.log("height: "+height);
 		$("#sourceCodeWrap").css("height", height);
 		$("#sourceCode").css("height", "60%");
 		$("#consoleView").css("height", "25%");
 		
+		ws.send("init");
+		prettyPrint();
 	});	// document onload
 	
 	//Event Handler	
@@ -315,13 +328,28 @@ label{
 	};
 	ws.onmessage = function(e) {
 		console.log(e.data);
-		console.log(typeof lastRank);
-		var rank = 0;
-		console.log(typeof rank);
-		rank = parseInt(lastRank)+parseInt(1);
-		console.log(typeof rank);
-		$("#rankView").append(rank, e.data, "<br/>");
- 		lastRank++;
+		var rankMap = new Object();
+		try{
+			rankMap = JSON.parse(e.data);
+			rank = Object.keys(rankMap);
+			console.log(rank[0]);
+			
+			console.log(rankId);
+			for(var i in rank){
+				var rankId = rankMap[rank[i]];
+				$("#rankView").append(i, "등: ", rankId, "<br/>");
+			}			
+// 	 		lastRank++;
+		}catch(err){
+			console.log(err);
+		}		
+	}
+	ws.onclose = function(e) {
+		console.log(e);
+		console.log("Ws is closed.");
+	}
+	ws.onerror = function(e) {
+		console.log(e);
 	}
 	
 	

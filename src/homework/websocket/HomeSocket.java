@@ -19,18 +19,18 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 public class HomeSocket extends TextWebSocketHandler{
 	Map<WebSocketSession, String> idMap;
 	Map<String, WebSocketSession> sMap;
-	List rank;
+	List<String> rankList;
 	String nick;
 	
 	@PostConstruct
 	public void init(){
 		idMap = new HashMap<>();
 		sMap = new HashMap<>();
-		rank = new ArrayList();
+		rankList = new ArrayList();
 	}
 	
 	public void setRank(String id){
-		rank.add(id);
+		rankList.add(id);
 		sendRank(id);
 	}
 	
@@ -40,8 +40,10 @@ public class HomeSocket extends TextWebSocketHandler{
 		System.out.println(idMap.size());
 		while(it.hasNext()){			
 			WebSocketSession wss = it.next();			
-			try {
-				wss.sendMessage(new TextMessage(rank.size()+" : "+id));
+			try {			
+					String payLoad = "{"+"\""+rankList.size()+"\":"+id+"}";
+					wss.sendMessage(new TextMessage(payLoad));				
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -52,14 +54,24 @@ public class HomeSocket extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println(session.getId()+"·Î ¿¬°á");
-		idMap.put(session, session.getId());
+		idMap.put(session, session.getId());		
 	}
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {		
 		String payLoad = (String)message.getPayload();
 		System.out.println(payLoad);		
-		
+		if(payLoad.equals("init")){			
+			if(rankList.size()>0){
+				String rankMap = "";
+				int i = 0;
+				for(i = 0; i < rankList.size()-1; i++){					
+					rankMap += "\""+(i+1)+"\":"+rankList.get(i)+",";
+				}
+				rankMap = "{"+rankMap+"\""+(i+1)+"\":"+rankList.get(i)+"}";
+				session.sendMessage(new TextMessage(rankMap));
+			}
+		}
 		session.sendMessage(message);
 		
 	}
