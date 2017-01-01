@@ -14,8 +14,17 @@
 <!--  	<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=java&amp;skin=doxy"></script>	 -->
 	<link rel="stylesheet" href="/css/prettify.css" >
 	<script src="/js/prettify.js" ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
 </head>
 <style>
+#editor { 
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        font-size: 14pt;
+}
 input[type="text"], textarea{	
 	background-color : white;
 	border: none;
@@ -85,12 +94,16 @@ label{
 		<label>Method Name : </label>
 		<input id='methodName' type="text" name="methodName" readonly="readonly"
 			 value="${pojo.methodName }" style="margin-left: -2px;">			 	
-
-		<div>
-			<pre class="prettyprint linenums:1" contenteditable="true" style="height: 58%;"
-			>${fn:replace(pojo.source, '<', '&lt;') }</pre>		
+<!-- 		<textarea id="sourceCode" cols='80' rows='50' -->
+<%-- 		>${pojo.source }		 --%>
+<!-- 		</textarea>		 -->
+<!-- 		<div>			 -->
+<!-- 			<pre id="sourceCode" class="prettyprint linenums:1" contenteditable="true" style="height: 58%;" -->
+<%-- 			>${fn:replace(pojo.source, '<', '&lt;') }</pre> --%>
+<!-- 		</div> -->
+		<div id='editor' style="widhth: 300px; height: 400px; position: relative;"
+		>${fn:replace(pojo.source, '<', '&lt;') }
 		</div>
-		
 		<div id='consoleView' ></div>
 		<div id='controllBar' align='center' >
 			<input id='run' type='button' value='실행' >
@@ -122,6 +135,7 @@ label{
 
 
 <script>
+	var editor;
 	var lastRank = new Number(0);	
 	
 	var path = location.pathname.split("/");
@@ -185,7 +199,10 @@ label{
 		$("#consoleView").css("height", "25%");
 		
 		ws.send("init");
-		prettyPrint();
+	
+		editor = ace.edit("editor");
+	    editor.setTheme("ace/theme/monokai");
+	    editor.getSession().setMode("ace/mode/java");
 	});	// document onload
 	
 	//Event Handler	
@@ -216,16 +233,21 @@ label{
 			});
 			$("input[type='submit']").click();
 			hwData = $("#homeworkForm").serializeArray();
-			
+			hwData.push({
+				name : "source",
+				value : editor.getValue()
+			});
 			break;
-		case "modify":
-				
+		case "modify":				
 			$("#homeworkForm").submit(function(e){			
 				e.preventDefault();
 			});
  			$("input[type='submit']").click();		
 			hwData = $("#homeworkForm").serializeArray();
-			
+			hwData.push({
+				name : "source",
+				value : editor.getValue()
+			});
 			break;
 		case "delete":
 			hwData = { num : $("input[type='hidden'][name='num']").val() };
@@ -233,7 +255,7 @@ label{
 		default:
 			break;
 		}
-		
+		console.log("hwdata...");
 		console.log(hwData);
 		
 		$.ajax({
@@ -259,20 +281,22 @@ label{
 	}
 	// handle <tab> in textarea
 	$(document).delegate('#sourceCode', 'keydown', function(e) {
-	  var keyCode = e.keyCode || e.which;
-	  console.log(e.keycode);
-	  console.log(e.which);
+	  var keyCode = e.keyCode || e.which;	  
 	  console.log(keyCode);
 	  if (keyCode == 9) {
 		e.preventDefault();
 	    var start = $(this).get(0).selectionStart;
 	    var end = $(this).get(0).selectionEnd;
-	
+		console.log($(this));
+		console.log(start);
+		console.log(end);
+		console.log($(this).val());
+		console.log($(this).text());
 	    // set textarea value to: text before caret + tab + text after caret
 	    $(this).val($(this).val().substring(0, start)
 	                + "\t"
 	                + $(this).val().substring(end));
-	
+	    
 	    // put caret at right position again
 	    $(this).get(0).selectionStart =
 	    $(this).get(0).selectionEnd = start + 1;
@@ -280,7 +304,7 @@ label{
 	});
 	
 	function compile(){
-		var $answer = $("#sourceCode").val();
+		var $answer = editor.getValue();
  		var className = $("#className").val();
  		var methodName = $("#methodName").val();
 		var sourceData = {
@@ -288,8 +312,7 @@ label{
 			"className" : className,
 			"methodName" : methodName,
 			"args" : $("#inputText").val()
-		}	
-		
+		}		
 		
 		console.log(sourceData);
 		$.ajax({
@@ -297,7 +320,9 @@ label{
 			type : "post",
 			data : sourceData,
 			success : function(r){
-				console.log(r);				
+				console.log(r);
+				r.result = r.result.replace(/\s/g, "&nbsp;"); //안된다...
+				console.log(r.result);
 		 		$("#consoleView").empty();
 		 		$("#consoleView").append(r.result+"<br/>");
 		 		if(auth=="student")

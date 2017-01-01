@@ -18,6 +18,7 @@ public class AdminService {
 	HomeworkPojo pojo;
 	
 	public int write(HomeworkPojo pojo){
+		System.out.println("write: "+pojo.getSource());
 		SqlSession sql = fac.openSession();
 		if(sql.insert("homework.write", pojo)!=1)
 			return 0;
@@ -34,6 +35,7 @@ public class AdminService {
 	}
 	
 	public int update(HomeworkPojo pojo){
+		System.out.println("update: "+pojo.getSource());
 		SqlSession sql = fac.openSession();
 		int r = sql.update("homework.update", pojo);
 		sql.close();		

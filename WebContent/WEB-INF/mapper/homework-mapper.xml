@@ -3,7 +3,7 @@
 <mapper namespace="homework" >
 	<insert id="write" parameterType="homework.model.pojo.HomeworkPojo" >
 		insert into homework values(HOMEWORK_SEQ.nextval, #{title}, #{writer},
-		 #{content }, sysdate, 0, #{adminLevel }, 0, '', '' , '', #{output }, #{input }, #{className}, #{methodName}, "" ) 
+		 #{content }, sysdate, 0, #{adminLevel }, 0, '', '' , '', #{output }, #{input }, #{className}, #{methodName}, '' ) 
 	</insert>
 	<select id="currval" resultType="java.lang.Integer" >
 		select HOMEWORK_SEQ.CURRVAL from dual
