@@ -335,6 +335,11 @@ label{
 		if(r){
 			$("#consoleView").append("<span class='correct' >Correct!!!</span><br/>");
 			recordRank();
+			var studentLevel = prompt("얼마나 어려우셨나요?(난이도 입력)", "1~5");			
+			console.log(studentLevel);
+			$.get("/hw/student/level?studentLevel="+studentLevel, function(r){
+				console.log(r);
+			});
 		}else{
 			$("#consoleView").append("<span class='incorrect' >incorrect..</span><br/>");
 		}	

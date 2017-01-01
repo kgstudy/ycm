@@ -37,4 +37,10 @@ public class HomeworkService {
 		sql.close();
 		return list;
 	}
+	public boolean insertLevel(int level){
+		SqlSession sql = fac.openSession();
+		int r = sql.update("homework.updateStudentLevel", level);
+		sql.close();
+		return r==1? true: false;
+	}
 }

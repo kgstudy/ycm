@@ -18,23 +18,13 @@ import homework.model.pojo.HomeworkPojo;
 @RequestMapping("/hw/student")
 public class StudentController {
 	@Autowired
-	HomeworkService hwSvc;
+	HomeworkService hwSvc;	
 	
-	@RequestMapping("/writeForm")
-	public String homeworkWriteForm(){
-		return "/homework/writing.jsp";
-	}
 	@RequestMapping("/read/{num}")
 	public String homeworkWrite(Map map, @PathVariable int num){
 		map.put("pojo", hwSvc.read(num));
 		return "t:hw/default";
-	}
-
-//	@RequestMapping("/read")
-//	public String homeworkRead(Map map, int num){
-//		map.put("list", hwSvc.read(num));
-//		return "/hw/read.jsp";
-//	}
+	}	
 	
 	@RequestMapping("/readJSON")
 	@ResponseBody

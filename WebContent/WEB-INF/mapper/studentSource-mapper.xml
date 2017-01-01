@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="studentSource">
+	<insert id="write" >
+		insert into studentSource values(studentSource_SEQ.nextval, #{homeworkNum }, #{classes },
+			#{id }, #{name }, #{source }, sysdate, #{studentLevel })
+	</insert>
+	<select id="read" >
+		select * from studentSource where homeworkNum = #{homeworkNum } 
+	</select>
+	<insert id="writeReply">
+		insert into studentSource_reply values(studentSource_reply_SEQ.nextval, #{homeworkNum },
+			#{id }, #{name }, #{content }, sysdate)
+	</insert>	
+</mapper>
