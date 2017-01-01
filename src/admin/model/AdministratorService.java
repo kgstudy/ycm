@@ -230,11 +230,46 @@ public class AdministratorService {
 	}
 	
 	// Class 메뉴
-	public List<HashMap> classList(){
+	public List<String> classList(){
 		SqlSession ss = fac.openSession();
-		List<HashMap> list= ss.selectList("admin.classList");
+		String classes= ss.selectOne("admin.classList");
+		String[] ar = classes.split(",");
+		List<String> list = new Vector<>();
+		for(int i=0; i<ar.length; i++){
+			list.add(ar[i]);
+		}
 		ss.close();
 		return list;
+	}
+	
+	// class 위치 변경
+	public List<String> classPosition(String menu, String arrow){
+		SqlSession ss = fac.openSession();
+		String oldClass = ss.selectOne("admin.classList");
+		String[] ar = oldClass.split(",");
+		List<String> classList = new Vector<>();
+		for(int i=0; i<ar.length; i++){
+			classList.add(ar[i]);
+		}
+		if(menu==null || arrow==null){
+			return classList;
+		} else {
+			if(arrow.equals("up2")){
+				if(menu.equals(ar[0])){
+					ss.close();
+					return classList;
+				} else {
+					return classWork(ss, classList, menu, -1);
+				}
+			} else{
+				if(menu.equals(ar[ar.length-1])){
+					ss.close();
+					return classList;
+				} else {
+					return classWork(ss, classList, menu, 1);
+				}
+			}
+		}
 	}
 	
 	// 메뉴 위치변경 내부메서드
@@ -259,5 +294,29 @@ public class AdministratorService {
 		ss.commit();
 		ss.close();
 		return menuList;
+	}
+	
+	// class 위치변경 내부메서드
+	public List<String> classWork(SqlSession ss, List<String> classList, String menu, int a){
+		String newClass = "";
+		int n = 0;
+		for(int i=0; i<classList.size(); i++){
+			if(menu.equals(classList.get(i))){
+				n = i;
+				break;
+			}
+		}
+		classList.remove(menu);
+		classList.add(n+a, menu);
+		for(int i=0; i<classList.size(); i++){
+			newClass += classList.get(i);
+			if(i!=classList.size()-1){
+				newClass += ",";
+			}
+		}
+		ss.update("admin.classUpdate", newClass);
+		ss.commit();
+		ss.close();
+		return classList;
 	}
 }

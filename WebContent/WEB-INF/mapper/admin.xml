@@ -37,7 +37,10 @@
 	<update id="menuUpdate" parameterType="java.lang.String">
 		update menu set menu = #{newMenu}
 	</update>
-	<select id="classList" resultType="java.util.HashMap">
+	<select id="classList" resultType="java.lang.String">
 		select * from class
 	</select>
+	<update id="classUpdate" parameterType="java.lang.String">
+		update class set name = #{newClass}
+	</update>
 </mapper>

@@ -149,19 +149,36 @@
 					<label>메뉴 이름</label><br/>
 					<input type="text" style="width: 60%" id="newMenuName"/><br/><br/>
 					<input type="button" class="btn btn-default" value="추가" id="addMenu"/><br/>
-					<span id="addMenuSpan" style="display: none"><font style="color: red">메뉴 이름을 입력해주세요.</font></span><br/><br/>
+					<span id="addMenuSpan" style="display: none"></span><br/><br/>
 					<label><font style="font-size: 20px">삭제</font></label><br/>
 					<label>메뉴 이름</label><br/>
 					<input type="text" style="width: 60%" id="removeMenuName"/><br/><br/>
 					<input type="button" class="btn btn-default" value="삭제" id="removeMenu"/><br/>
-					<span id="removeMenuSpan" style="display: none"><font style="color: red">메뉴 이름을 입력해주세요.</font></span><br/>
+					<span id="removeMenuSpan" style="display: none"></span><br/>
 				</div>
 				<hr class="w3-hide-large w3-hide-medium" style="border: solid black 1px"/>
 				<div class="w3-col m4 l4" style="padding-top: 10px">
 					<label><font style="font-size: 20px">Class</font></label><br/>
-					<c:forEach var="i" begin="0" end="${classes.size()-1 }">
-						<input type="checkbox" id="class${i }"/>&nbsp;${classes.get(i).NAME }<br/>
-					</c:forEach>
+					<table id="classTable">
+						<c:forEach var="t" items="${classes }">
+							<tr>
+								<td align="center">
+									<label><input type="radio" name="classRadio" id="class${t }"/></label>
+								</td>
+								<td>
+									<label onclick="$('#class${t }').prop('checked', true)"><font id="class${t }_">${t }</font></label>
+								</td>
+							</tr>
+						</c:forEach>
+						<tr>
+							<td align="center" colspan="2">
+								<i class="fa fa-arrow-up" onclick="position2(this)" id="up2"></i>&nbsp;
+								<i class="fa fa-arrow-down" onclick="position2(this)" id="down2"></i>&nbsp;
+								<input type="button" class="btn btn-default" value="적용"/><br/>
+								<span id="menuRst2" style="display: none"><font style="color: red">메뉴를 선택해주세요.</font></span>
+							</td>
+						</tr>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -184,6 +201,7 @@
 	var classes = new Array($("#class_1").html(), $("#class_2").html(), $("#class_3").html());
 	var admin = $("#admin").html();
 	var menus = new Array();
+	var menus2 = new Array();
 	
 	window.onload = function(){
 		$.ajax({
@@ -193,6 +211,16 @@
 			success : function(txt){
 				for(var i=0; i<txt.length; i++){
 					menus[i] = $("#menu"+txt[i]);
+				}
+			}
+		});
+		$.ajax({
+			type : "post",
+			url : "/admin/class",
+			async : false,
+			success : function(txt){
+				for(var i=0; i<txt.length; i++){
+					menus2[i] = $("#class"+txt[i]);
 				}
 			}
 		});
@@ -332,6 +360,43 @@
 			});
 		} else {
 			$("#menuRst").show();
+		}
+	}
+
+	function position2(element){
+		var arrow = element.id;
+		var menu = "";
+		var b = false;
+		for(var i=0; i<menus.length; i++){
+			if(menus2[i].prop("checked")){
+				menu = $("#"+menus2[i].prop("id")+"_").html();
+				b = true;
+				$("#menuRst2").hide();
+				break;
+			}
+		}
+		if(b){
+			$.ajax({
+				type : "post",
+				url : "/admin/class/"+menu+"/"+arrow,
+				async : false,
+				success : function(txt){
+					$("#classTable").html(txt);
+					$.ajax({
+						type : "post",
+						url : "/admin/class",
+						async : false,
+						success : function(txt){
+							for(var i=0; i<txt.length; i++){
+								menus2[i] = $("#class"+txt[i]);
+							}
+						}
+					});
+					$("#class"+menu).prop("checked", true);
+				}
+			});
+		} else {
+			$("#menuRst2").show();
 		}
 	}
 	

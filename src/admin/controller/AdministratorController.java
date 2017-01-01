@@ -93,4 +93,19 @@ public class AdministratorController {
 		mav.addObject("menu", as.removeMenu(name));
 		return mav;
 	}
+	
+	// class 리스트
+	@RequestMapping("/class")
+	@ResponseBody
+	public List<String> classList(){
+		return as.classList();
+	}
+	
+	// class 위치 변경
+	@RequestMapping("/class/{menu}/{arrow}")
+	public ModelAndView classPosition(@PathVariable(name="menu")String menu, @PathVariable(name="arrow")String arrow){
+		ModelAndView mav = new ModelAndView("/admin/ajaxClass.jsp");
+		mav.addObject("classes", as.classPosition(menu, arrow));
+		return mav;
+	}
 }
