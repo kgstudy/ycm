@@ -5,11 +5,14 @@
 		insert into studentSource values(studentSource_SEQ.nextval, #{homeworkNum }, #{classes },
 			#{id }, #{name }, #{source }, sysdate, #{studentLevel })
 	</insert>
+	<select id="sourceInfo" resultType="java.util.HashMap" >
+		select name, class from MEMBER where ID = #{ID }
+	</select>	
 	<select id="read" >
 		select * from studentSource where homeworkNum = #{homeworkNum } 
 	</select>
 	<insert id="writeReply">
 		insert into studentSource_reply values(studentSource_reply_SEQ.nextval, #{homeworkNum },
 			#{id }, #{name }, #{content }, sysdate)
-	</insert>	
+	</insert>
 </mapper>

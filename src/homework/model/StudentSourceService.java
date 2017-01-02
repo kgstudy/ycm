@@ -1,6 +1,7 @@
 package homework.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -24,5 +25,12 @@ public class StudentSourceService {
 		List<StudentSourcePojo> list = sql.selectList("studentSource.read", num);
 		sql.close();
 		return list;
+	}
+	
+	public Map sourceInfo(String id){
+		SqlSession sql = fac.openSession();
+		Map map = sql.selectOne("studentSource.sourceInfo", id);
+		sql.close();
+		return map;
 	}
 }

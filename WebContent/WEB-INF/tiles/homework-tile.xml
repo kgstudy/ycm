@@ -13,5 +13,6 @@
 	</definition>
 	<definition name="t:hw/*/*" extends="t:hw">
 		<put-attribute name="article" value="/WEB-INF/view/homework/{2}.jsp"/>
+		<put-attribute name="controlNav" value="/WEB-INF/view/homework/controlNav.jsp"/>
 	</definition>
 </tiles-definitions>
