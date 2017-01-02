@@ -58,8 +58,10 @@ public class AdministratorController {
 	public int total(@PathVariable(name="category")String category){
 		if(category.equals("빈 class 만")){
 			return as.size2();
-		} else {
+		} else if(category.equals("이름순")) {
 			return as.size();
+		} else {
+			return as.size3(category);
 		}
 	}
 	
@@ -72,10 +74,24 @@ public class AdministratorController {
 	}
 	
 	// 메뉴 추가
-	@RequestMapping("/menu/new/{name}")
-	public ModelAndView newMenu(@PathVariable(name="name")String name){
-		ModelAndView mav = new ModelAndView("/admin/ajaxMenu.jsp");
-		mav.addObject("menu", as.newMenu(name));
+//	@RequestMapping("/menu/new/{name}")
+//	public ModelAndView newMenu(@PathVariable(name="name")String name){
+//		ModelAndView mav = new ModelAndView("/admin/ajaxMenu.jsp");
+//		mav.addObject("menu", as.newMenu(name));
+//		return mav;
+//	}
+	
+	// 메뉴, 클래스 추가
+	@RequestMapping("/new/{type}/{menu}")
+	public ModelAndView newMenu(@PathVariable(name="type")String type, @PathVariable(name="menu")String menu){
+		ModelAndView mav = new ModelAndView();
+		if(type.equals("menu")){
+			mav.setViewName("/admin/ajaxMenu.jsp");
+			mav.addObject("menu", as.newMenu(menu));
+		} else {
+			mav.setViewName("/admin/ajaxClass.jsp");
+			mav.addObject("classes", as.newClass(menu));
+		}
 		return mav;
 	}
 	
@@ -87,10 +103,24 @@ public class AdministratorController {
 	}
 	
 	// 메뉴 삭제
-	@RequestMapping("/removeMenu/{name}")
-	public ModelAndView removeMenu(@PathVariable(name="name")String name){
-		ModelAndView mav = new ModelAndView("/admin/ajaxMenu.jsp");
-		mav.addObject("menu", as.removeMenu(name));
+//	@RequestMapping("/removeMenu/{name}")
+//	public ModelAndView removeMenu(@PathVariable(name="name")String name){
+//		ModelAndView mav = new ModelAndView("/admin/ajaxMenu.jsp");
+//		mav.addObject("menu", as.removeMenu(name));
+//		return mav;
+//	}
+	
+	// 메뉴, 클래스 삭제
+	@RequestMapping("/remove/{type}/{menu}")
+	public ModelAndView remove(@PathVariable(name="type")String type, @PathVariable(name="menu")String menu){
+		ModelAndView mav = new ModelAndView();
+		if(type.equals("menu")){
+			mav.setViewName("/admin/ajaxMenu.jsp");
+			mav.addObject("menu", as.removeMenu(menu));
+		} else {
+			mav.setViewName("/admin/ajaxClass.jsp");
+			mav.addObject("classes", as.removeClass(menu));
+		}
 		return mav;
 	}
 	

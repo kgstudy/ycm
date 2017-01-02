@@ -20,11 +20,14 @@ public class AdministratorService {
 			sql ="admin.member";
 		} else if(category.equals("빈 class 만")){
 			sql = "admin.selClass";
+		} else {
+			sql = "admin.selClass2";
 		}
 		SqlSession ss = fac.openSession();
 		HashMap map = new HashMap();
 		map.put("start", (p-1)*10+1);
 		map.put("end", p*10);
+		map.put("category", category);
 		List<HashMap> list = ss.selectList(sql, map);
 		ss.close();
 		return list;
@@ -57,6 +60,14 @@ public class AdministratorService {
 		return n;
 	}
 	
+	// Class 회원수
+	public int size3(String category){
+		SqlSession ss = fac.openSession();
+		int n = ss.selectOne("admin.size3", category);
+		ss.close();
+		return n;
+	}
+	
 	// 멤버 사이즈
 	public int memberSize(String category){
 		String sql = "";
@@ -66,9 +77,11 @@ public class AdministratorService {
 			sql = "admin.memSize2";
 		} else if(category.equals("이름순")){
 			sql = "admin.memSize";
+		} else {
+			sql = "admin.memSize3";
 		}
 		SqlSession ss = fac.openSession();
-		int n = ss.selectOne(sql);
+		int n = ss.selectOne(sql, category);
 		ss.close();
 		return n%10==0 ? n/10 : n/10+1;
 	}
@@ -172,6 +185,28 @@ public class AdministratorService {
 		return list;
 	}
 	
+	// Class 추가
+	public List<String> newClass(String name){
+		SqlSession ss = fac.openSession();
+		String menu = ss.selectOne("admin.classList");
+		String[] ar = menu.split(",");
+		List<String> list = new Vector<>();
+		for(String s : ar){
+			list.add(s);
+		}
+		menu += ","+name;
+		int n = ss.update("admin.classUpdate", menu);
+		if(n>0){
+			list.add(name);
+			ss.commit();
+			ss.close();
+		} else {
+			ss.rollback();
+			ss.close();
+		}
+		return list;
+	}
+	
 	// 메뉴 리스트
 	public List<String> menuList(){
 		SqlSession ss = fac.openSession();
@@ -229,7 +264,51 @@ public class AdministratorService {
 		}
 	}
 	
-	// Class 메뉴
+	// Class 삭제
+	public List<String> removeClass(String name){
+		SqlSession ss = fac.openSession();
+		String menu = ss.selectOne("admin.classList");
+		String[] ar = menu.split(",");
+		List<String> list = new Vector<>();
+		for(int i=0; i<ar.length; i++){
+			if(ar[i].equals(name)){
+				continue;
+			} else {
+				list.add(ar[i]);
+			}
+		}
+		menu = "";
+		for(int i=0; i<list.size(); i++){
+			menu += list.get(i);
+			if(i!=list.size()-1){
+				menu += ",";
+			}
+		}
+		int n = ss.update("admin.classUpdate", menu);
+		if(n>0){
+			ss.commit();
+			menu = ss.selectOne("admin.classList");
+			ar = menu.split(",");
+			list = new Vector<>();
+			for(String s : ar){
+				list.add(s);
+			}
+			ss.close();
+			return list;
+		} else {
+			ss.rollback();
+			menu = ss.selectOne("admin.classList");
+			ar = menu.split(",");
+			list = new Vector<>();
+			for(String s : ar){
+				list.add(s);
+			}
+			ss.close();
+			return list;
+		}
+	}
+	
+	// Class 리스트
 	public List<String> classList(){
 		SqlSession ss = fac.openSession();
 		String classes= ss.selectOne("admin.classList");

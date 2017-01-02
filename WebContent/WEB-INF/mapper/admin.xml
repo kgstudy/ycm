@@ -19,17 +19,26 @@
 	<select id="memSize2" resultType="java.lang.Integer">
 		select count(*) from member where grade != 'join' and class='없음' order by name asc
 	</select>
+	<select id="memSize3" resultType="java.lang.Integer">
+		select count(*) from member where class = #{category} order by name asc
+	</select>
 	<select id="joinMemSize" resultType="java.lang.Integer">
 		select count(*) from member where grade = 'join'
 	</select>
 	<select id="selClass" resultType="java.util.HashMap" parameterType="java.util.HashMap">
-		select mm.* from (select rownum rnum, m.* from member m where class='없음')mm where mm.rnum &gt;= #{start} and mm.rnum &lt;= #{end} order by name asc
+		select mm.* from (select rownum rnum, m.* from member m where class='없음' order by name asc)mm where mm.rnum &gt;= #{start} and mm.rnum &lt;= #{end}
+	</select>
+	<select id="selClass2" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		select mm.* from (select rownum rnum, m.* from member m where class=#{category} order by name asc)mm where mm.rnum &gt;= #{start} and mm.rnum &lt;= #{end}
 	</select>
 	<select id="size" resultType="java.lang.Integer">
 		select count(*) from member
 	</select>
 	<select id="size2" resultType="java.lang.Integer">
 		select count(*) from member where class='없음'
+	</select>
+	<select id="size3" resultType="java.lang.Integer">
+		select count(*) from member where class = #{category}
 	</select>
 	<select id="menu" resultType="java.lang.String">
 		select * from menu

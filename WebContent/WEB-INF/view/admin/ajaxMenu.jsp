@@ -4,8 +4,8 @@
 
 <c:forEach var="t" items="${menu }">
 	<tr>
-		<td>
-			<label><input type="radio" name="menuRadio" id="menu${t }"/>&nbsp;<font id="menu${t }_">${t }</font></label>
+		<td style="padding-left: 80px">
+			<label onclick="menuCheck()"><input type="radio" name="menuRadio" id="menu${t }"/>&nbsp;<font id="menu${t }_">${t }</font></label>
 		</td>
 	</tr>
 </c:forEach>
