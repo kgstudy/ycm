@@ -1,19 +1,23 @@
 package storage.controller;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.*;
+import org.springframework.web.servlet.*;
 
-import storage.model.StorageService;
+import storage.model.*;
 
 @Controller
 public class StorageController {
 	
 	@Autowired
 	StorageService ss ;
+	
+	@Autowired
+	FileUploadService fus;
 	
 
 	@RequestMapping("/storage/write")
@@ -24,11 +28,12 @@ public class StorageController {
 	}
 	
 	@RequestMapping("storage/make")
-	public ModelAndView make(String title, String content, HttpSession session, String category) {
+	public ModelAndView make(@RequestParam(name="content")MultipartFile file, String title, HttpSession session, String category) {
 		String id = (String) session.getAttribute("id");
-		int r = ss.write(title, content, id, category);
+//		int r = ss.write(title, content, id, category);
+		fus.upload(file);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("storagesessionid", r);
+//		mav.addObject("storagesessionid", r);
 		mav.setViewName("redirect:/storage");
 
 		return mav;

@@ -14,7 +14,7 @@
 
 <div class="w3-row" style="padding-left: 30px; padding-right: 30px; padding-top: 40px" align="center">
 	
-	<form action="/storage/make" method="post">
+	<form action="/storage/make" method="post" enctype="multipart/form-data">
 		<label>카테고리 </label>&nbsp;&nbsp;
 		<select name="category" style="width: 12%; height: 25px; border: 1px solid #ccc; border-radius: 5px">
 			<option>설치파일</option>

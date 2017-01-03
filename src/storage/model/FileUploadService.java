@@ -24,21 +24,22 @@ public class FileUploadService {
 	@PostConstruct
 	public void init(){
 		config = new Properties();
-		config.setProperty("AWS_BUCKETNAME", "ycm");
-		config.setProperty("AWS_ACCESS_KEY", "AKIAIWALZGI5LC6MO33A");
-		config.setProperty("AWS_SECRET_KEY", "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");
+		config.setProperty("BUCKET_NAME", "ycm");
+		config.setProperty("ACCESS_KEY", "AKIAIWALZGI5LC6MO33A");
+		config.setProperty("SECRET_KEY", "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");
 	}
 	
 	public void upload(MultipartFile f){
 		File temp = saveTempServer(f);
 		String name = f.getOriginalFilename();
 		
-		AWSCredentials credentials = new BasicAWSCredentials(config.getProperty("AWS_ACCESS_KEY"),
-				config.getProperty("AWS_SECRET_KEY"));
+		AWSCredentials credentials = new BasicAWSCredentials(config.getProperty("ACCESS_KEY"),
+				config.getProperty("SECRET_KEY"));
 		AmazonS3 s3 = new AmazonS3Client(credentials);
 		
+		// 파일 업로드 설정 제대로 바꾸기
 		try{
-			PutObjectRequest request = new PutObjectRequest(config.getProperty("AWS_BUCKETNAME"), "storage/"+name, temp);
+			PutObjectRequest request = new PutObjectRequest(config.getProperty("BUCKET_NAME")+"/storage", name, temp);
 			
 			s3.putObject(request);
 			System.out.println("Upload OK");
