@@ -1,15 +1,18 @@
 package homework.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import homework.model.pojo.StudentSourcePojo;
 
 @Component
 public class StudentSourceService {
+	@Autowired
 	SqlSessionFactory fac;
 	
 	public boolean write(StudentSourcePojo pojo){
@@ -24,5 +27,12 @@ public class StudentSourceService {
 		List<StudentSourcePojo> list = sql.selectList("studentSource.read", num);
 		sql.close();
 		return list;
+	}
+	
+	public Map sourceInfo(String id){
+		SqlSession sql = fac.openSession();
+		Map map = sql.selectOne("studentSource.sourceInfo", id);
+		sql.close();
+		return null;
 	}
 }

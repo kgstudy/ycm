@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="tile" uri="http://tiles.apache.org/tags-tiles" %>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -105,8 +106,20 @@ label{
 		>${fn:replace(pojo.source, '<', '&lt;') }
 		</div>
 		<div id='consoleView' ></div>
-		<div id='controllBar' align='center' >
-			<input id='run' type='button' value='실행' >
+		<div id='controllBar' align='center' >			
+			<nav class="navbar navbar-inverse" style='margin : 0px;'>
+			  <div class="container-fluid">
+			    <div class="navbar-header" style="border-bottom: 2px solid #000000">						
+						<a class="navbar-brand" href="#" >소스 갤러리</a>
+				</div>
+				<div class="navbar-nav" id="myNavbar">
+				    <ul id='homeworkNav' class="nav navbar-nav">
+				      <li class="active"><a id="run" href="#">실 행</a></li>
+				      <li class="active"><a id="report" href="#">제 출</a></li>
+				    </ul>
+				</div>
+			  </div>
+			</nav>
 		</div>	
 	</div>
 </form> <!-- homeworkForm -->
@@ -335,6 +348,10 @@ label{
 		if(r){
 			$("#consoleView").append("<span class='correct' >Correct!!!</span><br/>");
 			recordRank();
+			$("report").css("color", "yellow");
+			$("report").on("click", function(e){
+				report();
+			});
 			var studentLevel = prompt("얼마나 어려우셨나요?(난이도 입력)", "1~5");			
 			console.log(studentLevel);
 			$.get("/hw/student/level?studentLevel="+studentLevel, function(r){
@@ -349,6 +366,14 @@ label{
 // 		ws.send("${login.ID}");
 // 		$("#rankView").append((lastRank+1), " ${login.ID}", "<br/>");
 // 		lastRank++;
+	}
+	function report(){
+		$.ajax({
+			url : "/hw/student/report",
+			data : {
+				id : ${id}
+			}
+		});
 	}
 	
 	// WebSocket	
