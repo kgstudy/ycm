@@ -11,21 +11,23 @@
 			frm.optionValue.value = frm.selectBox.options[frm.selectBox.selectedIndex].value;
 		}
 	</script>
-	<form action="/storage" id="ctg" align="left" method="post">
-		<select name="mode" id="sel"
-			style="width: 10%; height: 25px; border: 1px solid #ccc; border-radius: 5px">
-			<option value="" ${storagemode eq ''?'selected':'' }>카테고리</option>
-			<option value="설치파일" ${storagemode eq '설치파일'?'selected':'' }>설치파일</option>
-			<option value="jar파일" ${storagemode eq 'jar파일'?'selected':'' }>jar파일</option>
-		</select>
-	</form>
+	<div align="left">
+		<form action="/storage" id="ctg" method="post">
+			<select name="mode" id="sel"
+				style="width: 10%; height: 25px; border: 1px solid #ccc; border-radius: 5px">
+				<option value="" ${storagemode eq ''?'selected':'' }>카테고리</option>
+				<option value="설치파일" ${storagemode eq '설치파일'?'selected':'' }>설치파일</option>
+				<option value="jar파일" ${storagemode eq 'jar파일'?'selected':'' }>jar파일</option>
+			</select>
+		</form>
+	</div>
 
-	<script>
+	<!-- <script>
 		document.getElementById("sel").addfreeboardListener("change",
 				function() {
 					document.getElementById("ctg").submit();
 				});
-	</script>
+	</script> -->
 
 
 	<table class="w3-table-all w3-hoverable">
@@ -48,7 +50,7 @@
 					<td><label>${storage.TITLE }</label></td>
 					<td><label>${storage.ID }</label></td>
 					<td><label>${storage.TIME }</label></td>
-					<td><input type="button" value="내려받기" class="btn btn-default" />
+					<td><input type="button" value="내려받기" class="btn btn-default" onclick="down('${storage.TITLE }', '${storage.URL}')"/></td>
 					<td><label>${storage.COUNT }</label></td>
 			</c:forEach>
 		</tbody>
@@ -88,15 +90,28 @@
 			</c:choose>
 		</label>
 	</div>
-	<div align="right">
+	<c:if test="${login.CLASS == 'master' }">
+		<div align="right">
 			<form action="/storage/write" method="post">
 			<input type="submit" value="글작성" class="btn btn-default" />
 			</form>
-	</div>
+		</div>
+	</c:if>
 	<div align="center">
-		<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px"/>&nbsp;&nbsp;
-		<input type="button" class="btn btn-default" value="검색"/>
+		<input type="text" placeholder="검색" style="width: 20%; padding-left: 10px" id="searchText"/>&nbsp;&nbsp;
+		<input type="button" class="btn btn-default" value="검색" id="search"/>
 	</div>
-	
-	
 </div>
+
+<script>
+	function down(title, url){
+		$.ajax({
+			type : "post",
+			url : "/storage/count?title="+title,
+			async : true,
+			success : function(){
+				location.href="/storage/down?url="+url;
+			}
+		});
+	}
+</script>

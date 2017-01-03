@@ -15,23 +15,23 @@ public class StorageService {
 	@Autowired
 	SqlSessionFactory fac;
 	
-	public int write(String title, String content, String id, String category) {
+	public boolean write(String title, String result, String id, String category) {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("title", title);
-		map.put("content", content);
+		map.put("url", result);
 		map.put("id", id);
 		map.put("category", category);
 		SqlSession sql = fac.openSession();
 		try {
-			int rst = sql.insert("storage.write", map);
+			sql.insert("storage.write", map);
 			sql.commit();
 			sql.close();
-			return rst;
+			return true;
 		} catch (Exception e) {
 			sql.rollback();
 			sql.close();
-			return -1;
+			return false;
 		}
 	}
 	
@@ -188,5 +188,17 @@ public class StorageService {
 
 	}
 	
-	
+	public boolean count(String title){
+		SqlSession ss = fac.openSession();
+		int n = ss.update("storage.count", title);
+		if(n>0){
+			ss.commit();
+			ss.close();
+			return true;
+		} else {
+			ss.rollback();
+			ss.close();
+			return false;
+		}
+	}
 }

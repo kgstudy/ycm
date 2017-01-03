@@ -1,6 +1,7 @@
 package storage.model;
 
 import java.io.*;
+import java.net.*;
 import java.util.*;
 
 import javax.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.multipart.*;
 
+import com.amazonaws.*;
 import com.amazonaws.auth.*;
 import com.amazonaws.services.s3.*;
 import com.amazonaws.services.s3.model.*;
@@ -24,44 +26,47 @@ public class FileUploadService {
 	@PostConstruct
 	public void init(){
 		config = new Properties();
-		config.setProperty("BUCKET_NAME", "ycm");
-		config.setProperty("ACCESS_KEY", "AKIAIWALZGI5LC6MO33A");
-		config.setProperty("SECRET_KEY", "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");
+		config.setProperty("BUCKET_NAME", "ycm99");
+		config.setProperty("ACCESS_KEY", "AKIAJS2ODEWZTDQBROUQ");
+		config.setProperty("SECRET_KEY", "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");
 	}
 	
-	public void upload(MultipartFile f){
-		File temp = saveTempServer(f);
+	public String upload(MultipartFile f){
 		String name = f.getOriginalFilename();
 		
 		AWSCredentials credentials = new BasicAWSCredentials(config.getProperty("ACCESS_KEY"),
 				config.getProperty("SECRET_KEY"));
 		AmazonS3 s3 = new AmazonS3Client(credentials);
+		String result = "";
 		
 		// 파일 업로드 설정 제대로 바꾸기
 		try{
-			PutObjectRequest request = new PutObjectRequest(config.getProperty("BUCKET_NAME")+"/storage", name, temp);
+			S3Object s3object = new S3Object();
+			
+			ObjectMetadata omd = new ObjectMetadata();
+			omd.setContentType(f.getContentType());
+			omd.setContentLength(f.getSize());
+			omd.setHeader("filename", name);
+			
+			ByteArrayInputStream bis = new ByteArrayInputStream(f.getBytes());
+			
+			PutObjectRequest request = new PutObjectRequest(config.getProperty("BUCKET_NAME"), "storage/"+name, bis, omd);
+			request.setCannedAcl(CannedAccessControlList.PublicRead);
 			
 			s3.putObject(request);
+			s3object.close();
+			
+			Date date = new Date();
+			GeneratePresignedUrlRequest generate = new GeneratePresignedUrlRequest(config.getProperty("BUCKET_NAME"), "storage/"+name);
+			generate.setMethod(HttpMethod.GET);
+			generate.setExpiration(date);
+			URL url = s3.generatePresignedUrl(generate);
+			result = url.toString().substring(0, url.toString().indexOf('?')).replace("https://", "http://");
 			System.out.println("Upload OK");
-			temp.delete();
+			return result;
 		} catch(Exception e) {
 			e.printStackTrace();
-		}
-	}
-	
-	public File saveTempServer(MultipartFile f){
-		if(f.isEmpty()){
 			return null;
-		} else {
-			try{
-				String uuid = UUID.randomUUID().toString().substring(0, 10);
-				File temp = new File(application.getRealPath("/storage"), uuid);
-				f.transferTo(temp);
-				return temp;
-			} catch(Exception e){
-				e.printStackTrace();
-				return null;
-			}
 		}
 	}
 }

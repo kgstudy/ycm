@@ -34,6 +34,29 @@ body {
 .w3-half img:hover {
 	opacity: 1
 }
+
+#loading {
+	height: 100%;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity : 0.5;
+}
+.loading {
+	background-color: white;
+	z-index: 199;
+}
+#loading_img{
+	position:absolute; 
+	top:50%;
+	left:50%;
+	margin-top:-75px;
+	margin-left:-75px;
+	z-index: 200;
+} 
 </style>
 <body>
 	<c:if test="${login == null }">
@@ -50,7 +73,7 @@ body {
 		<tile:insertAttribute name="article"/>
 		<!-- End page content -->
 	</div>
-
+	
 <!-- 	<!-- W3.CSS Container -->
 <!-- 	<div class="w3-light-grey w3-container w3-padding-32" -->
 <!-- 		style="margin-top: 75px; padding-right: 58px"> -->
@@ -60,7 +83,7 @@ body {
 <!-- 		</p> -->
 <!-- 	</div> -->
 
-	<script>
+<script>
 // Script to open and close sidenav
 function w3_open() {
     document.getElementById("mySidenav").style.display = "block";
@@ -79,6 +102,19 @@ function onClick(element) {
   var captionText = document.getElementById("caption");
   captionText.innerHTML = element.alt;
 }
+
+var loading = $('<div id="loading" class="loading"></div><img id="loading_img" src="/image/ajax-loader.gif" />').appendTo(document.body).hide();
+$(window).ajaxStart(function (){
+	loading.show();
+}).ajaxStop(function (){
+	loading.hide();
+}); 
+// jQuery(this).ajaxStart(function(){
+// 	jQuery("#loading-mask").show();
+// });
+// jQuery(this).ajaxStop(function() {
+// 	jQuery("#loading-mask").fadeOut();
+// });
 </script>
 
 </body>
