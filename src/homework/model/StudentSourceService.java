@@ -5,12 +5,14 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import homework.model.pojo.StudentSourcePojo;
 
 @Component
 public class StudentSourceService {
+	@Autowired
 	SqlSessionFactory fac;
 	
 	public boolean write(StudentSourcePojo pojo){
@@ -31,6 +33,6 @@ public class StudentSourceService {
 		SqlSession sql = fac.openSession();
 		Map map = sql.selectOne("studentSource.sourceInfo", id);
 		sql.close();
-		return map;
+		return null;
 	}
 }
