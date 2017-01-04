@@ -28,15 +28,20 @@ public class StudentController {
 	@RequestMapping("/read/{num}")
 	public String homeworkRead(HttpSession session, Map map, @PathVariable int num){
 		map.put("pojo", hwSvc.read(num));
-		System.out.println("sctrl: "+session.getAttribute("id"));
-		map.put("sourceInfo", ssSvc.sourceInfo((String)session.getAttribute("id")) );
+		map.put("num", num);
 		return "t:hw/default";
 	}	
-	
+	@RequestMapping("/level/{num}/{level}")
+	@ResponseBody
+	public boolean insertLevel(@PathVariable int num, @PathVariable int level){
+		return hwSvc.insertLevel(num, level);
+	}
 	@RequestMapping("/readJSON")
 	@ResponseBody
 	public HomeworkPojo homeworkReadJSON(int num){
 		HomeworkPojo pojo = hwSvc.read(num);
 		return pojo;
-	}	
+	}
+	
+	
 }

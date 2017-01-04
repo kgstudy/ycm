@@ -1,5 +1,7 @@
 package homework.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +18,11 @@ public class StudentSourceController {
 	@Autowired
 	StudentSourceService ssSvc;
 	
-	@RequestMapping("/write")
-	@ResponseBody
-	public boolean insert(StudentSourcePojo pojo){		
-		return ssSvc.write(pojo);
+	@RequestMapping("/report")
+	@ResponseBody	
+	public boolean sourceReport(HttpSession session, int num, String source){
+		
+		return ssSvc.write(num, source, (String)session.getAttribute("id"));
 	}
 	@RequestMapping("/read/{num }")
 	public ModelAndView read(@PathVariable int num){

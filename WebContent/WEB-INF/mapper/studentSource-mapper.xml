@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="studentSource">
-	<insert id="write" >
-		insert into studentSource values(studentSource_SEQ.nextval, #{homeworkNum }, #{classes },
-			#{id }, #{name }, #{source }, sysdate, #{studentLevel })
+	<insert id="write" parameterType="homework.model.pojo.StudentSourcePojo">
+		insert into studentSource values(studentSource_SEQ.nextval, #{homeworkNum },
+			#{id }, #{name }, #{source }, sysdate )
 	</insert>
-	<select id="sourceInfo" resultType="java.util.HashMap" >
-		select name, class from MEMBER where ID = #{ID }
+	<select id="name" resultType="java.lang.String" >
+		select name from MEMBER where ID = #{ID }
 	</select>	
 	<select id="read" >
 		select * from studentSource where homeworkNum = #{homeworkNum } 

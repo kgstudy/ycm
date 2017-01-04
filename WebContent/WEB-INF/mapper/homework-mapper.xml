@@ -20,8 +20,8 @@
 		 source=#{source}, output=#{output }, input=#{input }, className=#{className }, methodName=#{methodName }
 		 where num=#{num }
 	</update>
-	<update id="updateStudentLevel">
-		update homework set studentLevel=#{level }
+	<update id="updateStudentLevel" parameterType="java.util.HashMap" >
+		update homework set studentLevel=#{level } where num=#{num }
 	</update>
 	<update id="modiAnswer">
 		update homework set answer=#{answer } where num=#{num }

@@ -1,5 +1,6 @@
 package homework.model;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +16,15 @@ public class StudentSourceService {
 	@Autowired
 	SqlSessionFactory fac;
 	
-	public boolean write(StudentSourcePojo pojo){
+	public boolean write(int num, String source, String id){
 		SqlSession sql = fac.openSession();
+		String name = sql.selectOne("studentSource.name", id);
+		StudentSourcePojo pojo = new StudentSourcePojo();
+		pojo.setHomeworkNum(num);
+		pojo.setId(id);
+		pojo.setName("wook");
+		pojo.setSource(source);
+		
 		int r = sql.insert("studentSource.write", pojo);
 		sql.close();
 		return r==1? true: false;

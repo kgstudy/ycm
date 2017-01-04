@@ -1,6 +1,7 @@
 package homework.model;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,9 +38,12 @@ public class HomeworkService {
 		sql.close();
 		return list;
 	}
-	public boolean insertLevel(int level){
-		SqlSession sql = fac.openSession();
-		int r = sql.update("homework.updateStudentLevel", level);
+	public boolean insertLevel(int num, int level){
+		Map map = new HashMap<String, Integer>();
+		map.put("num", num);
+		map.put("level", level);
+		SqlSession sql = fac.openSession();		
+		int r = sql.update("homework.updateStudentLevel", map);
 		sql.close();
 		return r==1? true: false;
 	}

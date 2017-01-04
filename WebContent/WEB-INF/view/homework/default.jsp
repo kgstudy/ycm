@@ -225,7 +225,9 @@ label{
 	$("#run").on("click", function() {
 		compile();		
 	});
-	
+	$("#report").on("click", function(){
+		report();
+	});
 	$(document).on("keypress", ":input:not(textarea)", function(event) {
 	    return event.keyCode != 13;
 	});
@@ -325,26 +327,26 @@ label{
 			"className" : className,
 			"methodName" : methodName,
 			"args" : $("#inputText").val()
-		}		
-		
+		}	
 		console.log(sourceData);
+		
 		$.ajax({
 			url : "/hw/"+auth+"/compile",
 			type : "post",
 			data : sourceData,
 			success : function(r){
 				console.log(r);
-				r.result = r.result.replace(/\s/g, "&nbsp;"); //안된다...
+				r.result = r.result.replace(/\s/g, "&nbsp;"); 
 				console.log(r.result);
 		 		$("#consoleView").empty();
 		 		$("#consoleView").append(r.result+"<br/>");
-		 		if(auth=="student")
-		 			checkAnswer(r.check);
 			}
-		});
+		});		
+		
+		
 	}
 	function checkAnswer(r){ 		
-		var answer=$("#answer").val();
+		
 		if(r){
 			$("#consoleView").append("<span class='correct' >Correct!!!</span><br/>");
 			recordRank();
@@ -354,9 +356,27 @@ label{
 			});
 			var studentLevel = prompt("얼마나 어려우셨나요?(난이도 입력)", "1~5");			
 			console.log(studentLevel);
-			$.get("/hw/student/level?studentLevel="+studentLevel, function(r){
+			$.get("/hw/student/level/"+${num }+"/"+studentLevel, function(r){
 				console.log(r);
 			});
+			
+			$.ajax({
+				url : "/hw/source/report",
+				data : {
+					num : ${num },
+					source : editor.getValue()
+					
+				},
+				success : function(r){
+					alert("Success!!");
+					console.log(r);
+				},
+				error : function(data, r, err){
+					alert(err);
+					console.log(r);
+				}
+			});
+			
 		}else{
 			$("#consoleView").append("<span class='incorrect' >incorrect..</span><br/>");
 		}	
@@ -368,12 +388,32 @@ label{
 // 		lastRank++;
 	}
 	function report(){
+		var $answer = editor.getValue();
+ 		var className = $("#className").val();
+ 		var methodName = $("#methodName").val();
+		var sourceData = {
+			"java" : $answer,
+			"className" : className,
+			"methodName" : methodName,
+			"args" : $("#inputText").val()
+		}	
+		console.log(sourceData);
+		
 		$.ajax({
-			url : "/hw/student/report",
-			data : {
-				id : ${id}
+			url : "/hw/"+auth+"/compile",
+			type : "post",
+			data : sourceData,
+			success : function(r){
+				console.log(r);
+				r.result = r.result.replace(/\s/g, "&nbsp;"); 
+				console.log(r.result);
+		 		$("#consoleView").empty();
+		 		$("#consoleView").append(r.result+"<br/>");
+		 		if(auth=="student")
+		 			checkAnswer(r.check);
 			}
 		});
+		
 	}
 	
 	// WebSocket	
