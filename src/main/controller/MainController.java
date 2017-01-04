@@ -2,17 +2,19 @@ package main.controller;
 
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.*;
 
 import admin.model.*;
-import homework.model.HomeworkService;
-import notice.model.NoticeService;
-import question.model.QuestionService;
-import storage.model.StorageService;
+import homework.model.*;
+import notice.model.*;
+import question.model.*;
+import storage.model.*;
 
 @Controller
 public class MainController {
@@ -26,6 +28,8 @@ public class MainController {
 	StorageService ss;
 	@Autowired
 	AdministratorService as;
+	@Autowired
+	ServletContext application;
 
 	@RequestMapping("/")
 	public String index(){
@@ -214,9 +218,11 @@ public class MainController {
 		mav.addObject("size", size);
 		mav.addObject("size2", size2);
 		mav.addObject("total", total);
-		List<String> menu = as.menu(null, null);
+		List<HashMap> menu = as.menu(null, null);
 		mav.addObject("menu", menu);
-		List<String> list3 = as.classList();
+//		application.setAttribute("menu", menu);
+//		session.setAttribute("menu", menu);
+		List<HashMap> list3 = as.classList();
 		mav.addObject("classes", list3);
 		return mav;
 	}

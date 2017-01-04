@@ -134,26 +134,26 @@ public class AdministratorService {
 	}
 	
 	// 메뉴 위치 변경
-	public List<String> menu(String menu, String arrow){
+	public List<HashMap> menu(String menu, String arrow){
 		SqlSession ss = fac.openSession();
-		String oldMenu = ss.selectOne("admin.menu");
-		String[] menus = oldMenu.split(",");
-		List<String> menuList = new Vector<>();
-		for(int i=0; i<menus.length; i++){
-			menuList.add(menus[i]);
-		}
+		List<HashMap> menuList = ss.selectList("admin.menu");
+//		String[] menus = oldMenu.split(",");
+//		List<String> menuList = new Vector<>();
+//		for(int i=0; i<menus.length; i++){
+//			menuList.add(menus[i]);
+//		}
 		if(menu==null || arrow==null){
 			return menuList;
 		} else {
 			if(arrow.equals("up")){
-				if(menu.equals(menus[0])){
+				if(menu.equals(menuList.get(0).get("MENU"))){
 					ss.close();
 					return menuList;
 				} else {
 					return menuWork(ss, menuList, menu, -1);
 				}
 			} else{
-				if(menu.equals(menus[menus.length-1])){
+				if(menu.equals(menuList.get(menuList.size()-1).get("MENU"))){
 					ss.close();
 					return menuList;
 				} else {
@@ -164,25 +164,26 @@ public class AdministratorService {
 	}
 	
 	// 메뉴 추가
-	public List<String> newMenu(String name){
+	public List<HashMap> newMenu(String name, String id){
 		SqlSession ss = fac.openSession();
-		String menu = ss.selectOne("admin.menu");
-		String[] ar = menu.split(",");
-		List<String> list = new Vector<>();
-		for(String s : ar){
-			list.add(s);
-		}
-		menu += ","+name;
-		int n = ss.update("admin.menuUpdate", menu);
-		if(n>0){
-			list.add(name);
+		List<HashMap> menu = ss.selectList("admin.menu");
+		HashMap newMenu = new HashMap();
+		String href = "/custom/"+id;
+		newMenu.put("menu", name);
+		newMenu.put("id", id);
+		newMenu.put("href", href);
+		newMenu.put("num", menu.size()+1);
+		try{
+			ss.insert("admin.menuAdd", newMenu);
 			ss.commit();
+			menu = ss.selectList("admin.menu");
 			ss.close();
-		} else {
+		} catch(Exception e){
 			ss.rollback();
 			ss.close();
+			e.printStackTrace();
 		}
-		return list;
+		return menu;
 	}
 	
 	// Class 추가
@@ -208,60 +209,26 @@ public class AdministratorService {
 	}
 	
 	// 메뉴 리스트
-	public List<String> menuList(){
+	public List<HashMap> menuList(){
 		SqlSession ss = fac.openSession();
-		String menu = ss.selectOne("admin.menu");
-		String[] ar = menu.split(",");
-		List<String> list = new Vector<>();
-		for(String s : ar){
-			list.add(s);
-		}
+		List<HashMap> menu = ss.selectList("admin.menu");
 		ss.close();
-		return list;
+		return menu;
 	}
 	
 	// 메뉴 삭제
-	public List<String> removeMenu(String name){
+	public List<HashMap> removeMenu(String name){
 		SqlSession ss = fac.openSession();
-		String menu = ss.selectOne("admin.menu");
-		String[] ar = menu.split(",");
-		List<String> list = new Vector<>();
-		for(int i=0; i<ar.length; i++){
-			if(ar[i].equals(name)){
-				continue;
-			} else {
-				list.add(ar[i]);
-			}
-		}
-		menu = "";
-		for(int i=0; i<list.size(); i++){
-			menu += list.get(i);
-			if(i!=list.size()-1){
-				menu += ",";
-			}
-		}
-		int n = ss.update("admin.menuUpdate", menu);
-		if(n>0){
+		List<HashMap> menu = ss.selectList("admin.menu");
+		if(ss.delete("admin.removeMenu", name)>0){
 			ss.commit();
-			menu = ss.selectOne("admin.menu");
-			ar = menu.split(",");
-			list = new Vector<>();
-			for(String s : ar){
-				list.add(s);
-			}
+			menu = ss.selectList("admin.menu");
 			ss.close();
-			return list;
 		} else {
 			ss.rollback();
-			menu = ss.selectOne("admin.menu");
-			ar = menu.split(",");
-			list = new Vector<>();
-			for(String s : ar){
-				list.add(s);
-			}
 			ss.close();
-			return list;
 		}
+		return menu;
 	}
 	
 	// Class 삭제
@@ -309,39 +276,28 @@ public class AdministratorService {
 	}
 	
 	// Class 리스트
-	public List<String> classList(){
+	public List<HashMap> classList(){
 		SqlSession ss = fac.openSession();
-		String classes= ss.selectOne("admin.classList");
-		String[] ar = classes.split(",");
-		List<String> list = new Vector<>();
-		for(int i=0; i<ar.length; i++){
-			list.add(ar[i]);
-		}
-		ss.close();
-		return list;
+		List<HashMap> classes= ss.selectList("admin.classList");
+		return classes;
 	}
 	
 	// class 위치 변경
-	public List<String> classPosition(String menu, String arrow){
+	public List<HashMap> classPosition(String menu, String arrow){
 		SqlSession ss = fac.openSession();
-		String oldClass = ss.selectOne("admin.classList");
-		String[] ar = oldClass.split(",");
-		List<String> classList = new Vector<>();
-		for(int i=0; i<ar.length; i++){
-			classList.add(ar[i]);
-		}
+		List<HashMap> classList = ss.selectList("admin.classList");
 		if(menu==null || arrow==null){
 			return classList;
 		} else {
 			if(arrow.equals("up2")){
-				if(menu.equals(ar[0])){
+				if(menu.equals(classList.get(0).get("NAME"))){
 					ss.close();
 					return classList;
 				} else {
 					return classWork(ss, classList, menu, -1);
 				}
 			} else{
-				if(menu.equals(ar[ar.length-1])){
+				if(menu.equals(classList.get(classList.size()-1).get("NAME"))){
 					ss.close();
 					return classList;
 				} else {
@@ -352,48 +308,44 @@ public class AdministratorService {
 	}
 	
 	// 메뉴 위치변경 내부메서드
-	public List<String> menuWork(SqlSession ss, List<String> menuList, String menu, int a){
-		String newMenu = "";
+	public List<HashMap> menuWork(SqlSession ss, List<HashMap> menuList, String menu, int a){
+		HashMap newMap = new HashMap<>();
 		int n = 0;
 		for(int i=0; i<menuList.size(); i++){
-			if(menu.equals(menuList.get(i))){
+			if(menu.equals(menuList.get(i).get("MENU"))){
 				n = i;
 				break;
 			}
 		}
-		menuList.remove(menu);
-		menuList.add(n+a, menu);
+		newMap = menuList.get(n);
+		menuList.remove(n);
+		menuList.add(n+a, newMap);
 		for(int i=0; i<menuList.size(); i++){
-			newMenu += menuList.get(i);
-			if(i!=menuList.size()-1){
-				newMenu += ",";
-			}
+			menuList.get(i).put("NUM", i+1);
+			ss.update("admin.menuUpdate", menuList.get(i));
 		}
-		ss.update("admin.menuUpdate", newMenu);
 		ss.commit();
 		ss.close();
 		return menuList;
 	}
 	
 	// class 위치변경 내부메서드
-	public List<String> classWork(SqlSession ss, List<String> classList, String menu, int a){
-		String newClass = "";
+	public List<HashMap> classWork(SqlSession ss, List<HashMap> classList, String menu, int a){
+		HashMap newMap = new HashMap<>();
 		int n = 0;
 		for(int i=0; i<classList.size(); i++){
-			if(menu.equals(classList.get(i))){
+			if(menu.equals(classList.get(i).get("NAME"))){
 				n = i;
 				break;
 			}
 		}
-		classList.remove(menu);
-		classList.add(n+a, menu);
+		newMap = classList.get(n);
+		classList.remove(n);
+		classList.add(n+a, newMap);
 		for(int i=0; i<classList.size(); i++){
-			newClass += classList.get(i);
-			if(i!=classList.size()-1){
-				newClass += ",";
-			}
+			classList.get(i).put("NUM", i+1);
+			ss.update("admin.classUpdate", classList.get(i));
 		}
-		ss.update("admin.classUpdate", newClass);
 		ss.commit();
 		ss.close();
 		return classList;

@@ -148,55 +148,7 @@ public class MemberService {
 	
 	public List<HashMap> menu(){
 		SqlSession ss = fac.openSession();
-		String menu = ss.selectOne("admin.menu");
-		String[] ar = menu.split(",");
-		String href = "";
-		String id = "";
-		List<HashMap> list = new Vector<>();
-		for(String s : ar){
-			HashMap<String, String> map = new HashMap<>();
-			map.put(s, s);
-			switch(s){
-			case "Home":
-				href = "/member/login";
-				id = "home";
-				break;
-			case "Notice":
-				href = "/notice";
-				id = "notice";
-				break;
-			case "Question":
-				href = "/question";
-				id = "question";
-				break;
-			case "Homework":
-				href = "/homework";
-				id = "homework";
-				break;
-			case "Practice":
-				href = "/practice";
-				id = "practice";
-				break;
-			case "Storage":
-				href = "/storage";
-				id = "storage";
-				break;
-			case "Video":
-				href = "/video";
-				id = "video";
-				break;
-			case "Admin":
-				href = "/admin";
-				id = "admin";
-				break;
-			case "Class":
-				href = "/member/login";
-				id = "drop";
-				break;
-			}
-			map.put("href", href);
-			list.add(map);
-		}
-		return list;
+		List<HashMap> menu = ss.selectList("admin.menu");
+		return menu;
 	}
 }

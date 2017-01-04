@@ -40,16 +40,22 @@
 	<select id="size3" resultType="java.lang.Integer">
 		select count(*) from member where class = #{category}
 	</select>
-	<select id="menu" resultType="java.lang.String">
-		select * from menu
+	<select id="menu" resultType="java.util.HashMap">
+		select * from menu order by a asc
 	</select>
-	<update id="menuUpdate" parameterType="java.lang.String">
-		update menu set menu = #{newMenu}
+	<update id="menuUpdate" parameterType="java.util.HashMap">
+		update menu set menu = #{MENU}, id = #{ID}, href = #{HREF} where num = #{NUM}
 	</update>
-	<select id="classList" resultType="java.lang.String">
-		select * from class
+	<delete id="removeMenu">
+		delete from menu where menu = #{menu}
+	</delete>
+	<insert id="menuAdd" parameterType="java.util.HashMap">
+		insert into menu values(#{menu}, #{id}, #{href}, #{num}, menu_seq.nextval)
+	</insert>
+	<select id="classList" resultType="java.util.HashMap">
+		select * from class order by a asc
 	</select>
-	<update id="classUpdate" parameterType="java.lang.String">
-		update class set name = #{newClass}
+	<update id="classUpdate" parameterType="java.util.HashMap">
+		update class set name = #{NAME} where num = #{NUM}
 	</update>
 </mapper>

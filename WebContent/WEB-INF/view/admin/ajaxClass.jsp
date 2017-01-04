@@ -5,8 +5,8 @@
 <c:forEach var="t" items="${classes }">
 	<tr>
 		<td style="padding-left: 100px">
-			<label><input type="radio" name="classRadio" id="class${t }" onchange="classCheck()"/></label>
-			<label onclick="$('#class${t }').prop('checked', true), classCheck()"><font id="class${t }_">${t }</font></label>
+			<label><input type="radio" name="classRadio" id="class${t.NAME }" onchange="classCheck()"/></label>
+			<label onclick="$('#class${t.NAME }').prop('checked', true), classCheck()"><font id="class${t.NAME }_">${t.NAME }</font></label>
 		</td>
 	</tr>
 </c:forEach>

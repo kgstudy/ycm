@@ -133,7 +133,7 @@
 						<c:forEach var="t" items="${menu }">
 							<tr>
 								<td style="padding-left: 80px">
-									<label onclick="menuCheck()"><input type="radio" name="menuRadio" id="menu${t }"/>&nbsp;<font id="menu${t }_">${t }</font></label>
+									<label onclick="menuCheck()"><input type="radio" name="menuRadio" id="menu${t.MENU }"/>&nbsp;<font id="menu${t.MENU }_">${t.MENU }</font></label>
 								</td>
 							</tr>
 						</c:forEach>
@@ -141,7 +141,7 @@
 							<td align="center">
 								<i class="fa fa-arrow-up" onclick="position(this)" id="up"></i>&nbsp;
 								<i class="fa fa-arrow-down" onclick="position(this)" id="down"></i>&nbsp;
-								<input type="button" class="btn btn-default" value="적용"/><br/>
+								<input type="button" class="btn btn-default" value="적용" onclick="location.href='/member/login'"/><br/>
 								<span id="menuRst" style="display: none"><font style="color: red">메뉴를 선택해주세요.</font></span>
 							</td>
 						</tr>
@@ -154,7 +154,8 @@
 					<label>Menu / Class 이름</label><br/>
 					<input type="radio" id="addMenuRadio" name="addRadio" onchange="checkAdd()"/>&nbsp;<label onclick="$('#addMenuRadio').prop('checked', true), checkAdd()"><font>Menu</font></label>&nbsp;
 					<input type="radio" id="addClassRadio" name="addRadio" onchange="checkAdd()"/>&nbsp;<label onclick="$('#addClassRadio').prop('checked', true), checkAdd()"><font>Class</font></label><br/>
-					<input type="text" style="width: 60%" id="newName"/><br/><br/>
+					<input type="text" style="width: 60%" id="newName"/><br/>
+					<label style="margin-top: 10px">ID:</label>&nbsp;<input type="text" id="menuId" style="width: 50%"/><br/><br/>
 					<input type="button" class="btn btn-default" value="추가" id="addBtn"/><br/>
 					<span id="addSpan" style="display: none"></span><br/><br/>
 					<label><font style="font-size: 16px; color: blue">삭제</font></label><br/>
@@ -171,8 +172,8 @@
 							<c:forEach var="t" items="${classes }">
 								<tr>
 									<td style="padding-left: 100px">
-										<label><input type="radio" name="classRadio" id="class${t }" onchange="classCheck()"/></label>
-										<label onclick="$('#class${t }').prop('checked', true), classCheck()"><font id="class${t }_">${t }</font></label>
+										<label><input type="radio" name="classRadio" id="class${t.NAME }" onchange="classCheck()"/></label>
+										<label onclick="$('#class${t.NAME }').prop('checked', true), classCheck()"><font id="class${t.NAME }_">${t.NAME }</font></label>
 									</td>
 								</tr>
 							</c:forEach>
@@ -180,7 +181,7 @@
 					</div>
 					<i class="fa fa-arrow-up" onclick="position2(this)" id="up2"></i>&nbsp;
 					<i class="fa fa-arrow-down" onclick="position2(this)" id="down2"></i>&nbsp;
-					<input type="button" class="btn btn-default" value="적용"/><br/>
+					<input type="button" class="btn btn-default" value="적용" onclick="location.href='/member/login'"/><br/>
 					<span id="menuRst2" style="display: none"><font style="color: red">메뉴를 선택해주세요.</font></span>
 				</div>
 			</div>
@@ -216,7 +217,7 @@
 			async : false,
 			success : function(txt){
 				for(var i=0; i<txt.length; i++){
-					menus[i] = $("#menu"+txt[i]);
+					menus[i] = $("#menu"+txt[i].MENU);
 				}
 			}
 		});
@@ -226,7 +227,7 @@
 			async : false,
 			success : function(txt){
 				for(var i=0; i<txt.length; i++){
-					menus2[i] = $("#class"+txt[i]);
+					menus2[i] = $("#class"+txt[i].NAME);
 				}
 			}
 		});
@@ -309,12 +310,12 @@
 							success : function(txt){
 								if(checkType=="menu"){
 									for(var i=0; i<txt.length; i++){
-										menus[i] = $("#menu"+txt[i]);
+										menus[i] = $("#menu"+txt[i].MENU);
 									}
 								menus[menus.length] = $("#menu"+name);
 								} else {
 									for(var i=0; i<txt.length; i++){
-										menus2[i] = $("#class"+txt[i]);
+										menus2[i] = $("#class"+txt[i].NAME);
 									}
 								}
 								menus2[menus2.length] = $("#class"+name);
@@ -339,9 +340,10 @@
 	
 	$("#addBtn").click(function(){
 		var name = $("#newName").val();
+		var menuId = $("#menuId").val();
 		var b = true;
 		var html = "";
-		if(name.indexOf(' ')>0){
+		if(name.indexOf(' ')>0 || menuId.indexOf(' ')>0){
 			html = "<font style='color: red'>공백은 포함할 수 없습니다.</font>";
 			$("#addSpan").html(html);
 			$("#addSpan").show();
@@ -366,11 +368,11 @@
 						}
 					}
 				}
-				if(name.length!=0){
+				if(name.length!=0 && menuId.length!=0){
 					if(b){
 						$.ajax({
 							type : "post",
-							url : "/admin/new/"+checkType+"/"+name,
+							url : "/admin/new/"+checkType+"/"+name+"/"+menuId,
 							async : false,
 							success : function(txt){
 								$("#"+checkType+"Table").html(txt);
@@ -382,43 +384,40 @@
 									success : function(txt){
 										if(checkType=="menu"){
 											for(var i=0; i<txt.length; i++){
-												menus[i] = $("#menu"+txt[i]);
+												menus[i] = $("#menu"+txt[i].MENU);
 											}
 											menus[menus.length] = $("#menu"+name);
 										} else {
 											for(var i=0; i<txt.length; i++){
-												menus2[i] = $("#class"+txt[i]);
+												menus2[i] = $("#class"+txt[i].NAME);
 											}
 											menus2[menus2.length] = $("#class"+name);
 										}
 									}
 								});
 								$("#newName").val("");
+								$("#menuId").val("");
 								$("#addSpan").hide();
 								reset();
 							}
 						});
 					} else {
-						html = "<font style='color: red'>이미 존재하는 메뉴 또는 클래스입니다.</font>";
+						html = "<font style='color: red'>이미 존재하는 메뉴/클래스입니다.</font>";
 						$("#addSpan").html(html);
 						$("#addSpan").show();
 					}
 				} else {
-					html = "<font style='color: red'>메뉴 또는 클래스 이름을 입력해주세요.</font>";
+					html = "<font style='color: red'>메뉴/클래스 이름, ID를 입력해주세요.</font>";
 					$("#addSpan").html(html);
 					$("#addSpan").show();
 				}
 			} else {
-				html = "<font style='color: red'>메뉴 또는 클래스를 선택해주세요.</font>";
+				html = "<font style='color: red'>메뉴/클래스를 선택해주세요.</font>";
 				$("#addSpan").html(html);
 				$("#addSpan").show();
 			}
 		}
 	});
-	
-	function menuCommit(){
-		location.href="/member/login";
-	}
 	
 	function position(element){
 		var arrow = element.id;
@@ -445,7 +444,7 @@
 						async : false,
 						success : function(txt){
 							for(var i=0; i<txt.length; i++){
-								menus[i] = $("#menu"+txt[i]);
+								menus[i] = $("#menu"+txt[i].MENU);
 							}
 						}
 					});
@@ -482,7 +481,7 @@
 						async : false,
 						success : function(txt){
 							for(var i=0; i<txt.length; i++){
-								menus2[i] = $("#class"+txt[i]);
+								menus2[i] = $("#class"+txt[i].NAME);
 							}
 						}
 					});

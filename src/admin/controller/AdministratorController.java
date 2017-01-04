@@ -82,12 +82,12 @@ public class AdministratorController {
 //	}
 	
 	// 메뉴, 클래스 추가
-	@RequestMapping("/new/{type}/{menu}")
-	public ModelAndView newMenu(@PathVariable(name="type")String type, @PathVariable(name="menu")String menu){
+	@RequestMapping("/new/{type}/{menu}/{id}")
+	public ModelAndView newMenu(@PathVariable(name="type")String type, @PathVariable(name="menu")String menu, @PathVariable(name="id")String id){
 		ModelAndView mav = new ModelAndView();
 		if(type.equals("menu")){
 			mav.setViewName("/admin/ajaxMenu.jsp");
-			mav.addObject("menu", as.newMenu(menu));
+			mav.addObject("menu", as.newMenu(menu, id));
 		} else {
 			mav.setViewName("/admin/ajaxClass.jsp");
 			mav.addObject("classes", as.newClass(menu));
@@ -98,7 +98,7 @@ public class AdministratorController {
 	// 메뉴 리스트
 	@RequestMapping("/menu")
 	@ResponseBody
-	public List<String> menuList(){
+	public List<HashMap> menuList(){
 		return as.menuList();
 	}
 	
@@ -127,7 +127,7 @@ public class AdministratorController {
 	// class 리스트
 	@RequestMapping("/class")
 	@ResponseBody
-	public List<String> classList(){
+	public List<HashMap> classList(){
 		return as.classList();
 	}
 	

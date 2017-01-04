@@ -3,6 +3,7 @@ package member.controller;
 import java.util.*;
 
 import javax.annotation.*;
+import javax.servlet.*;
 import javax.servlet.http.*;
 
 import org.springframework.beans.factory.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
 
+import admin.model.*;
 import member.service.*;
 
 @Controller
@@ -17,6 +19,10 @@ import member.service.*;
 public class MemberController {
 	@Autowired
 	MemberService ms;
+	@Autowired
+	ServletContext application;
+	@Autowired
+	AdministratorService as;
 	
 	@RequestMapping("/join")
 	public String joinForm(){
@@ -50,6 +56,10 @@ public class MemberController {
 		mav.addObject("list", list);
 		session.setAttribute("login", list.get(0));
 		List<HashMap> list2 = ms.menu();
+		List<HashMap> classList = as.classList();
+//		mav.addObject("menu", list2);
+		application.setAttribute("menu", list2);
+		application.setAttribute("classes", classList);
 		return mav;
 	}
 	
