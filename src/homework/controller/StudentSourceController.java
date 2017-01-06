@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import homework.model.StudentSourceService;
-import homework.model.pojo.StudentSourcePojo;
+import sourceGallery.model.pojo.StudentSourcePojo;
 
 @Controller
 @RequestMapping("hw/source")

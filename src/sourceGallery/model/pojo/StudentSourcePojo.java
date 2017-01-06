@@ -1,4 +1,4 @@
-package homework.model.pojo;
+package sourceGallery.model.pojo;
 
 import java.util.Date;
 

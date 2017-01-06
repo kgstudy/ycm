@@ -110,7 +110,7 @@ label{
 			<nav class="navbar navbar-inverse" style='margin : 0px;'>
 			  <div class="container-fluid">
 			    <div class="navbar-header" style="border-bottom: 2px solid #000000">						
-						<a class="navbar-brand" href="#" >소스 갤러리</a>
+						<a id="gallery" class="navbar-brand" href="#" >소스 갤러리</a>
 				</div>
 				<div class="navbar-nav" id="myNavbar">
 				    <ul id='homeworkNav' class="nav navbar-nav">
@@ -228,6 +228,7 @@ label{
 	$("#report").on("click", function(){
 		report();
 	});
+	
 	$(document).on("keypress", ":input:not(textarea)", function(event) {
 	    return event.keyCode != 13;
 	});
@@ -376,6 +377,7 @@ label{
 					console.log(r);
 				}
 			});
+			$("#gallery").attr("href", "/gallery/read/"+${num });
 			
 		}else{
 			$("#consoleView").append("<span class='incorrect' >incorrect..</span><br/>");
